@@ -1,10 +1,8 @@
 package com.leclowndu93150.flightutils.registry;
 
 import com.leclowndu93150.flightutils.items.AngelRingItem;
-import com.leclowndu93150.flightutils.items.IntertiaRingItem;
+import com.leclowndu93150.flightutils.items.InertiaRingItem;
 import com.leclowndu93150.flightutils.items.MiningRingItem;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -17,7 +15,7 @@ public class ItemRegistry {
 
     public static final DeferredItem<Item> ANGEL_RING = ITEMS.register("angel_ring", () -> new AngelRingItem(new Item.Properties()));
 
-    public static final DeferredItem<Item> INERTIA_RING = ITEMS.register("inertia_ring", () -> new IntertiaRingItem(new Item.Properties()));
+    public static final DeferredItem<Item> INERTIA_RING = ITEMS.register("inertia_ring", () -> new InertiaRingItem(new Item.Properties()));
 
     public static final DeferredItem<Item> MINING_RING = ITEMS.register("mining_ring", () -> new MiningRingItem(new Item.Properties()));
 
