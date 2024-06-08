@@ -20,9 +20,7 @@ public class FlightUtilsMain
         CreativeTabRegistry.CREATIVE_MODE_TABS.register(modEventBus);
         ItemRegistry.ITEMS.register(modEventBus);
         modEventBus.addListener(AngelRingItem::registerCapabilities);
-
-        final IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
-        eventBus.addListener(this::setup);
+        modEventBus.addListener(this::setup);
     }
 
     private void setup(final FMLCommonSetupEvent evt) {
