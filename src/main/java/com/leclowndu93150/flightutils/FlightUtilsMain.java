@@ -1,5 +1,6 @@
 package com.leclowndu93150.flightutils;
 
+import com.leclowndu93150.flightutils.items.AngelRingCurioItem;
 import com.leclowndu93150.flightutils.items.AngelRingItem;
 import com.leclowndu93150.flightutils.items.InertiaRingItem;
 import com.leclowndu93150.flightutils.registry.CreativeTabRegistry;
@@ -11,24 +12,18 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import top.theillusivec4.curios.api.CuriosApi;
 
 @Mod(FlightUtilsMain.MODID)
-public class FlightUtilsMain
-{
+public class FlightUtilsMain {
     public static final String MODID = "flightutils";
 
-    public FlightUtilsMain(IEventBus modEventBus)
-    {
+    public FlightUtilsMain(IEventBus modEventBus) {
         CreativeTabRegistry.CREATIVE_MODE_TABS.register(modEventBus);
         ItemRegistry.ITEMS.register(modEventBus);
         modEventBus.addListener(AngelRingItem::registerCapabilities);
-        //modEventBus.addListener(this::setup);
+        modEventBus.addListener(FlightUtilsMain::setup);
     }
 
-    /*
-      * private void setup(final FMLCommonSetupEvent evt) {
-      * CuriosApi.registerCurio(ItemRegistry.ANGEL_RING.get(), new AngelRingItem(new Item.Properties()));
-      * CuriosApi.registerCurio(ItemRegistry.INERTIA_RING.get(), new InertiaRingItem(new Item.Properties()));
-      *CuriosApi.registerCurio(ItemRegistry.MINING_RING.get(), new AngelRingItem(new Item.Properties()));
-     }
-     */
+    private static void setup(final FMLCommonSetupEvent evt) {
+        CuriosApi.registerCurio(ItemRegistry.ANGEL_RING.get(), new AngelRingCurioItem());
+    }
 
 }

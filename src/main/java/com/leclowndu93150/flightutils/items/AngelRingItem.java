@@ -1,9 +1,13 @@
 package com.leclowndu93150.flightutils.items;
 
 import com.leclowndu93150.flightutils.registry.ItemRegistry;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import org.jetbrains.annotations.NotNull;
@@ -13,7 +17,7 @@ import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.type.capability.ICurio;
 import top.theillusivec4.curios.api.type.capability.ICurioItem;
 
-public class AngelRingItem extends Item implements ICurioItem {
+public class AngelRingItem extends Item {
 
     public AngelRingItem(Properties pProperties) {
         super(pProperties);
@@ -24,8 +28,8 @@ public class AngelRingItem extends Item implements ICurioItem {
         return 1;
     }
 
-    private static void startFlight(Player player){
-        if(!player.isCreative() && !player.isSpectator()){
+    private static void startFlight(Player player) {
+        if (!player.isCreative() && !player.isSpectator()) {
             player.getAbilities().mayfly = true;
             player.onUpdateAbilities();
         }
@@ -37,6 +41,13 @@ public class AngelRingItem extends Item implements ICurioItem {
             player.getAbilities().mayfly = false;
             player.onUpdateAbilities();
         }
+    }
+
+    @Override
+    public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pUsedHand) {
+        ItemStack itemStack = pPlayer.getMainHandItem();
+        pPlayer.sendSystemMessage(Component.literal(itemStack.getTags().toList().toString()));
+        return super.use(pLevel, pPlayer, pUsedHand);
     }
 
     public static void registerCapabilities(final RegisterCapabilitiesEvent evt) {
@@ -70,20 +81,20 @@ public class AngelRingItem extends Item implements ICurioItem {
 
                     @Override
                     public void onEquip(SlotContext slotContext, ItemStack prevStack) {
-                        if (slotContext.getWearer() instanceof Player)
-                            startFlight((Player) slotContext.getWearer());
+                        if (slotContext.entity() instanceof Player)
+                            startFlight((Player) slotContext.entity());
                     }
 
                     @Override
                     public void onUnequip(SlotContext slotContext, ItemStack newStack) {
-                        if (slotContext.getWearer() instanceof Player)
-                            stopFlight((Player) slotContext.getWearer());
+                        if (slotContext.entity() instanceof Player player)
+                            stopFlight(player);
                     }
 
-                }, ItemRegistry.ANGEL_RING.get()
+                },
+                ItemRegistry.ANGEL_RING.get()
         );
 
 
     }
-
 }
