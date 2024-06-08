@@ -4,7 +4,8 @@ import net.minecraft.world.item.Item;
 
 public class AngelRingItem extends Item {
 
-    public AngelRingItem() {
-        super(new Item.Properties());
+
+    public AngelRingItem(Properties pProperties) {
+        super(pProperties);
     }
 }

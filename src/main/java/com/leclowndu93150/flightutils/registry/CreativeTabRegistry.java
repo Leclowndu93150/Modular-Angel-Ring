@@ -8,7 +8,7 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 import static com.leclowndu93150.flightutils.FlightUtilsMain.MODID;
-import static com.leclowndu93150.flightutils.registry.ItemRegistry.ANGEL_RING;
+import static com.leclowndu93150.flightutils.registry.ItemRegistry.*;
 
 public class CreativeTabRegistry {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
@@ -19,6 +19,8 @@ public class CreativeTabRegistry {
             .icon(() -> ANGEL_RING.get().getDefaultInstance())
             .displayItems((parameters, output) -> {
                 output.accept(ANGEL_RING.get());
+                output.accept(INERTIA_RING.get());
+                output.accept(MINING_RING.get());
             }).build());
 
 }

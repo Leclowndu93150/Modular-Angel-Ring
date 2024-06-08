@@ -15,10 +15,10 @@ public class ItemRegistry {
 
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(MODID);
 
-    public static final DeferredItem<Item> ANGEL_RING = ITEMS.register("angel_ring", (ResourceLocation pProperties) -> new AngelRingItem());
+    public static final DeferredItem<Item> ANGEL_RING = ITEMS.register("angel_ring", () -> new AngelRingItem(new Item.Properties()));
 
-    public static final DeferredItem<Item> INERTIA_RING = ITEMS.register("inertia_ring", (ResourceLocation pProperties) -> new IntertiaRingItem());
+    public static final DeferredItem<Item> INERTIA_RING = ITEMS.register("inertia_ring", () -> new IntertiaRingItem(new Item.Properties()));
 
-    public static final DeferredItem<Item> MINING_RING = ITEMS.register("mining_ring", (ResourceLocation pProperties) -> new MiningRingItem());
+    public static final DeferredItem<Item> MINING_RING = ITEMS.register("mining_ring", () -> new MiningRingItem(new Item.Properties()));
 
 }
