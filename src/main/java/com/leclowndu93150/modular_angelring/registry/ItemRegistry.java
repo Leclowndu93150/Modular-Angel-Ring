@@ -1,11 +1,11 @@
-package com.leclowndu93150.flightutils.registry;
+package com.leclowndu93150.modular_angelring.registry;
 
-import com.leclowndu93150.flightutils.common.AngelRingItem;
+import com.leclowndu93150.modular_angelring.common.AngelRingItem;
 import net.minecraft.world.item.Item;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
-import static com.leclowndu93150.flightutils.FlightUtilsMain.MODID;
+import static com.leclowndu93150.modular_angelring.AngelRingMain.MODID;
 
 public class ItemRegistry {
 

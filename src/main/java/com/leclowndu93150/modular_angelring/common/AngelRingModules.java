@@ -1,6 +1,6 @@
-package com.leclowndu93150.flightutils.common;
+package com.leclowndu93150.modular_angelring.common;
 
-import com.leclowndu93150.flightutils.registry.DataComponentRegistry;
+import com.leclowndu93150.modular_angelring.registry.DataComponentRegistry;
 import net.minecraft.world.item.ItemStack;
 
 

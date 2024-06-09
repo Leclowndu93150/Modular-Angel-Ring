@@ -1,4 +1,4 @@
-package com.leclowndu93150.flightutils.registry;
+package com.leclowndu93150.modular_angelring.registry;
 
 import com.mojang.serialization.Codec;
 import net.minecraft.core.component.DataComponentType;
@@ -7,7 +7,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.function.Supplier;
 
-import static com.leclowndu93150.flightutils.FlightUtilsMain.MODID;
+import static com.leclowndu93150.modular_angelring.AngelRingMain.MODID;
 
 public class DataComponentRegistry {
 

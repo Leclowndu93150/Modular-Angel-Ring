@@ -1,15 +1,21 @@
-package com.leclowndu93150.flightutils.common;
+package com.leclowndu93150.modular_angelring.common;
 
-import com.leclowndu93150.flightutils.registry.ItemRegistry;
+import com.leclowndu93150.modular_angelring.registry.ItemRegistry;
+import com.leclowndu93150.modular_angelring.registry.KeyBindRegistry;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import org.jetbrains.annotations.NotNull;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.CuriosCapability;
 import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.type.capability.ICurio;
+
+import java.util.List;
 
 public class AngelRingItem extends Item {
 
@@ -86,5 +92,23 @@ public class AngelRingItem extends Item {
         );
 
 
+    }
+
+    @Override
+    public void appendHoverText(@NotNull ItemStack stack, @NotNull TooltipContext pContext, @NotNull List<Component> pTooltipComponents, @NotNull TooltipFlag pTooltipFlag) {
+        if (AngelRingModules.getMiningSpeedModifier(stack) && KeyBindRegistry.miningEnabled) {
+            pTooltipComponents.add(Component.literal("Mining Module: ").append("Enabled").withStyle(ChatFormatting.GREEN));
+        }
+        if (AngelRingModules.getInertiaModifier(stack) && KeyBindRegistry.inertiaEnabled){
+            pTooltipComponents.add(Component.literal("Inertia Module: ").append("Enabled").withStyle(ChatFormatting.GREEN));
+        }
+        if (AngelRingModules.getMiningSpeedModifier(stack) && !KeyBindRegistry.miningEnabled) {
+            pTooltipComponents.add(Component.literal("Mining Module: ").append("Disabled").withStyle(ChatFormatting.RED));
+        }
+        if (AngelRingModules.getInertiaModifier(stack) && !KeyBindRegistry.inertiaEnabled){
+            pTooltipComponents.add(Component.literal("Inertia Module: ").append("Disabled").withStyle(ChatFormatting.RED));
+        }
+
+        super.appendHoverText(stack, pContext, pTooltipComponents, pTooltipFlag);
     }
 }

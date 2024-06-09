@@ -1,4 +1,4 @@
-package com.leclowndu93150.flightutils.registry;
+package com.leclowndu93150.modular_angelring.registry;
 
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -7,14 +7,14 @@ import net.minecraft.world.item.CreativeModeTabs;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
-import static com.leclowndu93150.flightutils.FlightUtilsMain.MODID;
-import static com.leclowndu93150.flightutils.registry.ItemRegistry.*;
+import static com.leclowndu93150.modular_angelring.AngelRingMain.MODID;
+import static com.leclowndu93150.modular_angelring.registry.ItemRegistry.*;
 
 public class CreativeTabRegistry {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
 
-    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> UTILS_TAB = CREATIVE_MODE_TABS.register("example_tab", () -> CreativeModeTab.builder()
-            .title(Component.translatable("Flight Utilities")) //The language key for the title of your CreativeModeTab
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> UTILS_TAB = CREATIVE_MODE_TABS.register("angelring_tab", () -> CreativeModeTab.builder()
+            .title(Component.literal("Modular Angel Ring")) //The language key for the title of your CreativeModeTab
             .withTabsBefore(CreativeModeTabs.COMBAT)
             .icon(() -> ANGEL_RING.get().getDefaultInstance())
             .displayItems((parameters, output) -> {
