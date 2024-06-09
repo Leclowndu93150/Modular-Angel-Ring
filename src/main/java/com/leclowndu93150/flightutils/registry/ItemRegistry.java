@@ -1,6 +1,6 @@
 package com.leclowndu93150.flightutils.registry;
 
-import com.leclowndu93150.flightutils.items.AngelRingItem;
+import com.leclowndu93150.flightutils.common.AngelRingItem;
 import net.minecraft.world.item.Item;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -11,7 +11,7 @@ public class ItemRegistry {
 
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(MODID);
 
-    public static final DeferredItem<Item> ANGEL_RING = ITEMS.register("angel_ring", () -> new AngelRingItem(new Item.Properties()));
+    public static final DeferredItem<Item> ANGEL_RING = ITEMS.register("angel_ring", () -> new AngelRingItem(new Item.Properties().component(DataComponentRegistry.INERTIA_MODIFIER, false).component(DataComponentRegistry.MINING_MODIFIER, false)));
 
     public static final DeferredItem<Item> INERTIA_MODULE = ITEMS.registerSimpleItem("inertia_module");
 
