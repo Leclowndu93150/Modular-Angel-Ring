@@ -24,10 +24,10 @@ import static com.leclowndu93150.modular_angelring.AngelRingMain.MODID;
 public class KeyBindRegistry {
 
     public static final Lazy<KeyMapping> MINING_MODULE = Lazy.of(() ->new KeyMapping(
-            "key." + MODID + ".mining_module", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_M, "key.modular_angelring.misc"));
+            "Mining Module", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_M, "Modular Angel Ring"));
 
     public static final Lazy<KeyMapping> INERTIA_MODULE = Lazy.of(() ->new KeyMapping(
-            "key." + MODID + ".inertia_module", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_L, "key.modular_angelring.misc"));
+            "Inertia Module", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_L, "Modular Angel Ring"));
 
 
     @SubscribeEvent
