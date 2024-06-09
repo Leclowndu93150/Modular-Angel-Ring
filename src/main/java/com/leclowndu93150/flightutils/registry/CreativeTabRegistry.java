@@ -19,8 +19,8 @@ public class CreativeTabRegistry {
             .icon(() -> ANGEL_RING.get().getDefaultInstance())
             .displayItems((parameters, output) -> {
                 output.accept(ANGEL_RING.get());
-                output.accept(INERTIA_RING.get());
-                output.accept(MINING_RING.get());
+                output.accept(INERTIA_MODULE.get());
+                output.accept(MINING_MODULE.get());
             }).build());
 
 }
