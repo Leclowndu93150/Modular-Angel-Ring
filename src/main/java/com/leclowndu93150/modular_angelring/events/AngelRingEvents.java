@@ -25,7 +25,9 @@ public class AngelRingEvents {
 
     @SubscribeEvent(priority = EventPriority.LOW)
     public static void setRingBreakSpeed(PlayerEvent.BreakSpeed event) {
-            ItemStack angelRingStack = CuriosApi.getCuriosHelper().getCuriosHandler(event.getEntity()).get().findFirstCurio(ItemRegistry.ANGEL_RING.get()).get().stack();
+        Optional<SlotResult> slotResult = CuriosApi.getCuriosHelper().getCuriosHandler(event.getEntity()).flatMap(curiosHandler -> curiosHandler.findFirstCurio(ItemRegistry.ANGEL_RING.get()));
+        if (slotResult.isPresent()) {
+            ItemStack angelRingStack = slotResult.get().stack();
             float newDigSpeed = event.getOriginalSpeed();
             if (getMiningSpeedModifier(angelRingStack) && !event.getEntity().onGround() && KeyBindRegistry.miningEnabled) {
                 newDigSpeed *= 5f;
@@ -33,6 +35,7 @@ public class AngelRingEvents {
             if (newDigSpeed != event.getOriginalSpeed()) {
                 event.setNewSpeed(newDigSpeed);
             }
+        }
     }
 
     @SubscribeEvent(priority = EventPriority.LOW)
