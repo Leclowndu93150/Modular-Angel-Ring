@@ -40,15 +40,16 @@ public class AngelRingRendererRight extends RenderLayer<AbstractClientPlayer, Pl
         if (Minecraft.getInstance().player.getSkin().capeTexture() == null
                 && !player.isInvisible()
                 && player.isModelPartShown(PlayerModelPart.CAPE)
-                && isEquipped(player)
-                && player.getAbilities().flying) {
+                && isEquipped(player)) {
             matrixStack.pushPose();
             getParentModel().body.translateAndRotate(matrixStack);
             matrixStack.translate(-0.2, 0, 0.2);
             matrixStack.scale(0.9f, 0.9f, 0.9f);
             matrixStack.mulPose(new Quaternionf().rotateY((float) (Math.PI / 6)));
             matrixStack.scale(-1, -1, -1);
-            updateWingAngle();
+            if (player.getAbilities().flying){
+                updateWingAngle();
+            }
             matrixStack.mulPose(Axis.YN.rotationDegrees((float) angle));
             Minecraft.getInstance().getItemRenderer().renderStatic(player, new ItemStack(ItemRegistry.ANGEL_WINGS_RIGHT.get()), ItemDisplayContext.NONE, false, matrixStack, buffer, player.level(), 0xF000F0, OverlayTexture.NO_OVERLAY, player.getId());
             matrixStack.popPose();
