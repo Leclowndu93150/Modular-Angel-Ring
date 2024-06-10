@@ -44,7 +44,7 @@ public class AngelRingRendererRight extends RenderLayer<AbstractClientPlayer, Pl
                 && player.getAbilities().flying) {
             matrixStack.pushPose();
             getParentModel().body.translateAndRotate(matrixStack);
-            matrixStack.translate(-0.2, 0.2, 0.2);
+            matrixStack.translate(-0.2, 0, 0.2);
             matrixStack.scale(0.9f, 0.9f, 0.9f);
             matrixStack.mulPose(new Quaternionf().rotateY((float) (Math.PI / 6)));
             matrixStack.scale(-1, -1, -1);
