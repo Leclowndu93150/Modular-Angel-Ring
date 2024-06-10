@@ -19,4 +19,7 @@ public class ItemRegistry {
 
     public static final DeferredItem<Item> MINING_MODULE = ITEMS.register("mining_module",() -> new MiningModuleItem(new Item.Properties()));
 
+    public static final DeferredItem<Item> GOLD_RING = ITEMS.registerSimpleItem("gold_ring");
+
+    public static final DeferredItem<Item> ANGEL_WINGS = ITEMS.registerSimpleItem("angel_wings");
 }
