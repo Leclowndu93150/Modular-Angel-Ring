@@ -3,13 +3,20 @@ package com.leclowndu93150.modular_angelring.events;
 import com.leclowndu93150.modular_angelring.AngelRingMain;
 import com.leclowndu93150.modular_angelring.registry.ItemRegistry;
 import com.leclowndu93150.modular_angelring.registry.KeyBindRegistry;
+import com.leclowndu93150.modular_angelring.render.AngelRingRendererLeft;
+import com.leclowndu93150.modular_angelring.render.AngelRingRendererRight;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Options;
+import net.minecraft.client.renderer.entity.EntityRenderer;
+import net.minecraft.client.renderer.entity.player.PlayerRenderer;
+import net.minecraft.client.resources.PlayerSkin;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import top.theillusivec4.curios.api.CuriosApi;
@@ -22,7 +29,6 @@ import static com.leclowndu93150.modular_angelring.common.AngelRingModules.getMi
 
 @EventBusSubscriber(modid = AngelRingMain.MODID)
 public class AngelRingEvents {
-
     @SubscribeEvent(priority = EventPriority.LOW)
     public static void setRingBreakSpeed(PlayerEvent.BreakSpeed event) {
         Optional<SlotResult> slotResult = CuriosApi.getCuriosHelper().getCuriosHandler(event.getEntity()).flatMap(curiosHandler -> curiosHandler.findFirstCurio(ItemRegistry.ANGEL_RING.get()));
@@ -53,4 +59,5 @@ public class AngelRingEvents {
             }
         }
     }
+
 }
