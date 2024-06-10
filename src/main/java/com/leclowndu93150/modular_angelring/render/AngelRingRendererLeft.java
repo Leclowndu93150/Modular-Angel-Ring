@@ -36,7 +36,7 @@ public class AngelRingRendererLeft extends RenderLayer<AbstractClientPlayer, Pla
         if (Minecraft.getInstance().player.getSkin().capeTexture() == null && !player.isInvisible() && player.isModelPartShown(PlayerModelPart.CAPE) && isEquipped(player)) {
             matrixStack.pushPose();
             getParentModel().body.translateAndRotate(matrixStack);
-            matrixStack.translate(0.4, 0.2, 0.4);
+            matrixStack.translate(0.15, 0.2, 0.15);
             matrixStack.scale(-0.9f, 0.9f, 0.9f);
             matrixStack.mulPose(new Quaternionf().rotateY((float) (Math.PI / 6)));
             matrixStack.scale(-1, -1, -1);
