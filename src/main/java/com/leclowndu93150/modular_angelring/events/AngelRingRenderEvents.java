@@ -13,7 +13,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 
 @EventBusSubscriber(modid = AngelRingMain.MODID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
-public class AngelRingModEvents {
+public class AngelRingRenderEvents {
 
     @SubscribeEvent
     public static void registerEntityLayers(EntityRenderersEvent.AddLayers event) {
