@@ -22,7 +22,7 @@ import static com.leclowndu93150.modular_angelring.render.AngelRingCheck.isEquip
 
 @OnlyIn(Dist.CLIENT)
 public class AngelRingRendererLeft extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
-    private static final double FLAP_SPEED = 3.0; // Degrees per flap
+    private static final double FLAP_SPEED = 1.5; // Degrees per flap
     private static final double MAX_ANGLE = 25.0; // Maximum flap angle
     private double angle = 0.0; // Angle of rotation
     private boolean flappingUp = true; // Direction of flapping
@@ -33,10 +33,10 @@ public class AngelRingRendererLeft extends RenderLayer<AbstractClientPlayer, Pla
 
     @Override
     public void render(@NotNull PoseStack matrixStack, @NotNull MultiBufferSource buffer, int packedLight, AbstractClientPlayer player, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
-        if (Minecraft.getInstance().player.getSkin().capeTexture() == null && !player.isInvisible() && player.isModelPartShown(PlayerModelPart.CAPE) && isEquipped(player)) {
+        if (Minecraft.getInstance().player.getSkin().capeTexture() == null && !player.isInvisible() && player.isModelPartShown(PlayerModelPart.CAPE) && isEquipped(player) && player.getAbilities().flying) {
             matrixStack.pushPose();
             getParentModel().body.translateAndRotate(matrixStack);
-            matrixStack.translate(0.15, 0.2, 0.15);
+            matrixStack.translate(0.2, 0.2, 0.2);
             matrixStack.scale(-0.9f, 0.9f, 0.9f);
             matrixStack.mulPose(new Quaternionf().rotateY((float) (Math.PI / 6)));
             matrixStack.scale(-1, -1, -1);
