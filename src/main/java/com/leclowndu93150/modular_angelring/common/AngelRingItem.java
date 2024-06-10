@@ -10,7 +10,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import org.jetbrains.annotations.NotNull;
-import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.CuriosCapability;
 import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.type.capability.ICurio;
@@ -26,6 +25,11 @@ public class AngelRingItem extends Item {
     @Override
     public int getMaxStackSize(@NotNull ItemStack stack) {
         return 1;
+    }
+
+    @Override
+    public boolean isFoil(@NotNull ItemStack pStack) {
+        return true;
     }
 
     private static void startFlight(Player player) {
@@ -67,11 +71,6 @@ public class AngelRingItem extends Item {
                     @Override
                     public boolean canEquipFromUse(SlotContext slotContext) {
                         return true;
-                    }
-
-                    @Override
-                    public boolean canEquip(SlotContext slotContext) {
-                        return !CuriosApi.getCuriosHelper().findEquippedCurio(ItemRegistry.ANGEL_RING.get(), slotContext.entity()).isPresent();
                     }
 
                     @Override

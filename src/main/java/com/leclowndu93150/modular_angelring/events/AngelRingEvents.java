@@ -51,11 +51,6 @@ public class AngelRingEvents {
                         event.getEntity().setDeltaMovement(0, motion.y, 0);
                     }
             }
-            if (!opt.keyJump.isDown() && !opt.keyShift.isDown()) {
-                if (motion.y != 0) {
-                    event.getEntity().setDeltaMovement(motion.x, 0, motion.z);
-                }
-            }
         }
     }
 }
