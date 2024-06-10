@@ -40,18 +40,22 @@ public class AngelRingEvents {
 
     @SubscribeEvent(priority = EventPriority.LOW)
     public static void stopDrift(PlayerTickEvent.Pre event) {
-            Optional<SlotResult> slotResult = CuriosApi.getCuriosHelper().getCuriosHandler(event.getEntity()).flatMap(curiosHandler -> curiosHandler.findFirstCurio(ItemRegistry.ANGEL_RING.get()));
-            if (slotResult.isPresent()) {
-                ItemStack angelRingStack = slotResult.get().stack();
-                Vec3 motion = event.getEntity().getDeltaMovement();
-                if (event.getEntity().getAbilities().flying && getInertiaModifier(angelRingStack) && KeyBindRegistry.inertiaEnabled) {
-                    Options opt = Minecraft.getInstance().options;
-                    if (!opt.keyUp.isDown() && !opt.keyDown.isDown() && !opt.keyLeft.isDown() && !opt.keyRight.isDown()) {
-                        if (motion.x != 0 || motion.z != 0) {
-                            event.getEntity().setDeltaMovement(0, motion.y, 0);
-                        }
+        Optional<SlotResult> slotResult = CuriosApi.getCuriosHelper().getCuriosHandler(event.getEntity()).flatMap(curiosHandler -> curiosHandler.findFirstCurio(ItemRegistry.ANGEL_RING.get()));
+        if (slotResult.isPresent()) {
+            ItemStack angelRingStack = slotResult.get().stack();
+            Vec3 motion = event.getEntity().getDeltaMovement();
+            Options opt = Minecraft.getInstance().options;
+            if (event.getEntity().getAbilities().flying && getInertiaModifier(angelRingStack) && KeyBindRegistry.inertiaEnabled) {
+                if (!opt.keyUp.isDown() && !opt.keyDown.isDown() && !opt.keyLeft.isDown() && !opt.keyRight.isDown())
+                    if (motion.x != 0 || motion.z != 0) {
+                        event.getEntity().setDeltaMovement(0, motion.y, 0);
                     }
+            }
+            if (!opt.keyJump.isDown() && !opt.keyShift.isDown()) {
+                if (motion.y != 0) {
+                    event.getEntity().setDeltaMovement(motion.x, 0, motion.z);
                 }
             }
+        }
     }
 }

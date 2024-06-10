@@ -96,8 +96,8 @@ public class AngelRingItem extends Item {
 
     @Override
     public void appendHoverText(@NotNull ItemStack stack, @NotNull TooltipContext pContext, @NotNull List<Component> pTooltipComponents, @NotNull TooltipFlag pTooltipFlag) {
-        if (AngelRingModules.getMiningSpeedModifier(stack) && KeyBindRegistry.miningEnabled) {
-            pTooltipComponents.add(Component.literal("Mining Module:").append("Enabled").withStyle(ChatFormatting.GREEN));
+        if (AngelRingModules.getMiningSpeedModifier(stack) /* && KeyBindRegistry.miningEnabled */) {
+            pTooltipComponents.add(Component.literal("Mining Module")/*.append("Enabled")*/.withStyle(ChatFormatting.GRAY));
         }
         if (AngelRingModules.getInertiaModifier(stack) && KeyBindRegistry.inertiaEnabled){
             pTooltipComponents.add(Component.literal("Inertia Module: ").append("Enabled").withStyle(ChatFormatting.GREEN));
