@@ -15,6 +15,12 @@ public class MiningModuleItem extends Item {
     }
 
     @Override
+    public int getMaxStackSize(ItemStack stack) {
+        return 1;
+    }
+
+
+    @Override
     public void appendHoverText(@NotNull ItemStack pStack, @NotNull TooltipContext pContext, List<Component> pTooltipComponents, @NotNull TooltipFlag pTooltipFlag) {
         pTooltipComponents.add(Component.literal("Allows you to mine as fast as ground speed").withStyle(ChatFormatting.GRAY));
         super.appendHoverText(pStack, pContext, pTooltipComponents, pTooltipFlag);

@@ -23,6 +23,8 @@ public class CreativeTabRegistry {
                 output.accept(ANGEL_WINGS.get());
                 output.accept(INERTIA_MODULE.get());
                 output.accept(MINING_MODULE.get());
+                output.accept(SPEED_MODULE.get());
+                output.accept(BLANK_MODULE.get());
             }).build());
 
 }

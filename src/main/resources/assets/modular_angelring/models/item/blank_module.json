@@ -1,7 +1,7 @@
 {
     "parent": "minecraft:item/generated",
     "textures": {
-      "layer0": "modular_angelring:item/angel_wings_right"
+      "layer0": "modular_angelring:item/blank_module"
     }
   }
   

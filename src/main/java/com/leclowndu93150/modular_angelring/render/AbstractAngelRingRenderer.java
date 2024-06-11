@@ -61,7 +61,7 @@ public abstract class AbstractAngelRingRenderer extends RenderLayer<AbstractClie
             matrixStack.translate(0.5,0,0);
 
             //ItemRegistry.ANGEL_WINGS_RIGHT in both cases?
-            Minecraft.getInstance().getItemRenderer().renderStatic(player, new ItemStack(ItemRegistry.ANGEL_WINGS_RIGHT.get()), ItemDisplayContext.NONE, false, matrixStack, buffer, player.level(), 0xF000F0, OverlayTexture.NO_OVERLAY, player.getId());
+            Minecraft.getInstance().getItemRenderer().renderStatic(player, new ItemStack(ItemRegistry.ANGEL_WINGS_BOTH.get()), ItemDisplayContext.NONE, false, matrixStack, buffer, player.level(), 0xF000F0, OverlayTexture.NO_OVERLAY, player.getId());
             matrixStack.popPose();
         }
     }

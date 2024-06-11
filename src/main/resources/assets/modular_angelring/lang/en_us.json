@@ -4,5 +4,7 @@
   "item.modular_angelring.mining_module": "Mining Module",
     "curios.identifier.angel_ring": "Angel Ring",
   "item.modular_angelring.gold_ring": "Gold Ring",
-  "item.modular_angelring.angel_wings": "Angel's Wings"
+  "item.modular_angelring.angel_wings": "Angel's Wings",
+  "item.modular_angelring.speed_module": "Speed Module (W.I.P)",
+  "item.modular_angelring.blank_module": "Blank Module"
 }

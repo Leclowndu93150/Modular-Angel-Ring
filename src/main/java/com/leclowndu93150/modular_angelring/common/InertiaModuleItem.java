@@ -15,6 +15,11 @@ public class InertiaModuleItem extends Item {
     }
 
     @Override
+    public int getMaxStackSize(ItemStack stack) {
+        return 1;
+    }
+
+    @Override
     public void appendHoverText(@NotNull ItemStack pStack, @NotNull TooltipContext pContext, List<Component> pTooltipComponents, @NotNull TooltipFlag pTooltipFlag) {
         pTooltipComponents.add(Component.literal("Allows you to cancel flying inertia when stopping").withStyle(ChatFormatting.GRAY));
         super.appendHoverText(pStack, pContext, pTooltipComponents, pTooltipFlag);
