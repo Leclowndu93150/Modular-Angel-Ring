@@ -42,13 +42,17 @@ public abstract class AbstractAngelRingRenderer extends RenderLayer<AbstractClie
                 && isEquipped(player)) {
             matrixStack.pushPose();
             getParentModel().body.translateAndRotate(matrixStack);
+
+            // used to be +-0.2 0 0.2
             matrixStack.translate(dir * -0.5, 0.2, 0.35);
             matrixStack.scale((float)dir * 0.9f, 0.9f, 0.9f);
             matrixStack.mulPose(new Quaternionf().rotateY((float) (Math.PI / 6)));
             matrixStack.scale(-1, -1, -1);
 
             matrixStack.translate(-0.5,0,0);
-            updateWingAngle();
+            if (player.getAbilities().flying) {
+                updateWingAngle();
+            }
             matrixStack.mulPose(Axis.YN.rotationDegrees((float) angle));
             matrixStack.translate(0.5,0,0);
 
