@@ -20,7 +20,7 @@ import static com.leclowndu93150.modular_angelring.render.AngelRingCheck.isEquip
 
 public abstract class AbstractAngelRingRenderer extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
 
-    protected static final double FLAP_FREQUENCY = 0.5; // Degrees per flap
+    protected static final double FLAP_FREQUENCY = 0.5; // flaps per second
     protected static final double MAX_ANGLE = 25.0; // Maximum flap angle
 
     protected double angle; // Angle of rotation
@@ -33,7 +33,7 @@ public abstract class AbstractAngelRingRenderer extends RenderLayer<AbstractClie
     }
 
     @Override
-    public void render(@NotNull PoseStack matrixStack, @NotNull MultiBufferSource buffer, int packedLight, AbstractClientPlayer player, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void render(@NotNull PoseStack matrixStack, @NotNull MultiBufferSource buffer, int packedLight, @NotNull AbstractClientPlayer player, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
         assert Minecraft.getInstance().player != null;
 
         if (Minecraft.getInstance().player.getSkin().capeTexture() == null
@@ -44,10 +44,14 @@ public abstract class AbstractAngelRingRenderer extends RenderLayer<AbstractClie
             getParentModel().body.translateAndRotate(matrixStack);
 
             // used to be +-0.2 0 0.2
-            matrixStack.translate(dir * -0.5, 0.2, 0.35);
-            matrixStack.scale((float)dir * 0.9f, 0.9f, 0.9f);
-            matrixStack.mulPose(new Quaternionf().rotateY((float) (Math.PI / 6)));
-            matrixStack.scale(-1, -1, -1);
+            matrixStack.translate(dir * -0.5, 0.1, 0.35);
+            matrixStack.scale(0.9f, 0.9f, 0.9f);
+
+            matrixStack.mulPose(new Quaternionf().rotateXYZ(
+                    .0f,
+                    (float) ((Math.PI/2.f) - dir * (Math.PI/2.f - Math.PI /6.f)),
+                    (float) Math.PI
+            ));
 
             matrixStack.translate(-0.5,0,0);
             if (player.getAbilities().flying) {
@@ -63,6 +67,6 @@ public abstract class AbstractAngelRingRenderer extends RenderLayer<AbstractClie
     }
 
     private void updateWingAngle() {
-        angle = MAX_ANGLE * Math.sin(2*Math.PI * FLAP_FREQUENCY * (System.currentTimeMillis()/1000.));
+        this.angle = dir * MAX_ANGLE * Math.sin(2*Math.PI * FLAP_FREQUENCY * (System.currentTimeMillis()/1000.));
     }
 }
