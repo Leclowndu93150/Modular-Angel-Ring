@@ -1,6 +1,5 @@
 package com.leclowndu93150.modular_angelring.common;
 
-import com.leclowndu93150.modular_angelring.registry.ItemRegistry;
 import com.leclowndu93150.modular_angelring.registry.KeyBindRegistry;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -8,11 +7,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import org.jetbrains.annotations.NotNull;
-import top.theillusivec4.curios.api.CuriosCapability;
-import top.theillusivec4.curios.api.SlotContext;
-import top.theillusivec4.curios.api.type.capability.ICurio;
 
 import java.util.List;
 
@@ -47,50 +42,23 @@ public class AngelRingItem extends Item {
         }
     }
 
+    public void tickRing(ItemStack stack, Player player) {
+        if (stack.getItem() != this) return;
+        if (!player.getAbilities().mayfly) {
+                startFlight(player);
+            }
+    }
 
-
-    public static void registerCapabilities(final RegisterCapabilitiesEvent evt) {
-        evt.registerItem(
-                CuriosCapability.ITEM,
-                (stack, context) -> new ICurio() {
-
-                    @Override
-                    public ItemStack getStack() {
-                        return ItemRegistry.ANGEL_RING.toStack();
-                    }
-
-                    @Override
-                    public void curioTick(SlotContext slotContext) {
-                        if (slotContext.entity() instanceof Player player) {
-                            if (!player.getAbilities().mayfly) {
-                                startFlight(player);
-                            }
-                        }
-                    }
-
-                    @Override
-                    public boolean canEquipFromUse(SlotContext slotContext) {
-                        return true;
-                    }
-
-                    @Override
-                    public void onEquip(SlotContext slotContext, ItemStack prevStack) {
-                        if (slotContext.entity() instanceof Player)
-                            startFlight((Player) slotContext.entity());
-                    }
-
-                    @Override
-                    public void onUnequip(SlotContext slotContext, ItemStack newStack) {
-                        if (slotContext.entity() instanceof Player player)
-                            stopFlight(player);
-                    }
-
-                },
-                ItemRegistry.ANGEL_RING.get()
-
-        );
-
-
+    static Boolean canFlyWithRing = false;
+    public static void tickPlayer(Player player) {
+        for (ItemStack item : player.getInventory().items) {
+            if (item.getItem() instanceof AngelRingItem angelRing) {
+                angelRing.tickRing(item,player);
+            } else{
+                stopFlight(player);
+            }
+            break;
+        }
     }
 
     @Override

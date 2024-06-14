@@ -8,7 +8,6 @@ import net.neoforged.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class AngelRingRendererRight extends AbstractAngelRingRenderer {
-
     public AngelRingRendererRight(RenderLayerParent<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> playerModel) {
         super(playerModel, true);
     }
