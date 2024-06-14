@@ -11,10 +11,6 @@ group = mod_group_id
 
 repositories {
     mavenLocal()
-    maven {
-        name = "Illusive Soulworks maven"
-        url = "https://maven.theillusivec4.top/"
-    }
 }
 
 base {

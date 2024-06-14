@@ -49,7 +49,6 @@ public class AngelRingItem extends Item {
             }
     }
 
-    static Boolean canFlyWithRing = false;
     public static void tickPlayer(Player player) {
         for (ItemStack item : player.getInventory().items) {
             if (item.getItem() instanceof AngelRingItem angelRing) {

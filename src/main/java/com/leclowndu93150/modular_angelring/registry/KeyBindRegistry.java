@@ -9,34 +9,20 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.SmithingRecipe;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.InputEvent;
 import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.util.Lazy;
-import net.neoforged.neoforge.event.entity.player.PlayerEvent;
-import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import org.lwjgl.glfw.GLFW;
-import top.theillusivec4.curios.api.CuriosApi;
-import top.theillusivec4.curios.api.SlotResult;
-
-import java.awt.*;
-import java.util.Optional;
 
 import static com.leclowndu93150.modular_angelring.AngelRingMain.MODID;
 
 @EventBusSubscriber(modid = MODID, bus = EventBusSubscriber.Bus.MOD)
 public class KeyBindRegistry {
-    /*
-    public static final Lazy<KeyMapping> MINING_MODULE = Lazy.of(() ->new KeyMapping(
-            "Mining Module", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_M, "Modular Angel Ring"));
-     */
     public static final Lazy<KeyMapping> INERTIA_MODULE = Lazy.of(() ->new KeyMapping(
             "Inertia Module", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_L, "Modular Angel Ring"));
 
@@ -52,12 +38,12 @@ public class KeyBindRegistry {
     public static boolean inertiaEnabled = true;
     public static void onKey(InputEvent.Key event) {
         Player player = Minecraft.getInstance().player;
-        Optional<SlotResult> slotResult = CuriosApi.getCuriosHelper().getCuriosHandler(player).flatMap(curiosHandler -> curiosHandler.findFirstCurio(ItemRegistry.ANGEL_RING.get()));
-        if(slotResult.isPresent()){
-            ItemStack angelRingStack = slotResult.get().stack();
-            if (INERTIA_MODULE.get().consumeClick() && AngelRingModules.getInertiaModifier(angelRingStack)) {
-                inertiaEnabled = !inertiaEnabled;
-                if (player != null) {
+        if (player == null) return;
+        for (ItemStack item : player.getInventory().items) {
+            if(item.getItem() instanceof AngelRingItem) {
+                ItemStack angelRingStack = item.getItem().getDefaultInstance();
+                if (INERTIA_MODULE.get().consumeClick() && AngelRingModules.getInertiaModifier(angelRingStack)) {
+                    inertiaEnabled = !inertiaEnabled;
                     if (inertiaEnabled) {
                         player.displayClientMessage(Component.literal("Inertia Module: Enabled").withStyle(ChatFormatting.GREEN), true);
                         player.level().playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.NOTE_BLOCK_BELL.value(), SoundSource.PLAYERS, 0.4f, 0.01f);
@@ -68,6 +54,5 @@ public class KeyBindRegistry {
                 }
             }
         }
-
     }
 }
