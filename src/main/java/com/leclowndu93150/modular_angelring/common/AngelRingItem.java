@@ -7,8 +7,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.neoforged.neoforge.common.NeoForgeMod;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AngelRingItem extends Item {
@@ -29,34 +31,35 @@ public class AngelRingItem extends Item {
 
     private static void startFlight(Player player) {
         if (!player.isCreative() && !player.isSpectator()) {
-            player.getAbilities().mayfly = true;
-            player.onUpdateAbilities();
+            player.getAttribute(NeoForgeMod.CREATIVE_FLIGHT).setBaseValue(1);
         }
     }
 
     private static void stopFlight(Player player) {
         if (!player.isCreative() && !player.isSpectator()) {
-            player.getAbilities().flying = false;
-            player.getAbilities().mayfly = false;
-            player.onUpdateAbilities();
+            player.getAttribute(NeoForgeMod.CREATIVE_FLIGHT).setBaseValue(0);
         }
     }
 
     public void tickRing(ItemStack stack, Player player) {
-        if (stack.getItem() != this) return;
-        if (!player.getAbilities().mayfly) {
+        if (!(stack.getItem() instanceof AngelRingItem)) return;
+        if (player.getAttribute(NeoForgeMod.CREATIVE_FLIGHT).getBaseValue() != 1) {
                 startFlight(player);
             }
     }
 
     public static void tickPlayer(Player player) {
-        for (ItemStack item : player.getInventory().items) {
+        List<ItemStack> items = new ArrayList<>(player.getInventory().items);
+        boolean hasAngelRing = false;
+        for (ItemStack item : items) {
             if (item.getItem() instanceof AngelRingItem angelRing) {
-                angelRing.tickRing(item,player);
-            } else{
-                stopFlight(player);
+                angelRing.tickRing(item, player);
+                hasAngelRing = true;
+                break;
             }
-            break;
+        }
+        if (!hasAngelRing) {
+            stopFlight(player);
         }
     }
 
