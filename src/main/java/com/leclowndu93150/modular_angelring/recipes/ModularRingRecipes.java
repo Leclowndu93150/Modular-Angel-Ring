@@ -5,10 +5,8 @@ import com.leclowndu93150.modular_angelring.registry.DataComponentRegistry;
 import com.leclowndu93150.modular_angelring.registry.ItemRegistry;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.recipes.RecipeCategory;
-import net.minecraft.data.recipes.RecipeOutput;
-import net.minecraft.data.recipes.RecipeProvider;
-import net.minecraft.data.recipes.SmithingTransformRecipeBuilder;
+import net.minecraft.data.recipes.*;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -26,7 +24,9 @@ public class ModularRingRecipes extends RecipeProvider {
 
     @Override
     protected void buildRecipes(RecipeOutput pRecipeOutput) {
-        SmithingTransformRecipeBuilder.smithing(Ingredient.of(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE), Ingredient.of(ItemRegistry.ANGEL_RING), Ingredient.of(ItemRegistry.INERTIA_MODULE), RecipeCategory.MISC, ItemRegistry.ANGEL_RING.asItem())
+        ItemStack itemStack = ItemRegistry.ANGEL_RING.asItem().getDefaultInstance();
+        itemStack.set(DataComponentRegistry.INERTIA_MODIFIER, true);
+        AdvancedSmithingRecipeBuilder.smithing(Ingredient.of(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE), Ingredient.of(ItemRegistry.ANGEL_RING), Ingredient.of(ItemRegistry.INERTIA_MODULE), RecipeCategory.MISC, itemStack)
                 .unlocks("criteria", has(ItemRegistry.ANGEL_RING))
                 .save(pRecipeOutput, AngelRingMain.MODID+":smithing/inertia_modifier");
     }

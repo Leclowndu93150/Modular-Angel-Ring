@@ -7,6 +7,9 @@
     "item": "modular_angelring:angel_ring"
   },
   "result": {
+    "components": {
+      "modular_angelring:inertia_modifier": true
+    },
     "count": 1,
     "id": "modular_angelring:angel_ring"
   },
