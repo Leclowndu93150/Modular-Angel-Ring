@@ -23,35 +23,37 @@ public class AngelRingEvents {
     public static void setRingBreakSpeed(PlayerEvent.BreakSpeed event) {
         Player player = event.getEntity();
         for (ItemStack item : player.getInventory().items) {
-                if(item.getItem() instanceof AngelRingItem){
-                    ItemStack angelRingStack = item.getItem().getDefaultInstance();
-                    float newDigSpeed = event.getOriginalSpeed();
-                    if (getMiningSpeedModifier(angelRingStack) && !event.getEntity().onGround() && KeyBindRegistry.miningEnabled) {
-                        newDigSpeed *= 5f;
-                    }
-                    if (newDigSpeed != event.getOriginalSpeed()) {
-                        event.setNewSpeed(newDigSpeed);
-                    }
+            if (item.getItem() instanceof AngelRingItem) {
+                float newDigSpeed = event.getOriginalSpeed();
+                if (getMiningSpeedModifier(item) && !player.onGround() && KeyBindRegistry.miningEnabled) {
+                    newDigSpeed *= 5f;
                 }
+                if (newDigSpeed != event.getOriginalSpeed()) {
+                    event.setNewSpeed(newDigSpeed);
+                }
+                break;
+            }
         }
     }
+
     @SubscribeEvent(priority = EventPriority.LOW)
     public static void stopDrift(PlayerTickEvent.Pre event) {
         Player player = event.getEntity();
         for (ItemStack item : player.getInventory().items) {
-            if(item.getItem() instanceof AngelRingItem) {
-                ItemStack angelRingStack = item.getItem().getDefaultInstance();
-                Vec3 motion = event.getEntity().getDeltaMovement();
+            if (item.getItem() instanceof AngelRingItem) {
+                Vec3 motion = player.getDeltaMovement();
                 Options opt = Minecraft.getInstance().options;
-                if (event.getEntity().getAbilities().flying && getInertiaModifier(angelRingStack) && KeyBindRegistry.inertiaEnabled) {
-                    if (!opt.keyUp.isDown() && !opt.keyDown.isDown() && !opt.keyLeft.isDown() && !opt.keyRight.isDown())
+                if (player.getAbilities().flying && getInertiaModifier(item) && KeyBindRegistry.inertiaEnabled) {
+                    if (!opt.keyUp.isDown() && !opt.keyDown.isDown() && !opt.keyLeft.isDown() && !opt.keyRight.isDown()) {
                         if (motion.x != 0 || motion.z != 0) {
-                            event.getEntity().setDeltaMovement(0, motion.y, 0);
+                            player.setDeltaMovement(0, motion.y, 0);
                         }
+                    }
+                }
+                break;
             }
         }
-            }
-        }
+    }
 
     @SubscribeEvent(priority = EventPriority.LOW)
     public static void onPlayerTick(PlayerTickEvent.Pre event) {

@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "item": "minecraft:sugar"
+  },
+  "base": {
+    "item": "modular_angelring:blank_module"
+  },
+  "result": {
+    "count": 1,
+    "id": "modular_angelring:speed_module"
+  },
+  "template": []
+}

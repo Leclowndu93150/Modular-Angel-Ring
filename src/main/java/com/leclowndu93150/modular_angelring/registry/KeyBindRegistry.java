@@ -36,13 +36,14 @@ public class KeyBindRegistry {
 
     public static boolean miningEnabled = true;
     public static boolean inertiaEnabled = true;
+
     public static void onKey(InputEvent.Key event) {
         Player player = Minecraft.getInstance().player;
         if (player == null) return;
+
         for (ItemStack item : player.getInventory().items) {
-            if(item.getItem() instanceof AngelRingItem) {
-                ItemStack angelRingStack = item.getItem().getDefaultInstance();
-                if (INERTIA_MODULE.get().consumeClick() && AngelRingModules.getInertiaModifier(angelRingStack)) {
+            if (item.getItem() instanceof AngelRingItem) {
+                if (INERTIA_MODULE.get().consumeClick() && AngelRingModules.getInertiaModifier(item)) {
                     inertiaEnabled = !inertiaEnabled;
                     if (inertiaEnabled) {
                         player.displayClientMessage(Component.literal("Inertia Module: Enabled").withStyle(ChatFormatting.GREEN), true);
@@ -51,6 +52,7 @@ public class KeyBindRegistry {
                         player.displayClientMessage(Component.literal("Inertia Module: Disabled").withStyle(ChatFormatting.RED), true);
                         player.level().playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.NOTE_BLOCK_BELL.value(), SoundSource.PLAYERS, 0.4f, 0.09f);
                     }
+                    break;
                 }
             }
         }

@@ -14,6 +14,6 @@
     "id": "modular_angelring:angel_ring"
   },
   "template": {
-    "item": "minecraft:netherite_upgrade_smithing_template"
+    "item": "modular_angelring:angel_ring_upgrade_smithing_template"
   }
 }

@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "modular_angelring:angel_wings"
+    },
+    {
+      "item": "modular_angelring:gold_ring"
+    }
+  ],
+  "result": {
+    "id": "modular_angelring:angel_ring"
+  }
+}

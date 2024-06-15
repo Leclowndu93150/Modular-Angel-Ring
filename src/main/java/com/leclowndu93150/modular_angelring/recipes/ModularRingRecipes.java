@@ -9,6 +9,7 @@ import net.minecraft.data.recipes.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.SmithingTransformRecipe;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
@@ -24,11 +25,31 @@ public class ModularRingRecipes extends RecipeProvider {
 
     @Override
     protected void buildRecipes(RecipeOutput pRecipeOutput) {
-        ItemStack itemStack = ItemRegistry.ANGEL_RING.asItem().getDefaultInstance();
-        itemStack.set(DataComponentRegistry.INERTIA_MODIFIER, true);
-        AdvancedSmithingRecipeBuilder.smithing(Ingredient.of(Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE), Ingredient.of(ItemRegistry.ANGEL_RING), Ingredient.of(ItemRegistry.INERTIA_MODULE), RecipeCategory.MISC, itemStack)
+        ItemStack itemStackInertia = ItemRegistry.ANGEL_RING.asItem().getDefaultInstance();
+        itemStackInertia.set(DataComponentRegistry.INERTIA_MODIFIER, true);
+
+        AdvancedSmithingRecipeBuilder.smithing(Ingredient.of(ItemRegistry.UPGRADE_TEMPLATE), Ingredient.of(ItemRegistry.ANGEL_RING), Ingredient.of(ItemRegistry.INERTIA_MODULE), RecipeCategory.MISC, itemStackInertia)
                 .unlocks("criteria", has(ItemRegistry.ANGEL_RING))
                 .save(pRecipeOutput, AngelRingMain.MODID+":smithing/inertia_modifier");
+
+        ItemStack itemStackMining = ItemRegistry.ANGEL_RING.asItem().getDefaultInstance();
+        itemStackMining.set(DataComponentRegistry.MINING_MODIFIER, true);
+
+        AdvancedSmithingRecipeBuilder.smithing(Ingredient.of(ItemRegistry.UPGRADE_TEMPLATE), Ingredient.of(ItemRegistry.ANGEL_RING), Ingredient.of(ItemRegistry.MINING_MODULE), RecipeCategory.MISC, itemStackMining)
+                .unlocks("criteria", has(ItemRegistry.ANGEL_RING))
+                .save(pRecipeOutput, AngelRingMain.MODID+":smithing/mining_modifier");
+
+        SmithingTransformRecipeBuilder.smithing(Ingredient.EMPTY, Ingredient.of(ItemRegistry.BLANK_MODULE), Ingredient.of(Items.DIAMOND_PICKAXE), RecipeCategory.MISC, ItemRegistry.MINING_MODULE.asItem())
+                .unlocks("criteria", has(ItemRegistry.ANGEL_RING))
+                .save(pRecipeOutput, AngelRingMain.MODID+":smithing/mining_module");
+
+        SmithingTransformRecipeBuilder.smithing(Ingredient.EMPTY, Ingredient.of(ItemRegistry.BLANK_MODULE), Ingredient.of(Items.PHANTOM_MEMBRANE), RecipeCategory.MISC, ItemRegistry.INERTIA_MODULE.asItem())
+                .unlocks("criteria", has(ItemRegistry.ANGEL_RING))
+                .save(pRecipeOutput, AngelRingMain.MODID+":smithing/inertia_module");
+
+        SmithingTransformRecipeBuilder.smithing(Ingredient.EMPTY, Ingredient.of(ItemRegistry.BLANK_MODULE), Ingredient.of(Items.SUGAR), RecipeCategory.MISC, ItemRegistry.SPEED_MODULE.asItem())
+                .unlocks("criteria", has(ItemRegistry.ANGEL_RING))
+                .save(pRecipeOutput, AngelRingMain.MODID+":smithing/speed_module");
     }
 
     @EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD, modid = AngelRingMain.MODID)

@@ -21,6 +21,8 @@ public class ItemRegistry {
 
     public static final DeferredItem<Item> SPEED_MODULE = ITEMS.registerSimpleItem("speed_module");
 
+    public static final DeferredItem<Item> UPGRADE_TEMPLATE = ITEMS.registerSimpleItem("angel_ring_upgrade_smithing_template");
+
     public static final DeferredItem<Item> GOLD_RING = ITEMS.registerSimpleItem("gold_ring");
 
     public static final DeferredItem<Item> BLANK_MODULE = ITEMS.registerSimpleItem("blank_module");
