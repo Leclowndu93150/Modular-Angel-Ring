@@ -58,4 +58,5 @@ public class AngelRingEvents {
         AngelRingItem.tickPlayer(event.getEntity());
     }
 
+
     }

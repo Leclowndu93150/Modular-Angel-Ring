@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "item": "modular_angelring:inertia_module"
+  },
+  "base": {
+    "item": "modular_angelring:angel_ring"
+  },
+  "result": {
+    "count": 1,
+    "id": "modular_angelring:angel_ring"
+  },
+  "template": {
+    "item": "minecraft:netherite_upgrade_smithing_template"
+  }
+}

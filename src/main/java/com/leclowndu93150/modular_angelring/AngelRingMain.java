@@ -14,8 +14,6 @@ public class AngelRingMain {
         CreativeTabRegistry.CREATIVE_MODE_TABS.register(modEventBus);
         ItemRegistry.ITEMS.register(modEventBus);
         DataComponentRegistry.COMPONENTS.register(modEventBus);
-        //modEventBus.addListener(AngelRingEvents::onPlayerTick);
     }
-
-
+    
 }
