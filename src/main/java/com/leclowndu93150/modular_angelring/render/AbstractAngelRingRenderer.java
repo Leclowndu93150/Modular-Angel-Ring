@@ -35,7 +35,6 @@ public abstract class AbstractAngelRingRenderer extends RenderLayer<AbstractClie
     @Override
     public void render(@NotNull PoseStack matrixStack, @NotNull MultiBufferSource buffer, int packedLight, @NotNull AbstractClientPlayer player, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
         assert Minecraft.getInstance().player != null;
-
         if (!player.isInvisible() && isEquipped(player)) {
             matrixStack.pushPose();
             getParentModel().body.translateAndRotate(matrixStack);
