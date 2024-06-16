@@ -2,10 +2,12 @@ package com.leclowndu93150.modular_angelring.events;
 
 import com.leclowndu93150.modular_angelring.AngelRingMain;
 import com.leclowndu93150.modular_angelring.common.AngelRingItem;
+import com.leclowndu93150.modular_angelring.registry.ItemRegistry;
 import com.leclowndu93150.modular_angelring.registry.KeyBindRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Options;
 import net.minecraft.network.chat.ClickEvent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
@@ -16,8 +18,7 @@ import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
-import static com.leclowndu93150.modular_angelring.common.AngelRingModules.getInertiaModifier;
-import static com.leclowndu93150.modular_angelring.common.AngelRingModules.getMiningSpeedModifier;
+import static com.leclowndu93150.modular_angelring.common.AngelRingModules.*;
 
 @EventBusSubscriber(modid = AngelRingMain.MODID)
 public class AngelRingEvents {
@@ -57,11 +58,19 @@ public class AngelRingEvents {
         }
     }
 
+    /*
     @SubscribeEvent(priority = EventPriority.LOW)
-    public static void newFlightSpeed(PlayerInteractEvent event) {
+    public static void newFlightSpeed(PlayerInteractEvent.RightClickItem event) {
+        float defaultFlySpeed = 0.02f;
         Player player = event.getEntity();
-        System.out.println(event.getEntity().defaultFlySpeed);
+        if (player.getMainHandItem() == ItemRegistry.ANGEL_RING.toStack()) {
+            if(getSpeedModifier(player.getMainHandItem())) {
+                player.getAbilities().setFlyingSpeed(defaultFlySpeed + 0.02f);
+                player.sendSystemMessage(Component.literal(String.valueOf(player.getAbilities().getFlyingSpeed())));
+            }
+        }
     }
+     */
 
     @SubscribeEvent(priority = EventPriority.LOW)
     public static void onPlayerTick(PlayerTickEvent.Pre event) {
