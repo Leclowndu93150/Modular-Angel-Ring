@@ -5,6 +5,7 @@ import com.leclowndu93150.modular_angelring.common.AngelRingItem;
 import com.leclowndu93150.modular_angelring.registry.KeyBindRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Options;
+import net.minecraft.network.chat.ClickEvent;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
@@ -12,6 +13,7 @@ import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
 import static com.leclowndu93150.modular_angelring.common.AngelRingModules.getInertiaModifier;
@@ -53,6 +55,12 @@ public class AngelRingEvents {
                 break;
             }
         }
+    }
+
+    @SubscribeEvent(priority = EventPriority.LOW)
+    public static void newFlightSpeed(PlayerInteractEvent event) {
+        Player player = event.getEntity();
+        System.out.println(event.getEntity().defaultFlySpeed);
     }
 
     @SubscribeEvent(priority = EventPriority.LOW)

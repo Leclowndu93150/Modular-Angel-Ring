@@ -96,6 +96,11 @@ description='''${mod_description}'''
     side="BOTH"
 
 
+[[accessTransformers]]
+## The file is relative to the output directory of the resources, or the root path inside the jar when compiled
+## The 'resources' directory represents the root output directory of the resources
+file="META-INF/accesstransformer.cfg
+
 
 # Features are specific properties of the game environment, that you may want to declare you require. This example declares
 # that your mod requires GL version 3.2 or higher. Other features will be added. They are side aware so declaring this won't
