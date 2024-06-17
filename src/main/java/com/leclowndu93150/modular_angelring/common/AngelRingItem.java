@@ -1,5 +1,6 @@
 package com.leclowndu93150.modular_angelring.common;
 
+import com.leclowndu93150.modular_angelring.registry.ItemRegistry;
 import com.leclowndu93150.modular_angelring.registry.KeyBindRegistry;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -9,9 +10,12 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.neoforged.neoforge.common.NeoForgeMod;
 import org.jetbrains.annotations.NotNull;
+import top.theillusivec4.curios.api.CuriosApi;
+import top.theillusivec4.curios.api.SlotResult;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class AngelRingItem extends Item {
 
@@ -41,7 +45,7 @@ public class AngelRingItem extends Item {
         }
     }
 
-    public void tickRing(ItemStack stack, Player player) {
+    public static void tickRing(ItemStack stack, Player player) {
         if (!(stack.getItem() instanceof AngelRingItem)) return;
         if (player.getAttribute(NeoForgeMod.CREATIVE_FLIGHT).getBaseValue() != 1) {
                 startFlight(player);
@@ -49,16 +53,12 @@ public class AngelRingItem extends Item {
     }
 
     public static void tickPlayer(Player player) {
-        List<ItemStack> items = new ArrayList<>(player.getInventory().items);
-        boolean hasAngelRing = false;
-        for (ItemStack item : items) {
-            if (item.getItem() instanceof AngelRingItem angelRing) {
-                angelRing.tickRing(item, player);
-                hasAngelRing = true;
-                break;
+        Optional<SlotResult> slotResult = CuriosApi.getCuriosHelper().getCuriosHandler(player).flatMap(curiosHandler -> curiosHandler.findFirstCurio(ItemRegistry.ANGEL_RING.get()));
+        if (slotResult.isPresent()) {
+            ItemStack angelRingStack = slotResult.get().stack();
+                tickRing(angelRingStack, player);
             }
-        }
-        if (!hasAngelRing) {
+        if (slotResult.isEmpty()) {
             stopFlight(player);
         }
     }

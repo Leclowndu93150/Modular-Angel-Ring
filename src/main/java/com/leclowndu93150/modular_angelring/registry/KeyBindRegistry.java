@@ -18,6 +18,10 @@ import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.util.Lazy;
 import org.lwjgl.glfw.GLFW;
+import top.theillusivec4.curios.api.CuriosApi;
+import top.theillusivec4.curios.api.SlotResult;
+
+import java.util.Optional;
 
 import static com.leclowndu93150.modular_angelring.AngelRingMain.MODID;
 
@@ -40,10 +44,10 @@ public class KeyBindRegistry {
     public static void onKey(InputEvent.Key event) {
         Player player = Minecraft.getInstance().player;
         if (player == null) return;
-
-        for (ItemStack item : player.getInventory().items) {
-            if (item.getItem() instanceof AngelRingItem) {
-                if (INERTIA_MODULE.get().consumeClick() && AngelRingModules.getInertiaModifier(item)) {
+        Optional<SlotResult> slotResult = CuriosApi.getCuriosHelper().getCuriosHandler(player).flatMap(curiosHandler -> curiosHandler.findFirstCurio(ItemRegistry.ANGEL_RING.get()));
+            if (slotResult.isPresent()) {
+                ItemStack angelRingStack = slotResult.get().stack();
+                if (INERTIA_MODULE.get().consumeClick() && AngelRingModules.getInertiaModifier(angelRingStack)) {
                     inertiaEnabled = !inertiaEnabled;
                     if (inertiaEnabled) {
                         player.displayClientMessage(Component.literal("Inertia Module: Enabled").withStyle(ChatFormatting.GREEN), true);
@@ -52,9 +56,8 @@ public class KeyBindRegistry {
                         player.displayClientMessage(Component.literal("Inertia Module: Disabled").withStyle(ChatFormatting.RED), true);
                         player.level().playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.NOTE_BLOCK_BELL.value(), SoundSource.PLAYERS, 0.4f, 0.09f);
                     }
-                    break;
                 }
             }
-        }
+
     }
 }
