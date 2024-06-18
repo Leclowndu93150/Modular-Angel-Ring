@@ -29,7 +29,7 @@ public class AngelRingEvents {
     @SubscribeEvent(priority = EventPriority.LOW)
     public static void setRingBreakSpeed(PlayerEvent.BreakSpeed event) {
         Player player = event.getEntity();
-        Optional<SlotResult> slotResult = CuriosApi.getCuriosHelper().getCuriosHandler(player).flatMap(curiosHandler -> curiosHandler.findFirstCurio(ItemRegistry.ANGEL_RING.get()));
+        Optional<SlotResult> slotResult = CuriosApi.getCuriosInventory(player).flatMap(handler -> handler.findFirstCurio(ItemRegistry.ANGEL_RING.get()));
             if (slotResult.isPresent()) {
                 ItemStack angelRingStack = slotResult.get().stack();
                 float newDigSpeed = event.getOriginalSpeed();
@@ -45,7 +45,7 @@ public class AngelRingEvents {
     @SubscribeEvent(priority = EventPriority.LOW)
     public static void stopDrift(PlayerTickEvent.Pre event) {
         Player player = event.getEntity();
-        Optional<SlotResult> slotResult = CuriosApi.getCuriosHelper().getCuriosHandler(player).flatMap(curiosHandler -> curiosHandler.findFirstCurio(ItemRegistry.ANGEL_RING.get()));
+        Optional<SlotResult> slotResult = CuriosApi.getCuriosInventory(player).flatMap(handler -> handler.findFirstCurio(ItemRegistry.ANGEL_RING.get()));
         if (slotResult.isPresent()) {
             ItemStack angelRingStack = slotResult.get().stack();
                 Vec3 motion = player.getDeltaMovement();

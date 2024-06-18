@@ -80,7 +80,7 @@ configurations {
 
 dependencies {
     implementation "net.neoforged:neoforge:${neo_version}"
-    implementation "curse.maven:curios-1037991:5434184"
+    implementation "curse.maven:curios-1037991:5441959"
 }
 
 

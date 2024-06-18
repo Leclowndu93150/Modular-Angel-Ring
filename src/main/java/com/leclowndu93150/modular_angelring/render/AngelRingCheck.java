@@ -6,7 +6,7 @@ import top.theillusivec4.curios.api.CuriosApi;
 
 public class AngelRingCheck {
     public static boolean isBaseEquipped(AbstractClientPlayer playerEntity) {
-        return CuriosApi.getCuriosHelper().findEquippedCurio(ItemRegistry.ANGEL_RING.get(), playerEntity).isPresent();
+        return CuriosApi.getCuriosInventory(playerEntity).flatMap(handler -> handler.findFirstCurio(ItemRegistry.ANGEL_RING.get())).isPresent();
     }
 
     public static boolean isEquipped(AbstractClientPlayer playerEntity) {

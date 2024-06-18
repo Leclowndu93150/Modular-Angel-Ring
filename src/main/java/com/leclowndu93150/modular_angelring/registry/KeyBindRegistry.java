@@ -44,7 +44,7 @@ public class KeyBindRegistry {
     public static void onKey(InputEvent.Key event) {
         Player player = Minecraft.getInstance().player;
         if (player == null) return;
-        Optional<SlotResult> slotResult = CuriosApi.getCuriosHelper().getCuriosHandler(player).flatMap(curiosHandler -> curiosHandler.findFirstCurio(ItemRegistry.ANGEL_RING.get()));
+        Optional<SlotResult> slotResult = CuriosApi.getCuriosInventory(player).flatMap(handler -> handler.findFirstCurio(ItemRegistry.ANGEL_RING.get()));
             if (slotResult.isPresent()) {
                 ItemStack angelRingStack = slotResult.get().stack();
                 if (INERTIA_MODULE.get().consumeClick() && AngelRingModules.getInertiaModifier(angelRingStack)) {

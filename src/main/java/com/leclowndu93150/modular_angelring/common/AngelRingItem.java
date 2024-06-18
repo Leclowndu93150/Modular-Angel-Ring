@@ -53,7 +53,7 @@ public class AngelRingItem extends Item {
     }
 
     public static void tickPlayer(Player player) {
-        Optional<SlotResult> slotResult = CuriosApi.getCuriosHelper().getCuriosHandler(player).flatMap(curiosHandler -> curiosHandler.findFirstCurio(ItemRegistry.ANGEL_RING.get()));
+        Optional<SlotResult> slotResult = CuriosApi.getCuriosInventory(player).flatMap(handler -> handler.findFirstCurio(ItemRegistry.ANGEL_RING.get()));
         if (slotResult.isPresent()) {
             ItemStack angelRingStack = slotResult.get().stack();
                 tickRing(angelRingStack, player);
