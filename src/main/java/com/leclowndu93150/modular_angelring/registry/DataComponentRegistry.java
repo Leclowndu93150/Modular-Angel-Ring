@@ -19,6 +19,6 @@ public class DataComponentRegistry {
     public static final Supplier<DataComponentType<Boolean>> MINING_MODIFIER = COMPONENTS.registerComponentType("mining_modifier",
             builder -> builder.persistent(Codec.BOOL).networkSynchronized(ByteBufCodecs.BOOL));
 
-    public static final Supplier<DataComponentType<Boolean>> SPEED_MODIFIER = COMPONENTS.registerComponentType("speed_modifier",
-            builder -> builder.persistent(Codec.BOOL).networkSynchronized(ByteBufCodecs.BOOL));
+    public static final Supplier<DataComponentType<Float>> SPEED_MODIFIER = COMPONENTS.registerComponentType("speed_modifier",
+            builder -> builder.persistent(Codec.FLOAT).networkSynchronized(ByteBufCodecs.FLOAT));
 }
