@@ -17,15 +17,14 @@ import org.joml.Quaternionf;
 
 import static com.leclowndu93150.modular_angelring.render.AngelRingCheck.isEquipped;
 
-public abstract class AbstractAngelRingRenderer extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
-
+public class AngelRingRenderer extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
     protected static final double FLAP_FREQUENCY = 0.5; // flaps per second
     protected static final double MAX_ANGLE = 25.0; // Maximum flap angle
 
     protected double angle; // Angle of rotation
     private final double dir; //-1 or 1, depending on wing side
 
-    public AbstractAngelRingRenderer(RenderLayerParent<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> playerModel, boolean isRightWing) {
+    public AngelRingRenderer(RenderLayerParent<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> playerModel, boolean isRightWing) {
         super(playerModel);
         this.angle = 0.;
         this.dir = isRightWing ? 1. : -1.;
