@@ -2,13 +2,19 @@ package com.leclowndu93150.modular_angelring.events;
 
 import com.leclowndu93150.modular_angelring.AngelRingMain;
 import com.leclowndu93150.modular_angelring.common.AngelRingItem;
+import com.leclowndu93150.modular_angelring.registry.DataComponentRegistry;
 import com.leclowndu93150.modular_angelring.registry.ItemRegistry;
 import com.leclowndu93150.modular_angelring.registry.KeyBindRegistry;
+import com.leclowndu93150.modular_angelring.utils.FlightSpeedPercentage;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Options;
 import net.minecraft.network.chat.ClickEvent;
 import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.EventPriority;
@@ -60,19 +66,43 @@ public class AngelRingEvents {
         }
     }
 
-    /*
+
+
     @SubscribeEvent(priority = EventPriority.LOW)
     public static void newFlightSpeed(PlayerInteractEvent.RightClickItem event) {
-        float defaultFlySpeed = 0.02f;
+        final float MAX_FLY_SPEED = 0.06F;
+        final float SPEED_INCREMENT = 0.002F;
+        final float defaultFlySpeed = 0.02f;
         Player player = event.getEntity();
-        if (player.getMainHandItem() == ItemRegistry.ANGEL_RING.toStack()) {
-            if(getSpeedModifier(player.getMainHandItem())) {
-                player.getAbilities().setFlyingSpeed(defaultFlySpeed + 0.02f);
-                player.sendSystemMessage(Component.literal(String.valueOf(player.getAbilities().getFlyingSpeed())));
+        ItemStack item = player.getMainHandItem();
+
+        if (item.is(ItemRegistry.ANGEL_RING) && item.has(DataComponentRegistry.SPEED_MODIFIER)) {
+            float currentFlySpeed = getSpeedModifier(item);
+
+            if (currentFlySpeed < MAX_FLY_SPEED) {
+                currentFlySpeed = Math.min(currentFlySpeed + SPEED_INCREMENT, MAX_FLY_SPEED); // Ensure it doesn't exceed the max
+                setSpeedModifier(item, currentFlySpeed);
+
+                int percentage = FlightSpeedPercentage.speedToPercentage(currentFlySpeed);
+                player.displayClientMessage(Component.literal("Speed: ")
+                        .append(String.valueOf(percentage))
+                        .append("%")
+                        .withStyle(ChatFormatting.WHITE), true);
+
+                player.level().playSound(player, player.getX(), player.getY(), player.getZ(),
+                        SoundEvents.NOTE_BLOCK_BELL.value(), SoundSource.PLAYERS, 0.4f, 0.01f);
+            }
+        }
+        Optional<SlotResult> slotResult = CuriosApi.getCuriosInventory(player).flatMap(handler -> handler.findFirstCurio(ItemRegistry.ANGEL_RING.get()));
+        if(slotResult.isPresent()) {
+            ItemStack angelRingStack = slotResult.get().stack();
+            if(angelRingStack.has(DataComponentRegistry.SPEED_MODIFIER) && player.getAbilities().flying && !player.isCreative() && !player.isSpectator() && (player.getAbilities().getFlyingSpeed() != getSpeedModifier(angelRingStack))){
+                player.getAbilities().setFlyingSpeed(getSpeedModifier(angelRingStack));
+            }else if (!angelRingStack.has(DataComponentRegistry.SPEED_MODIFIER)){
+                player.getAbilities().setFlyingSpeed(defaultFlySpeed);
             }
         }
     }
-     */
 
     @SubscribeEvent(priority = EventPriority.LOW)
     public static void onPlayerTick(PlayerTickEvent.Pre event) {

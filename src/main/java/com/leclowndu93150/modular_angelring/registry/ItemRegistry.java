@@ -3,6 +3,7 @@ package com.leclowndu93150.modular_angelring.registry;
 import com.leclowndu93150.modular_angelring.common.AngelRingItem;
 import com.leclowndu93150.modular_angelring.common.InertiaModuleItem;
 import com.leclowndu93150.modular_angelring.common.MiningModuleItem;
+import com.leclowndu93150.modular_angelring.common.SpeedModuleItem;
 import net.minecraft.world.item.Item;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -19,7 +20,7 @@ public class ItemRegistry {
 
     public static final DeferredItem<Item> MINING_MODULE = ITEMS.register("mining_module",() -> new MiningModuleItem(new Item.Properties()));
 
-    public static final DeferredItem<Item> SPEED_MODULE = ITEMS.registerSimpleItem("speed_module");
+    public static final DeferredItem<Item> SPEED_MODULE = ITEMS.register("speed_module",() -> new SpeedModuleItem(new Item.Properties()));
 
     public static final DeferredItem<Item> UPGRADE_TEMPLATE = ITEMS.registerSimpleItem("angel_ring_upgrade_smithing_template");
 

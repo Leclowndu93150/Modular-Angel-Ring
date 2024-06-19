@@ -1,7 +1,9 @@
 package com.leclowndu93150.modular_angelring.common;
 
+import com.leclowndu93150.modular_angelring.registry.DataComponentRegistry;
 import com.leclowndu93150.modular_angelring.registry.ItemRegistry;
 import com.leclowndu93150.modular_angelring.registry.KeyBindRegistry;
+import com.leclowndu93150.modular_angelring.utils.FlightSpeedPercentage;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
@@ -76,6 +78,9 @@ public class AngelRingItem extends Item {
         }
         if (AngelRingModules.getInertiaModifier(stack) && !KeyBindRegistry.inertiaEnabled){
             pTooltipComponents.add(Component.literal("Inertia Module: ").append("Disabled").withStyle(ChatFormatting.RED));
+        }
+        if (stack.has(DataComponentRegistry.SPEED_MODIFIER)){
+            pTooltipComponents.add(Component.literal("Speed Module: ").append(String.valueOf(FlightSpeedPercentage.speedToPercentage(AngelRingModules.getSpeedModifier(stack)))).append("%").withStyle(ChatFormatting.GRAY));
         }
 
         super.appendHoverText(stack, pContext, pTooltipComponents, pTooltipFlag);

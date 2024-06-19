@@ -39,6 +39,13 @@ public class ModularRingRecipes extends RecipeProvider {
                 .unlocks("criteria", has(ItemRegistry.ANGEL_RING))
                 .save(pRecipeOutput, AngelRingMain.MODID+":smithing/mining_modifier");
 
+        ItemStack itemStackSpeed = ItemRegistry.ANGEL_RING.asItem().getDefaultInstance();
+        itemStackSpeed.set(DataComponentRegistry.SPEED_MODIFIER, 0.02F);
+
+        AdvancedSmithingRecipeBuilder.smithing(Ingredient.of(ItemRegistry.UPGRADE_TEMPLATE), Ingredient.of(ItemRegistry.ANGEL_RING), Ingredient.of(ItemRegistry.SPEED_MODULE), RecipeCategory.MISC, itemStackSpeed)
+                .unlocks("criteria", has(ItemRegistry.ANGEL_RING))
+                .save(pRecipeOutput, AngelRingMain.MODID+":smithing/speed_modifier");
+
         SmithingTransformRecipeBuilder.smithing(Ingredient.EMPTY, Ingredient.of(ItemRegistry.BLANK_MODULE), Ingredient.of(Items.DIAMOND_PICKAXE), RecipeCategory.MISC, ItemRegistry.MINING_MODULE.asItem())
                 .unlocks("criteria", has(ItemRegistry.ANGEL_RING))
                 .save(pRecipeOutput, AngelRingMain.MODID+":smithing/mining_module");

@@ -22,8 +22,8 @@ public class AngelRingModules {
         return stack.getOrDefault(DataComponentRegistry.INERTIA_MODIFIER, false);
     }
 
-    public static void setSpeedModifier(ItemStack stack) {
-        stack.set(DataComponentRegistry.SPEED_MODIFIER, null);
+    public static void setSpeedModifier(ItemStack stack, Float speedModifier) {
+        stack.set(DataComponentRegistry.SPEED_MODIFIER, speedModifier);
     }
 
     public static Float getSpeedModifier(ItemStack stack) {

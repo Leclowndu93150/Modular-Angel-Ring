@@ -14,6 +14,16 @@ repositories {
     maven {
         url "https://cursemaven.com"
     }
+    maven {
+        // location of the maven that hosts JEI files since January 2023
+        name = "Jared's maven"
+        url = "https://maven.blamejared.com/"
+    }
+    maven {
+        // location of a maven mirror for JEI files, as a fallback
+        name = "ModMaven"
+        url = "https://modmaven.dev"
+    }
 }
 
 base {
@@ -81,6 +91,7 @@ configurations {
 dependencies {
     implementation "net.neoforged:neoforge:${neo_version}"
     implementation "curse.maven:curios-1037991:5441959"
+    runtimeOnly("mezz.jei:jei-1.21-neoforge:19.0.0.7")
 }
 
 
