@@ -70,37 +70,31 @@ public class AngelRingEvents {
 
     @SubscribeEvent(priority = EventPriority.LOW)
     public static void newFlightSpeed(PlayerInteractEvent.RightClickItem event) {
-        final float MAX_FLY_SPEED = 0.06F;
-        final float SPEED_INCREMENT = 0.002F;
-        final float defaultFlySpeed = 0.02f;
+        final float MAX_FLY_SPEED = 0.15F;
+        final float MIN_FLY_SPEED = 0.0F;
+        final float SPEED_INCREMENT = 0.005F;
         Player player = event.getEntity();
         ItemStack item = player.getMainHandItem();
 
         if (item.is(ItemRegistry.ANGEL_RING) && item.has(DataComponentRegistry.SPEED_MODIFIER)) {
             float currentFlySpeed = getSpeedModifier(item);
 
-            if (currentFlySpeed < MAX_FLY_SPEED) {
+            if (player.isCrouching()) {
+                currentFlySpeed = Math.max(currentFlySpeed - SPEED_INCREMENT, MIN_FLY_SPEED); // Ensure it doesn't go below the min
+            } else if (currentFlySpeed < MAX_FLY_SPEED) {
                 currentFlySpeed = Math.min(currentFlySpeed + SPEED_INCREMENT, MAX_FLY_SPEED); // Ensure it doesn't exceed the max
-                setSpeedModifier(item, currentFlySpeed);
-
-                int percentage = FlightSpeedPercentage.speedToPercentage(currentFlySpeed);
-                player.displayClientMessage(Component.literal("Speed: ")
-                        .append(String.valueOf(percentage))
-                        .append("%")
-                        .withStyle(ChatFormatting.WHITE), true);
-
-                player.level().playSound(player, player.getX(), player.getY(), player.getZ(),
-                        SoundEvents.NOTE_BLOCK_BELL.value(), SoundSource.PLAYERS, 0.4f, 0.01f);
             }
-        }
-        Optional<SlotResult> slotResult = CuriosApi.getCuriosInventory(player).flatMap(handler -> handler.findFirstCurio(ItemRegistry.ANGEL_RING.get()));
-        if(slotResult.isPresent()) {
-            ItemStack angelRingStack = slotResult.get().stack();
-            if(angelRingStack.has(DataComponentRegistry.SPEED_MODIFIER) && player.getAbilities().flying && !player.isCreative() && !player.isSpectator() && (player.getAbilities().getFlyingSpeed() != getSpeedModifier(angelRingStack))){
-                player.getAbilities().setFlyingSpeed(getSpeedModifier(angelRingStack));
-            }else if (!angelRingStack.has(DataComponentRegistry.SPEED_MODIFIER)){
-                player.getAbilities().setFlyingSpeed(defaultFlySpeed);
-            }
+
+            setSpeedModifier(item, currentFlySpeed);
+
+            int percentage = FlightSpeedPercentage.speedToPercentage(currentFlySpeed);
+            player.displayClientMessage(Component.literal("Speed: ")
+                    .append(String.valueOf(percentage))
+                    .append("%")
+                    .withStyle(ChatFormatting.WHITE), true);
+
+            player.level().playSound(player, player.getX(), player.getY(), player.getZ(),
+                    SoundEvents.NOTE_BLOCK_BELL.value(), SoundSource.PLAYERS, 0.4f, 0.01f);
         }
     }
 

@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static com.leclowndu93150.modular_angelring.common.AngelRingModules.getSpeedModifier;
+
 public class AngelRingItem extends Item {
 
     public AngelRingItem(Properties pProperties) {
@@ -48,10 +50,20 @@ public class AngelRingItem extends Item {
     }
 
     public static void tickRing(ItemStack stack, Player player) {
-        if (!(stack.getItem() instanceof AngelRingItem)) return;
+        Optional<SlotResult> slotResult = CuriosApi.getCuriosInventory(player).flatMap(handler -> handler.findFirstCurio(ItemRegistry.ANGEL_RING.get()));
+        if(slotResult.isEmpty()){
+            player.getAbilities().setFlyingSpeed(0.05F);
+            return;
+        }
+
         if (player.getAttribute(NeoForgeMod.CREATIVE_FLIGHT).getBaseValue() != 1) {
                 startFlight(player);
             }
+
+        ItemStack angelRingStack = slotResult.get().stack();
+        if(angelRingStack.has(DataComponentRegistry.SPEED_MODIFIER) && !(player.getAbilities().getFlyingSpeed() == getSpeedModifier(angelRingStack))){
+            player.getAbilities().setFlyingSpeed(getSpeedModifier(angelRingStack));
+        }
     }
 
     public static void tickPlayer(Player player) {
@@ -62,6 +74,7 @@ public class AngelRingItem extends Item {
             }
         if (slotResult.isEmpty()) {
             stopFlight(player);
+            player.getAbilities().setFlyingSpeed(0.05F);
         }
     }
 

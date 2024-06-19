@@ -12,11 +12,11 @@ public class FlightSpeedPercentage {
      */
     public static int speedToPercentage(float input) {
 
-        if (input < 0 || input > 0.06F) {
-            throw new IllegalArgumentException("Input must be in the range from 0 to 0.06 (inclusive)");
+        if (input < 0 || input > 0.15F) {
+            throw new IllegalArgumentException("Input must be in the range from 0 to 0.15 (inclusive)");
         }
 
-        int percentage = Math.round((input / 0.02F) * 100);
+        int percentage = Math.round((input / 0.05F) * 100);
 
         if (percentage < 0) {
             return 0;
