@@ -61,8 +61,10 @@ public class AngelRingItem extends Item {
             }
 
         ItemStack angelRingStack = slotResult.get().stack();
-        if(angelRingStack.has(DataComponentRegistry.SPEED_MODIFIER) && !(player.getAbilities().getFlyingSpeed() == getSpeedModifier(angelRingStack))){
-            player.getAbilities().setFlyingSpeed(getSpeedModifier(angelRingStack));
+        if(angelRingStack.has(DataComponentRegistry.SPEED_MODIFIER) && ((player.getAbilities().getFlyingSpeed() != getSpeedModifier(angelRingStack)) || !KeyBindRegistry.speedEnabled)){
+            if(KeyBindRegistry.speedEnabled){
+                player.getAbilities().setFlyingSpeed(getSpeedModifier(angelRingStack));
+            } else player.getAbilities().setFlyingSpeed(0.05F);
         }
     }
 
@@ -86,14 +88,14 @@ public class AngelRingItem extends Item {
         if (AngelRingModules.getInertiaModifier(stack) && KeyBindRegistry.inertiaEnabled){
             pTooltipComponents.add(Component.literal("Inertia Module: ").append("Enabled").withStyle(ChatFormatting.GREEN));
         }
-        if (AngelRingModules.getMiningSpeedModifier(stack) && !KeyBindRegistry.miningEnabled) {
-            pTooltipComponents.add(Component.literal("Mining Module: ").append("Disabled").withStyle(ChatFormatting.RED));
-        }
         if (AngelRingModules.getInertiaModifier(stack) && !KeyBindRegistry.inertiaEnabled){
             pTooltipComponents.add(Component.literal("Inertia Module: ").append("Disabled").withStyle(ChatFormatting.RED));
         }
-        if (stack.has(DataComponentRegistry.SPEED_MODIFIER)){
-            pTooltipComponents.add(Component.literal("Speed Module: ").append(String.valueOf(FlightSpeedPercentage.speedToPercentage(AngelRingModules.getSpeedModifier(stack)))).append("%").withStyle(ChatFormatting.GRAY));
+        if (stack.has(DataComponentRegistry.SPEED_MODIFIER) && KeyBindRegistry.speedEnabled){
+            pTooltipComponents.add(Component.literal("Speed Module: ").append(String.valueOf(FlightSpeedPercentage.speedToPercentage(AngelRingModules.getSpeedModifier(stack)))).append("%").withStyle(ChatFormatting.GREEN));
+        }
+        if (stack.has(DataComponentRegistry.SPEED_MODIFIER) && !KeyBindRegistry.speedEnabled){
+            pTooltipComponents.add(Component.literal("Speed Module: ").append(String.valueOf(FlightSpeedPercentage.speedToPercentage(AngelRingModules.getSpeedModifier(stack)))).append("%").withStyle(ChatFormatting.RED));
         }
 
         super.appendHoverText(stack, pContext, pTooltipComponents, pTooltipFlag);

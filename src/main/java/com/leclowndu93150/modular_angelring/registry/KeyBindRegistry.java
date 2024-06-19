@@ -30,16 +30,20 @@ public class KeyBindRegistry {
     public static final Lazy<KeyMapping> INERTIA_MODULE = Lazy.of(() ->new KeyMapping(
             "Inertia Module", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_L, "Modular Angel Ring"));
 
+    public static final Lazy<KeyMapping> SPEED_MODULE = Lazy.of(() ->new KeyMapping(
+            "Speed Module", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_K, "Modular Angel Ring"));
+
 
     @SubscribeEvent
     public static void registerBindings(RegisterKeyMappingsEvent event) {
-        //event.register(MINING_MODULE.get());
+        event.register(SPEED_MODULE.get());
         event.register(INERTIA_MODULE.get());
         NeoForge.EVENT_BUS.addListener(KeyBindRegistry::onKey);
     }
 
     public static boolean miningEnabled = true;
     public static boolean inertiaEnabled = true;
+    public static boolean speedEnabled = true;
 
     public static void onKey(InputEvent.Key event) {
         Player player = Minecraft.getInstance().player;
@@ -54,6 +58,16 @@ public class KeyBindRegistry {
                         player.level().playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.NOTE_BLOCK_BELL.value(), SoundSource.PLAYERS, 0.4f, 0.01f);
                     } else {
                         player.displayClientMessage(Component.literal("Inertia Module: Disabled").withStyle(ChatFormatting.RED), true);
+                        player.level().playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.NOTE_BLOCK_BELL.value(), SoundSource.PLAYERS, 0.4f, 0.09f);
+                    }
+                }
+                if (SPEED_MODULE.get().consumeClick() && angelRingStack.has(DataComponentRegistry.SPEED_MODIFIER)) {
+                    speedEnabled = !speedEnabled;
+                    if (speedEnabled) {
+                        player.displayClientMessage(Component.literal("Speed Module: Enabled").withStyle(ChatFormatting.GREEN), true);
+                        player.level().playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.NOTE_BLOCK_BELL.value(), SoundSource.PLAYERS, 0.4f, 0.01f);
+                    } else {
+                        player.displayClientMessage(Component.literal("Speed Module: Disabled").withStyle(ChatFormatting.RED), true);
                         player.level().playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.NOTE_BLOCK_BELL.value(), SoundSource.PLAYERS, 0.4f, 0.09f);
                     }
                 }
