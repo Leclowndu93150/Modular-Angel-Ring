@@ -66,7 +66,6 @@ public class AngelRingEvents {
         }
     }
 
-
     @SubscribeEvent(priority = EventPriority.LOW)
     public static void newFlightSpeed(PlayerInteractEvent.RightClickItem event) {
         final float MAX_FLY_SPEED = 0.15F;
