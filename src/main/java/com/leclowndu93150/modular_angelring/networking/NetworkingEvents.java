@@ -12,5 +12,6 @@ public final class NetworkingEvents {
     public static void registerPayloads(RegisterPayloadHandlersEvent event) {
         PayloadRegistrar registrar = event.registrar(AngelRingMain.MODID);
         registrar.playToServer(KeyPressedPayload.TYPE, KeyPressedPayload.STREAM_CODEC, PayloadActions::keyPressedAction);
+        registrar.playToServer(noKeyPressedPayload.TYPE, noKeyPressedPayload.STREAM_CODEC, PayloadActions::noKeyPressedAction);
     }
 }

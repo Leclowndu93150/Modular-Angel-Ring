@@ -3,6 +3,7 @@ package com.leclowndu93150.modular_angelring.events;
 import com.leclowndu93150.modular_angelring.AngelRingMain;
 import com.leclowndu93150.modular_angelring.common.AngelRingItem;
 import com.leclowndu93150.modular_angelring.networking.PayloadActions;
+import com.leclowndu93150.modular_angelring.networking.noKeyPressedPayload;
 import com.leclowndu93150.modular_angelring.registry.DataComponentRegistry;
 import com.leclowndu93150.modular_angelring.registry.ItemRegistry;
 import com.leclowndu93150.modular_angelring.registry.KeyBindRegistry;
@@ -14,6 +15,7 @@ import net.minecraft.network.chat.ClickEvent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.EntityEvent;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -21,8 +23,10 @@ import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.entity.living.LivingBreatheEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
+import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotResult;
@@ -56,9 +60,8 @@ public class AngelRingEvents {
         if (slotResult.isPresent()) {
             ItemStack angelRingStack = slotResult.get().stack();
             Vec3 motion = player.getDeltaMovement();
-            Options opt = Minecraft.getInstance().options;
             if (player.getAbilities().flying && getInertiaModifier(angelRingStack) && PayloadActions.inertiaEnabled) {
-                if (!opt.keyUp.isDown() && !opt.keyDown.isDown() && !opt.keyLeft.isDown() && !opt.keyRight.isDown()) {
+                if (PayloadActions.isNoKeysPressed) {
                     if (motion.x != 0 || motion.z != 0) {
                         player.setDeltaMovement(0, motion.y, 0);
                     }
@@ -101,4 +104,5 @@ public class AngelRingEvents {
     public static void onPlayerTick(PlayerTickEvent.Pre event) {
         AngelRingItem.tickPlayer(event.getEntity());
     }
+
 }

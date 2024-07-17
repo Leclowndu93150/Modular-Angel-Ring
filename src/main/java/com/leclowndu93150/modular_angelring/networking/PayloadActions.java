@@ -8,6 +8,7 @@ import net.neoforged.neoforge.network.handling.IPayloadContext;
 public final class PayloadActions {
     public static boolean inertiaEnabled = true;
     public static boolean speedEnabled = true;
+    public static boolean isNoKeysPressed = false;
 
     public static void keyPressedAction(KeyPressedPayload payload, IPayloadContext ctx) {
         // SERVER-SIDE
@@ -21,5 +22,10 @@ public final class PayloadActions {
         if (key == KeyBindRegistry.SPEED_MODULE.get().getKey().getValue()) {
             speedEnabled = !speedEnabled;
         }
+    }
+
+    public static void noKeyPressedAction(noKeyPressedPayload payload, IPayloadContext ctx) {
+        // SERVER-SIDE
+        isNoKeysPressed = payload.pressed();
     }
 }

@@ -3,18 +3,22 @@ package com.leclowndu93150.modular_angelring.registry;
 import com.leclowndu93150.modular_angelring.common.AngelRingModules;
 import com.leclowndu93150.modular_angelring.networking.KeyPressedPayload;
 import com.leclowndu93150.modular_angelring.networking.PayloadActions;
+import com.leclowndu93150.modular_angelring.networking.noKeyPressedPayload;
 import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.Options;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.InputEvent;
 import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
 import net.neoforged.neoforge.common.NeoForge;
@@ -27,8 +31,9 @@ import top.theillusivec4.curios.api.SlotResult;
 import java.util.Optional;
 
 import static com.leclowndu93150.modular_angelring.AngelRingMain.MODID;
+import static com.leclowndu93150.modular_angelring.common.AngelRingModules.getInertiaModifier;
 
-@EventBusSubscriber(modid = MODID, bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = MODID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class KeyBindRegistry {
     public static final Lazy<KeyMapping> INERTIA_MODULE = Lazy.of(() -> new KeyMapping(
             "Inertia Module", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_L, "Modular Angel Ring"));
@@ -64,6 +69,7 @@ public class KeyBindRegistry {
                     player.displayClientMessage(Component.literal("Inertia Module: Disabled").withStyle(ChatFormatting.RED), true);
                     level.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.NOTE_BLOCK_BELL.value(), SoundSource.PLAYERS, 0.4f, 0.09f);
                 }
+
             }
             if (SPEED_MODULE.get().consumeClick() && angelRingStack.has(DataComponentRegistry.SPEED_MODIFIER)) {
                 speedEnabled = !speedEnabled;
@@ -79,4 +85,34 @@ public class KeyBindRegistry {
         }
 
     }
+
+    public static boolean isNoKeysPressed = false;
+
+    @EventBusSubscriber(modid = MODID, bus = EventBusSubscriber.Bus.GAME, value = Dist.CLIENT)
+    public static class clientGameStuff{
+        @SubscribeEvent
+        public static void clientTick(ClientTickEvent.Post event){
+            Options opt = Minecraft.getInstance().options;
+            Minecraft mc = Minecraft.getInstance();
+            if(mc.level != null){
+                if(mc.level.isClientSide()){
+                    if (!opt.keyUp.isDown() && !opt.keyDown.isDown() && !opt.keyLeft.isDown() && !opt.keyRight.isDown()) {
+                        if (isNoKeysPressed){
+                            mc.player.sendSystemMessage(Component.literal("No keys pressed").withStyle(ChatFormatting.RED));
+                            return;
+                        }else{
+                            mc.player.sendSystemMessage(Component.literal("No keys pressed but it's false so sending packet").withStyle(ChatFormatting.RED));
+                            PacketDistributor.sendToServer(new noKeyPressedPayload(true));
+                            isNoKeysPressed = true;
+                        }
+                    } else if (isNoKeysPressed){
+                        mc.player.sendSystemMessage(Component.literal("Keys pressed but it's true so sending packet").withStyle(ChatFormatting.GREEN));
+                        PacketDistributor.sendToServer(new noKeyPressedPayload(false));
+                        isNoKeysPressed = false;
+                    }
+                }
+            }
+        }
+    }
+
 }
