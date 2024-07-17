@@ -2,6 +2,7 @@ package com.leclowndu93150.modular_angelring.events;
 
 import com.leclowndu93150.modular_angelring.AngelRingMain;
 import com.leclowndu93150.modular_angelring.common.AngelRingItem;
+import com.leclowndu93150.modular_angelring.networking.PayloadActions;
 import com.leclowndu93150.modular_angelring.registry.DataComponentRegistry;
 import com.leclowndu93150.modular_angelring.registry.ItemRegistry;
 import com.leclowndu93150.modular_angelring.registry.KeyBindRegistry;
@@ -39,7 +40,7 @@ public class AngelRingEvents {
         if (slotResult.isPresent()) {
             ItemStack angelRingStack = slotResult.get().stack();
             float newDigSpeed = event.getOriginalSpeed();
-            if (getMiningSpeedModifier(angelRingStack) && !player.onGround() && KeyBindRegistry.miningEnabled) {
+            if (getMiningSpeedModifier(angelRingStack) && !player.onGround()) {
                 newDigSpeed *= 5f;
             }
             if (newDigSpeed != event.getOriginalSpeed()) {
@@ -56,7 +57,7 @@ public class AngelRingEvents {
             ItemStack angelRingStack = slotResult.get().stack();
             Vec3 motion = player.getDeltaMovement();
             Options opt = Minecraft.getInstance().options;
-            if (player.getAbilities().flying && getInertiaModifier(angelRingStack) && KeyBindRegistry.inertiaEnabled) {
+            if (player.getAbilities().flying && getInertiaModifier(angelRingStack) && PayloadActions.inertiaEnabled) {
                 if (!opt.keyUp.isDown() && !opt.keyDown.isDown() && !opt.keyLeft.isDown() && !opt.keyRight.isDown()) {
                     if (motion.x != 0 || motion.z != 0) {
                         player.setDeltaMovement(0, motion.y, 0);

@@ -1,5 +1,6 @@
 package com.leclowndu93150.modular_angelring.common;
 
+import com.leclowndu93150.modular_angelring.networking.PayloadActions;
 import com.leclowndu93150.modular_angelring.registry.DataComponentRegistry;
 import com.leclowndu93150.modular_angelring.registry.ItemRegistry;
 import com.leclowndu93150.modular_angelring.registry.KeyBindRegistry;
@@ -61,8 +62,8 @@ public class AngelRingItem extends Item {
             }
 
         ItemStack angelRingStack = slotResult.get().stack();
-        if(angelRingStack.has(DataComponentRegistry.SPEED_MODIFIER) && ((player.getAbilities().getFlyingSpeed() != getSpeedModifier(angelRingStack)) || !KeyBindRegistry.speedEnabled)){
-            if(KeyBindRegistry.speedEnabled){
+        if(angelRingStack.has(DataComponentRegistry.SPEED_MODIFIER) && ((player.getAbilities().getFlyingSpeed() != getSpeedModifier(angelRingStack)) || !PayloadActions.speedEnabled)){
+            if(PayloadActions.speedEnabled){
                 player.getAbilities().setFlyingSpeed(getSpeedModifier(angelRingStack));
             } else player.getAbilities().setFlyingSpeed(0.05F);
         }
@@ -85,16 +86,16 @@ public class AngelRingItem extends Item {
         if (AngelRingModules.getMiningSpeedModifier(stack) /* && KeyBindRegistry.miningEnabled */) {
             pTooltipComponents.add(Component.literal("Mining Module")/*.append("Enabled")*/.withStyle(ChatFormatting.GRAY));
         }
-        if (AngelRingModules.getInertiaModifier(stack) && KeyBindRegistry.inertiaEnabled){
+        if (AngelRingModules.getInertiaModifier(stack) && PayloadActions.inertiaEnabled){
             pTooltipComponents.add(Component.literal("Inertia Module: ").append("Enabled").withStyle(ChatFormatting.GREEN));
         }
-        if (AngelRingModules.getInertiaModifier(stack) && !KeyBindRegistry.inertiaEnabled){
+        if (AngelRingModules.getInertiaModifier(stack) && !PayloadActions.inertiaEnabled){
             pTooltipComponents.add(Component.literal("Inertia Module: ").append("Disabled").withStyle(ChatFormatting.RED));
         }
-        if (stack.has(DataComponentRegistry.SPEED_MODIFIER) && KeyBindRegistry.speedEnabled){
+        if (stack.has(DataComponentRegistry.SPEED_MODIFIER) && PayloadActions.speedEnabled){
             pTooltipComponents.add(Component.literal("Speed Module: ").append(String.valueOf(FlightSpeedPercentage.speedToPercentage(AngelRingModules.getSpeedModifier(stack)))).append("%").withStyle(ChatFormatting.GREEN));
         }
-        if (stack.has(DataComponentRegistry.SPEED_MODIFIER) && !KeyBindRegistry.speedEnabled){
+        if (stack.has(DataComponentRegistry.SPEED_MODIFIER) && !PayloadActions.speedEnabled){
             pTooltipComponents.add(Component.literal("Speed Module: ").append(String.valueOf(FlightSpeedPercentage.speedToPercentage(AngelRingModules.getSpeedModifier(stack)))).append("%").withStyle(ChatFormatting.RED));
         }
 

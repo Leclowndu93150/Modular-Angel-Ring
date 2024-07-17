@@ -1,8 +1,8 @@
 package com.leclowndu93150.modular_angelring.registry;
 
-import com.leclowndu93150.modular_angelring.common.AngelRingItem;
 import com.leclowndu93150.modular_angelring.common.AngelRingModules;
 import com.leclowndu93150.modular_angelring.networking.KeyPressedPayload;
+import com.leclowndu93150.modular_angelring.networking.PayloadActions;
 import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.KeyMapping;
@@ -44,7 +44,6 @@ public class KeyBindRegistry {
         NeoForge.EVENT_BUS.addListener(KeyBindRegistry::onKey);
     }
 
-    public static boolean miningEnabled = true;
     public static boolean inertiaEnabled = true;
     public static boolean speedEnabled = true;
 
@@ -56,9 +55,8 @@ public class KeyBindRegistry {
             ItemStack angelRingStack = slotResult.get().stack();
             Level level = player.level();
             if (INERTIA_MODULE.get().consumeClick() && AngelRingModules.getInertiaModifier(angelRingStack)) {
-                // Send payload to server
-                PacketDistributor.sendToServer(new KeyPressedPayload(INERTIA_MODULE.get().getKey().getValue()));
                 inertiaEnabled = !inertiaEnabled;
+                PacketDistributor.sendToServer(new KeyPressedPayload(INERTIA_MODULE.get().getKey().getValue()));
                 if (inertiaEnabled) {
                     player.displayClientMessage(Component.literal("Inertia Module: Enabled").withStyle(ChatFormatting.GREEN), true);
                     level.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.NOTE_BLOCK_BELL.value(), SoundSource.PLAYERS, 0.4f, 0.01f);
@@ -69,6 +67,7 @@ public class KeyBindRegistry {
             }
             if (SPEED_MODULE.get().consumeClick() && angelRingStack.has(DataComponentRegistry.SPEED_MODIFIER)) {
                 speedEnabled = !speedEnabled;
+                PacketDistributor.sendToServer(new KeyPressedPayload(SPEED_MODULE.get().getKey().getValue()));
                 if (speedEnabled) {
                     player.displayClientMessage(Component.literal("Speed Module: Enabled").withStyle(ChatFormatting.GREEN), true);
                     level.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.NOTE_BLOCK_BELL.value(), SoundSource.PLAYERS, 0.4f, 0.01f);
