@@ -93,15 +93,18 @@ public class KeyBindRegistry {
             Minecraft mc = Minecraft.getInstance();
             Options opt = mc.options;
             Player player = mc.player;
+            Optional<SlotResult> slotResult = CuriosApi.getCuriosInventory(player).flatMap(handler -> handler.findFirstCurio(ItemRegistry.ANGEL_RING.get()));
             if (mc.level != null) {
                 if (mc.level.isClientSide()) {
-                    CompoundTag persistentData = player.getPersistentData();
-                    if (opt.keyUp.isDown() || opt.keyDown.isDown() || opt.keyLeft.isDown() || opt.keyRight.isDown()) {
-                        PacketDistributor.sendToServer(new NoKeyPressedPayload(false));
-                        persistentData.putBoolean(PayloadActions.NO_KEYS_PRESSED, false);
-                    } else {
-                        PacketDistributor.sendToServer(new NoKeyPressedPayload(true));
-                        persistentData.putBoolean(PayloadActions.NO_KEYS_PRESSED, true);
+                    if (slotResult.isPresent() && slotResult.get().stack().has(DataComponentRegistry.INERTIA_MODIFIER)){
+                        CompoundTag persistentData = player.getPersistentData();
+                        if (opt.keyUp.isDown() || opt.keyDown.isDown() || opt.keyLeft.isDown() || opt.keyRight.isDown()) {
+                            PacketDistributor.sendToServer(new NoKeyPressedPayload(false));
+                            persistentData.putBoolean(PayloadActions.NO_KEYS_PRESSED, false);
+                        } else {
+                            PacketDistributor.sendToServer(new NoKeyPressedPayload(true));
+                            persistentData.putBoolean(PayloadActions.NO_KEYS_PRESSED, true);
+                        }
                     }
                 }
             }
