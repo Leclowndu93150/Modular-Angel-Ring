@@ -1,5 +1,6 @@
 package com.leclowndu93150.modular_angelring.registry;
 
+import com.leclowndu93150.modular_angelring.common.EnabledModifiersComponent;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.network.codec.ByteBufCodecs;
@@ -21,4 +22,7 @@ public class DataComponentRegistry {
 
     public static final Supplier<DataComponentType<Float>> SPEED_MODIFIER = COMPONENTS.registerComponentType("speed_modifier",
             builder -> builder.persistent(Codec.FLOAT).networkSynchronized(ByteBufCodecs.FLOAT));
+
+    public static final Supplier<DataComponentType<EnabledModifiersComponent>> MODIFIERS_ENABLED = COMPONENTS.registerComponentType("modifiers_enabled",
+            builder -> builder.persistent(EnabledModifiersComponent.CODEC.codec()).networkSynchronized(EnabledModifiersComponent.STREAM_CODEC));
 }

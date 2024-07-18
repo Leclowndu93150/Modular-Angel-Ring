@@ -1,14 +1,16 @@
 package com.leclowndu93150.modular_angelring.registry;
 
 import com.leclowndu93150.modular_angelring.common.AngelRingModules;
+import com.leclowndu93150.modular_angelring.common.EnabledModifiersComponent;
 import com.leclowndu93150.modular_angelring.networking.KeyPressedPayload;
+import com.leclowndu93150.modular_angelring.networking.NoKeyPressedPayload;
 import com.leclowndu93150.modular_angelring.networking.PayloadActions;
-import com.leclowndu93150.modular_angelring.networking.noKeyPressedPayload;
 import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Options;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -31,7 +33,6 @@ import top.theillusivec4.curios.api.SlotResult;
 import java.util.Optional;
 
 import static com.leclowndu93150.modular_angelring.AngelRingMain.MODID;
-import static com.leclowndu93150.modular_angelring.common.AngelRingModules.getInertiaModifier;
 
 @EventBusSubscriber(modid = MODID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class KeyBindRegistry {
@@ -49,20 +50,18 @@ public class KeyBindRegistry {
         NeoForge.EVENT_BUS.addListener(KeyBindRegistry::onKey);
     }
 
-    public static boolean inertiaEnabled = true;
-    public static boolean speedEnabled = true;
-
     public static void onKey(InputEvent.Key event) {
         Player player = Minecraft.getInstance().player;
         if (player == null) return;
         Optional<SlotResult> slotResult = CuriosApi.getCuriosInventory(player).flatMap(handler -> handler.findFirstCurio(ItemRegistry.ANGEL_RING.get()));
         if (slotResult.isPresent()) {
             ItemStack angelRingStack = slotResult.get().stack();
+            EnabledModifiersComponent data = angelRingStack.getOrDefault(DataComponentRegistry.MODIFIERS_ENABLED, EnabledModifiersComponent.EMPTY);
             Level level = player.level();
             if (INERTIA_MODULE.get().consumeClick() && AngelRingModules.getInertiaModifier(angelRingStack)) {
-                inertiaEnabled = !inertiaEnabled;
                 PacketDistributor.sendToServer(new KeyPressedPayload(INERTIA_MODULE.get().getKey().getValue()));
-                if (inertiaEnabled) {
+                // Needs to be inverted, since the data component has not yet synced to the client
+                if (!data.inertiaEnabled()) {
                     player.displayClientMessage(Component.literal("Inertia Module: Enabled").withStyle(ChatFormatting.GREEN), true);
                     level.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.NOTE_BLOCK_BELL.value(), SoundSource.PLAYERS, 0.4f, 0.01f);
                 } else {
@@ -71,10 +70,11 @@ public class KeyBindRegistry {
                 }
 
             }
+
             if (SPEED_MODULE.get().consumeClick() && angelRingStack.has(DataComponentRegistry.SPEED_MODIFIER)) {
-                speedEnabled = !speedEnabled;
                 PacketDistributor.sendToServer(new KeyPressedPayload(SPEED_MODULE.get().getKey().getValue()));
-                if (speedEnabled) {
+                // Needs to be inverted, since the data component has not yet synced to the client
+                if (!data.speedModifierEnabled()) {
                     player.displayClientMessage(Component.literal("Speed Module: Enabled").withStyle(ChatFormatting.GREEN), true);
                     level.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.NOTE_BLOCK_BELL.value(), SoundSource.PLAYERS, 0.4f, 0.01f);
                 } else {
@@ -86,33 +86,27 @@ public class KeyBindRegistry {
 
     }
 
-    public static boolean isNoKeysPressed = false;
-
     @EventBusSubscriber(modid = MODID, bus = EventBusSubscriber.Bus.GAME, value = Dist.CLIENT)
-    public static class clientGameStuff{
+    public static class clientGameStuff {
         @SubscribeEvent
-        public static void clientTick(ClientTickEvent.Post event){
-            Options opt = Minecraft.getInstance().options;
+        public static void clientTick(ClientTickEvent.Post event) {
             Minecraft mc = Minecraft.getInstance();
-            if(mc.level != null){
-                if(mc.level.isClientSide()){
-                    if (!opt.keyUp.isDown() && !opt.keyDown.isDown() && !opt.keyLeft.isDown() && !opt.keyRight.isDown()) {
-                        if (isNoKeysPressed){
-                            mc.player.sendSystemMessage(Component.literal("No keys pressed").withStyle(ChatFormatting.RED));
-                            return;
-                        }else{
-                            mc.player.sendSystemMessage(Component.literal("No keys pressed but it's false so sending packet").withStyle(ChatFormatting.RED));
-                            PacketDistributor.sendToServer(new noKeyPressedPayload(true));
-                            isNoKeysPressed = true;
-                        }
-                    } else if (isNoKeysPressed){
-                        mc.player.sendSystemMessage(Component.literal("Keys pressed but it's true so sending packet").withStyle(ChatFormatting.GREEN));
-                        PacketDistributor.sendToServer(new noKeyPressedPayload(false));
-                        isNoKeysPressed = false;
+            Options opt = mc.options;
+            Player player = mc.player;
+            if (mc.level != null) {
+                if (mc.level.isClientSide()) {
+                    CompoundTag persistentData = player.getPersistentData();
+                    if (opt.keyUp.isDown() || opt.keyDown.isDown() || opt.keyLeft.isDown() || opt.keyRight.isDown()) {
+                        PacketDistributor.sendToServer(new NoKeyPressedPayload(false));
+                        persistentData.putBoolean(PayloadActions.NO_KEYS_PRESSED, false);
+                    } else {
+                        PacketDistributor.sendToServer(new NoKeyPressedPayload(true));
+                        persistentData.putBoolean(PayloadActions.NO_KEYS_PRESSED, true);
                     }
                 }
             }
         }
+
     }
 
 }

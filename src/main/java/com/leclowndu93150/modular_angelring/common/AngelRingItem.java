@@ -7,10 +7,15 @@ import com.leclowndu93150.modular_angelring.registry.KeyBindRegistry;
 import com.leclowndu93150.modular_angelring.utils.FlightSpeedPercentage;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.common.NeoForgeMod;
 import org.jetbrains.annotations.NotNull;
 import top.theillusivec4.curios.api.CuriosApi;
@@ -21,6 +26,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.leclowndu93150.modular_angelring.common.AngelRingModules.getSpeedModifier;
+import static com.leclowndu93150.modular_angelring.common.AngelRingModules.setSpeedModifier;
 
 public class AngelRingItem extends Item {
 
@@ -38,6 +44,39 @@ public class AngelRingItem extends Item {
         return true;
     }
 
+    @Override
+    public InteractionResultHolder<ItemStack> use(Level pLevel, Player player, InteractionHand pUsedHand) {
+
+        final float MAX_FLY_SPEED = 0.15F;
+        final float MIN_FLY_SPEED = 0.0F;
+        final float SPEED_INCREMENT = 0.005F;
+        ItemStack item = player.getItemInHand(pUsedHand);
+
+        if (item.is(this) && item.has(DataComponentRegistry.SPEED_MODIFIER)) {
+            float currentFlySpeed = getSpeedModifier(item);
+
+            if (player.isShiftKeyDown()) {
+                currentFlySpeed = Math.max(currentFlySpeed - SPEED_INCREMENT, MIN_FLY_SPEED); // Ensure it doesn't go below the min
+            } else if (currentFlySpeed < MAX_FLY_SPEED) {
+                currentFlySpeed = Math.min(currentFlySpeed + SPEED_INCREMENT, MAX_FLY_SPEED); // Ensure it doesn't exceed the max
+            }
+
+            setSpeedModifier(item, currentFlySpeed);
+
+            int percentage = FlightSpeedPercentage.speedToPercentage(currentFlySpeed);
+            player.displayClientMessage(Component.literal("Speed: ")
+                    .append(String.valueOf(percentage))
+                    .append("%")
+                    .withStyle(ChatFormatting.WHITE), true);
+
+            player.level().playSound(player, player.getX(), player.getY(), player.getZ(),
+                    SoundEvents.NOTE_BLOCK_BELL.value(), SoundSource.PLAYERS, 0.4f, 0.01f);
+            return InteractionResultHolder.success(item);
+        }
+
+        return InteractionResultHolder.fail(item);
+    }
+
     private static void startFlight(Player player) {
         if (!player.isCreative() && !player.isSpectator()) {
             player.getAttribute(NeoForgeMod.CREATIVE_FLIGHT).setBaseValue(1);
@@ -52,20 +91,24 @@ public class AngelRingItem extends Item {
 
     public static void tickRing(ItemStack stack, Player player) {
         Optional<SlotResult> slotResult = CuriosApi.getCuriosInventory(player).flatMap(handler -> handler.findFirstCurio(ItemRegistry.ANGEL_RING.get()));
-        if(slotResult.isEmpty()){
+        if (slotResult.isEmpty()) {
             player.getAbilities().setFlyingSpeed(0.05F);
             return;
         }
 
         if (player.getAttribute(NeoForgeMod.CREATIVE_FLIGHT).getBaseValue() != 1) {
-                startFlight(player);
-            }
+            startFlight(player);
+        }
 
         ItemStack angelRingStack = slotResult.get().stack();
-        if(angelRingStack.has(DataComponentRegistry.SPEED_MODIFIER) && ((player.getAbilities().getFlyingSpeed() != getSpeedModifier(angelRingStack)) || !PayloadActions.speedEnabled)){
-            if(PayloadActions.speedEnabled){
+        EnabledModifiersComponent data = stack.getOrDefault(DataComponentRegistry.MODIFIERS_ENABLED, EnabledModifiersComponent.EMPTY);
+
+        if (angelRingStack.has(DataComponentRegistry.SPEED_MODIFIER) && ((player.getAbilities().getFlyingSpeed() != getSpeedModifier(angelRingStack)) || !data.speedModifierEnabled())) {
+            if (data.speedModifierEnabled()) {
                 player.getAbilities().setFlyingSpeed(getSpeedModifier(angelRingStack));
-            } else player.getAbilities().setFlyingSpeed(0.05F);
+            } else {
+                player.getAbilities().setFlyingSpeed(0.05F);
+            }
         }
     }
 
@@ -73,8 +116,8 @@ public class AngelRingItem extends Item {
         Optional<SlotResult> slotResult = CuriosApi.getCuriosInventory(player).flatMap(handler -> handler.findFirstCurio(ItemRegistry.ANGEL_RING.get()));
         if (slotResult.isPresent()) {
             ItemStack angelRingStack = slotResult.get().stack();
-                tickRing(angelRingStack, player);
-            }
+            tickRing(angelRingStack, player);
+        }
         if (slotResult.isEmpty()) {
             stopFlight(player);
             player.getAbilities().setFlyingSpeed(0.05F);
@@ -83,19 +126,21 @@ public class AngelRingItem extends Item {
 
     @Override
     public void appendHoverText(@NotNull ItemStack stack, @NotNull TooltipContext pContext, @NotNull List<Component> pTooltipComponents, @NotNull TooltipFlag pTooltipFlag) {
+        EnabledModifiersComponent data = stack.getOrDefault(DataComponentRegistry.MODIFIERS_ENABLED, EnabledModifiersComponent.EMPTY);
+
         if (AngelRingModules.getMiningSpeedModifier(stack) /* && KeyBindRegistry.miningEnabled */) {
             pTooltipComponents.add(Component.literal("Mining Module")/*.append("Enabled")*/.withStyle(ChatFormatting.GRAY));
         }
-        if (AngelRingModules.getInertiaModifier(stack) && PayloadActions.inertiaEnabled){
+        if (AngelRingModules.getInertiaModifier(stack) && data.inertiaEnabled()) {
             pTooltipComponents.add(Component.literal("Inertia Module: ").append("Enabled").withStyle(ChatFormatting.GREEN));
         }
-        if (AngelRingModules.getInertiaModifier(stack) && !PayloadActions.inertiaEnabled){
+        if (AngelRingModules.getInertiaModifier(stack) && !data.inertiaEnabled()) {
             pTooltipComponents.add(Component.literal("Inertia Module: ").append("Disabled").withStyle(ChatFormatting.RED));
         }
-        if (stack.has(DataComponentRegistry.SPEED_MODIFIER) && PayloadActions.speedEnabled){
+        if (stack.has(DataComponentRegistry.SPEED_MODIFIER) && data.speedModifierEnabled()) {
             pTooltipComponents.add(Component.literal("Speed Module: ").append(String.valueOf(FlightSpeedPercentage.speedToPercentage(AngelRingModules.getSpeedModifier(stack)))).append("%").withStyle(ChatFormatting.GREEN));
         }
-        if (stack.has(DataComponentRegistry.SPEED_MODIFIER) && !PayloadActions.speedEnabled){
+        if (stack.has(DataComponentRegistry.SPEED_MODIFIER) && !data.speedModifierEnabled()) {
             pTooltipComponents.add(Component.literal("Speed Module: ").append(String.valueOf(FlightSpeedPercentage.speedToPercentage(AngelRingModules.getSpeedModifier(stack)))).append("%").withStyle(ChatFormatting.RED));
         }
 

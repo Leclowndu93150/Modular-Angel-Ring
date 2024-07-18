@@ -8,12 +8,12 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
-public record noKeyPressedPayload(boolean pressed) implements CustomPacketPayload {
-    public static final Type<noKeyPressedPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(AngelRingMain.MODID, "no_keypressed_payload"));
-    public static final StreamCodec<RegistryFriendlyByteBuf, noKeyPressedPayload> STREAM_CODEC = StreamCodec.composite(
+public record NoKeyPressedPayload(boolean pressed) implements CustomPacketPayload {
+    public static final Type<NoKeyPressedPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(AngelRingMain.MODID, "no_keypressed_payload"));
+    public static final StreamCodec<RegistryFriendlyByteBuf, NoKeyPressedPayload> STREAM_CODEC = StreamCodec.composite(
             ByteBufCodecs.BOOL,
-            noKeyPressedPayload::pressed,
-            noKeyPressedPayload::new
+            NoKeyPressedPayload::pressed,
+            NoKeyPressedPayload::new
     );
 
     @Override
