@@ -27,10 +27,10 @@ public final class PayloadActions {
         if (slotResult.isPresent()) {
             ItemStack itemStack = slotResult.get().stack();
             EnabledModifiersComponent data = itemStack.getOrDefault(DataComponentRegistry.MODIFIERS_ENABLED, EnabledModifiersComponent.EMPTY);
-            if (key == KeyBindRegistry.INERTIA_MODULE.get().getKey().getValue()) {
+            if (key == 0) {
                 itemStack.set(DataComponentRegistry.MODIFIERS_ENABLED,
                         new EnabledModifiersComponent(!data.inertiaEnabled(), data.speedModifierEnabled(), data.miningEnabled()));
-            } else if (key == KeyBindRegistry.SPEED_MODULE.get().getKey().getValue()) {
+            } else if (key == 1) {
                 itemStack.set(DataComponentRegistry.MODIFIERS_ENABLED,
                         new EnabledModifiersComponent(data.inertiaEnabled(), !data.speedModifierEnabled(), data.miningEnabled()));
             }

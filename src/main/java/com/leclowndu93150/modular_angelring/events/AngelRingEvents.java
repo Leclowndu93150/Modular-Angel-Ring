@@ -2,24 +2,31 @@ package com.leclowndu93150.modular_angelring.events;
 
 import com.leclowndu93150.modular_angelring.AngelRingMain;
 import com.leclowndu93150.modular_angelring.common.AngelRingItem;
+import com.leclowndu93150.modular_angelring.common.AngelRingModules;
 import com.leclowndu93150.modular_angelring.common.EnabledModifiersComponent;
+import com.leclowndu93150.modular_angelring.networking.KeyPressedPayload;
 import com.leclowndu93150.modular_angelring.networking.PayloadActions;
 import com.leclowndu93150.modular_angelring.registry.DataComponentRegistry;
 import com.leclowndu93150.modular_angelring.registry.ItemRegistry;
+import com.leclowndu93150.modular_angelring.registry.KeyBindRegistry;
 import com.leclowndu93150.modular_angelring.utils.FlightSpeedPercentage;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.client.event.InputEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
+import net.neoforged.neoforge.network.PacketDistributor;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotResult;
 
@@ -29,7 +36,7 @@ import static com.leclowndu93150.modular_angelring.common.AngelRingModules.*;
 
 @EventBusSubscriber(modid = AngelRingMain.MODID)
 public class AngelRingEvents {
-    @SubscribeEvent(priority = EventPriority.LOW)
+    @SubscribeEvent
     public static void setRingBreakSpeed(PlayerEvent.BreakSpeed event) {
         Player player = event.getEntity();
         Optional<SlotResult> slotResult = CuriosApi.getCuriosInventory(player).flatMap(handler -> handler.findFirstCurio(ItemRegistry.ANGEL_RING.get()));
@@ -45,7 +52,7 @@ public class AngelRingEvents {
         }
     }
 
-    @SubscribeEvent(priority = EventPriority.LOW)
+    @SubscribeEvent
     public static void stopDrift(PlayerTickEvent.Pre event) {
         Player player = event.getEntity();
         Optional<SlotResult> slotResult = CuriosApi.getCuriosInventory(player).flatMap(handler -> handler.findFirstCurio(ItemRegistry.ANGEL_RING.get()));
@@ -63,7 +70,7 @@ public class AngelRingEvents {
         }
     }
 
-    @SubscribeEvent(priority = EventPriority.LOW)
+    @SubscribeEvent
     public static void onPlayerTick(PlayerTickEvent.Pre event) {
         AngelRingItem.tickPlayer(event.getEntity());
     }
