@@ -49,9 +49,9 @@ public class AngelRingRenderer extends RenderLayer<AbstractClientPlayer, PlayerM
             ));
 
             matrixStack.translate(-0.5,0,0);
-            if (player.getAbilities().flying) {
-                updateWingAngle();
-            }
+
+            updateWingAngle();
+
             matrixStack.mulPose(Axis.YN.rotationDegrees((float) angle));
             matrixStack.translate(0.5,0,0);
 
