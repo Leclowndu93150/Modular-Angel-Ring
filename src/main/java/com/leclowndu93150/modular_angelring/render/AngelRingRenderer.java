@@ -15,8 +15,7 @@ import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Quaternionf;
 
-import static com.leclowndu93150.modular_angelring.render.AngelRingCheck.isEquipped;
-import static com.leclowndu93150.modular_angelring.render.AngelRingCheck.isVisible;
+import static com.leclowndu93150.modular_angelring.render.AngelRingCheck.*;
 
 public class AngelRingRenderer extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
     protected static final double FLAP_FREQUENCY = 0.5; // flaps per second
@@ -55,8 +54,34 @@ public class AngelRingRenderer extends RenderLayer<AbstractClientPlayer, PlayerM
             matrixStack.mulPose(Axis.YN.rotationDegrees((float) angle));
             matrixStack.translate(0.5,0,0);
 
-            //ItemRegistry.ANGEL_WINGS_RIGHT in both cases?
-            Minecraft.getInstance().getItemRenderer().renderStatic(player, new ItemStack(ItemRegistry.ANGEL_WINGS_BOTH.get()), ItemDisplayContext.NONE, false, matrixStack, buffer, player.level(), 0xF000F0, OverlayTexture.NO_OVERLAY, player.getId());
+
+            switch(getWingType(player)) {
+                case "BAT":
+                    Minecraft.getInstance().getItemRenderer().renderStatic(player, new ItemStack(ItemRegistry.BAT_WINGS_BOTH.get()), ItemDisplayContext.NONE, false, matrixStack, buffer, player.level(), 0xF000F0, OverlayTexture.NO_OVERLAY, player.getId());
+                    break;
+                case "BUTTERFLY":
+                    Minecraft.getInstance().getItemRenderer().renderStatic(player, new ItemStack(ItemRegistry.BUTTERFLY_WINGS_BOTH.get()), ItemDisplayContext.NONE, false, matrixStack, buffer, player.level(), 0xF000F0, OverlayTexture.NO_OVERLAY, player.getId());
+                    break;
+                case "DRAGON":
+                    Minecraft.getInstance().getItemRenderer().renderStatic(player, new ItemStack(ItemRegistry.DRAGON_WINGS_BOTH.get()), ItemDisplayContext.NONE, false, matrixStack, buffer, player.level(), 0xF000F0, OverlayTexture.NO_OVERLAY, player.getId());
+                    break;
+                case "BIG_DRAGON":
+                    Minecraft.getInstance().getItemRenderer().renderStatic(player, new ItemStack(ItemRegistry.BIG_DRAGON_WINGS_BOTH.get()), ItemDisplayContext.NONE, false, matrixStack, buffer, player.level(), 0xF000F0, OverlayTexture.NO_OVERLAY, player.getId());
+                    break;
+                case "BLUE_DRAGON":
+                    Minecraft.getInstance().getItemRenderer().renderStatic(player, new ItemStack(ItemRegistry.BLUE_DRAGON_WINGS_BOTH.get()), ItemDisplayContext.NONE, false, matrixStack, buffer, player.level(), 0xF000F0, OverlayTexture.NO_OVERLAY, player.getId());
+                    break;
+                case "GOLD":
+                    Minecraft.getInstance().getItemRenderer().renderStatic(player, new ItemStack(ItemRegistry.GOLD_WINGS_BOTH.get()), ItemDisplayContext.NONE, false, matrixStack, buffer, player.level(), 0xF000F0, OverlayTexture.NO_OVERLAY, player.getId());
+                    break;
+                case"GOLDEN":
+                    Minecraft.getInstance().getItemRenderer().renderStatic(player, new ItemStack(ItemRegistry.GOLDEN_WINGS_BOTH.get()), ItemDisplayContext.NONE, false, matrixStack, buffer, player.level(), 0xF000F0, OverlayTexture.NO_OVERLAY, player.getId());
+                    break;
+                default:
+                    Minecraft.getInstance().getItemRenderer().renderStatic(player, new ItemStack(ItemRegistry.ANGEL_WINGS_BOTH.get()), ItemDisplayContext.NONE, false, matrixStack, buffer, player.level(), 0xF000F0, OverlayTexture.NO_OVERLAY, player.getId());
+                    break;
+            }
+
             matrixStack.popPose();
         }
     }

@@ -25,4 +25,7 @@ public class DataComponentRegistry {
 
     public static final Supplier<DataComponentType<EnabledModifiersComponent>> MODIFIERS_ENABLED = COMPONENTS.registerComponentType("modifiers_enabled",
             builder -> builder.persistent(EnabledModifiersComponent.CODEC.codec()).networkSynchronized(EnabledModifiersComponent.STREAM_CODEC));
+
+    public static final Supplier<DataComponentType<String>> WING = COMPONENTS.registerComponentType("wing_component",
+            builder -> builder.persistent(Codec.STRING).networkSynchronized(ByteBufCodecs.STRING_UTF8));
 }
