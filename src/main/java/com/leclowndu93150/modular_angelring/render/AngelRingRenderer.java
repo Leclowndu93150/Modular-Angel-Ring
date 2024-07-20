@@ -16,6 +16,7 @@ import org.jetbrains.annotations.NotNull;
 import org.joml.Quaternionf;
 
 import static com.leclowndu93150.modular_angelring.render.AngelRingCheck.isEquipped;
+import static com.leclowndu93150.modular_angelring.render.AngelRingCheck.isVisible;
 
 public class AngelRingRenderer extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
     protected static final double FLAP_FREQUENCY = 0.5; // flaps per second
@@ -33,7 +34,7 @@ public class AngelRingRenderer extends RenderLayer<AbstractClientPlayer, PlayerM
     @Override
     public void render(@NotNull PoseStack matrixStack, @NotNull MultiBufferSource buffer, int packedLight, @NotNull AbstractClientPlayer player, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
         assert Minecraft.getInstance().player != null;
-        if (!player.isInvisible() && isEquipped(player)) {
+        if (!player.isInvisible() && isEquipped(player) && isVisible(player)) {
             matrixStack.pushPose();
             getParentModel().body.translateAndRotate(matrixStack);
 
