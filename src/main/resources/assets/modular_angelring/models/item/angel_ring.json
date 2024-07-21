@@ -1,7 +1,15 @@
 {
-    "parent": "minecraft:item/generated",
-    "textures": {
-      "layer0": "modular_angelring:item/angel_ring"
-    }
-  }
-  
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "modular_angelring:item/angel_ring"
+  },
+  "overrides": [
+    { "predicate": { "custom_model_data": 1 }, "model": "modular_angelring:item/bat_ring" },
+    { "predicate": { "custom_model_data": 2 }, "model": "modular_angelring:item/big_dragon_ring" },
+    { "predicate": { "custom_model_data": 3 }, "model": "modular_angelring:item/blue_dragon_ring" },
+    { "predicate": { "custom_model_data": 4 }, "model": "modular_angelring:item/butterfly_ring" },
+    { "predicate": { "custom_model_data": 5 }, "model": "modular_angelring:item/dragon_ring" },
+    { "predicate": { "custom_model_data": 6 }, "model": "modular_angelring:item/gold_ring2" },
+    { "predicate": { "custom_model_data": 7 }, "model": "modular_angelring:item/golden_ring" }
+  ]
+}

@@ -29,6 +29,13 @@ public class ItemRegistry {
     public static final DeferredItem<Item> BLANK_MODULE = ITEMS.registerSimpleItem("blank_module");
 
     public static final DeferredItem<Item> ANGEL_WINGS = ITEMS.registerSimpleItem("angel_wings");
+    public static final DeferredItem<Item> BLUE_DRAGON_WINGS = ITEMS.registerSimpleItem("blue_dragon_wings");
+    public static final DeferredItem<Item> BIG_DRAGON_WINGS = ITEMS.registerSimpleItem("big_dragon_wings");
+    public static final DeferredItem<Item> DRAGON_WINGS = ITEMS.registerSimpleItem("dragon_wings");
+    public static final DeferredItem<Item> BUTTERFLY_WINGS = ITEMS.registerSimpleItem("butterfly_wings");
+    public static final DeferredItem<Item> BAT_WINGS = ITEMS.registerSimpleItem("bat_wings");
+    public static final DeferredItem<Item> GOLDEN_WINGS = ITEMS.registerSimpleItem("golden_wings");
+    public static final DeferredItem<Item> GOLD_WINGS = ITEMS.registerSimpleItem("gold_wings");
 
 
     public static final DeferredItem<Item> ANGEL_WINGS_BOTH = ITEMS.registerSimpleItem("angel_wings_both");

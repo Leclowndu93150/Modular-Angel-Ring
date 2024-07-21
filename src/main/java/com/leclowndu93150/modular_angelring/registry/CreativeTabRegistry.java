@@ -26,6 +26,15 @@ public class CreativeTabRegistry {
                 output.accept(SPEED_MODULE.get());
                 output.accept(UPGRADE_TEMPLATE.get());
                 output.accept(BLANK_MODULE.get());
+
+                output.accept(BLUE_DRAGON_WINGS.get());
+                output.accept(BIG_DRAGON_WINGS.get());
+                output.accept(DRAGON_WINGS.get());
+                output.accept(BUTTERFLY_WINGS.get());
+                output.accept(GOLDEN_WINGS.get());
+                output.accept(GOLD_WINGS.get());
+                output.accept(BAT_WINGS.get());
+
             }).build());
 
 }
