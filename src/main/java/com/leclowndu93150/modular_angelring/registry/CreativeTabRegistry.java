@@ -34,6 +34,7 @@ public class CreativeTabRegistry {
                 output.accept(GOLDEN_WINGS.get());
                 output.accept(GOLD_WINGS.get());
                 output.accept(BAT_WINGS.get());
+                output.accept(FISHRON_WINGS.get());
 
             }).build());
 

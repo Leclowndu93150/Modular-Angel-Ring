@@ -36,7 +36,7 @@ public class ItemRegistry {
     public static final DeferredItem<Item> BAT_WINGS = ITEMS.registerSimpleItem("bat_wings");
     public static final DeferredItem<Item> GOLDEN_WINGS = ITEMS.registerSimpleItem("golden_wings");
     public static final DeferredItem<Item> GOLD_WINGS = ITEMS.registerSimpleItem("gold_wings");
-
+    public static final DeferredItem<Item> FISHRON_WINGS = ITEMS.registerSimpleItem("fishron_wings");
 
     public static final DeferredItem<Item> ANGEL_WINGS_BOTH = ITEMS.registerSimpleItem("angel_wings_both");
     public static final DeferredItem<Item> BIG_DRAGON_WINGS_BOTH = ITEMS.registerSimpleItem("big_dragon_wings_both");
@@ -46,5 +46,6 @@ public class ItemRegistry {
     public static final DeferredItem<Item> GOLDEN_WINGS_BOTH = ITEMS.registerSimpleItem("golden_wings_both");
     public static final DeferredItem<Item> GOLD_WINGS_BOTH = ITEMS.registerSimpleItem("gold_wings_both");
     public static final DeferredItem<Item> BLUE_DRAGON_WINGS_BOTH = ITEMS.registerSimpleItem("blue_dragon_wings_both");
+    public static final DeferredItem<Item> FISHRON_WINGS_BOTH = ITEMS.registerSimpleItem("fishron_wings_both");
 
 }
