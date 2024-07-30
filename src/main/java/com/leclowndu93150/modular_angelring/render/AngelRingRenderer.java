@@ -48,7 +48,6 @@ public class AngelRingRenderer extends RenderLayer<AbstractClientPlayer, PlayerM
             ));
 
             matrixStack.translate(-0.5,0,0);
-
             updateWingAngle();
 
             matrixStack.mulPose(Axis.YN.rotationDegrees((float) angle));
@@ -76,9 +75,6 @@ public class AngelRingRenderer extends RenderLayer<AbstractClientPlayer, PlayerM
                     break;
                 case"GOLDEN":
                     Minecraft.getInstance().getItemRenderer().renderStatic(player, new ItemStack(ItemRegistry.GOLDEN_WINGS_BOTH.get()), ItemDisplayContext.NONE, false, matrixStack, buffer, player.level(), 0xF000F0, OverlayTexture.NO_OVERLAY, player.getId());
-                    break;
-                case "FISHRON":
-                    Minecraft.getInstance().getItemRenderer().renderStatic(player, new ItemStack(ItemRegistry.FISHRON_WINGS_BOTH.get()), ItemDisplayContext.NONE, false, matrixStack, buffer, player.level(), 0xF000F0, OverlayTexture.NO_OVERLAY, player.getId());
                     break;
                 default:
                     Minecraft.getInstance().getItemRenderer().renderStatic(player, new ItemStack(ItemRegistry.ANGEL_WINGS_BOTH.get()), ItemDisplayContext.NONE, false, matrixStack, buffer, player.level(), 0xF000F0, OverlayTexture.NO_OVERLAY, player.getId());

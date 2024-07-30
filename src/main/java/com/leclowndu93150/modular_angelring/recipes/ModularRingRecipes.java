@@ -118,13 +118,6 @@ public class ModularRingRecipes extends RecipeProvider {
                 .unlocks("criteria", has(ItemRegistry.ANGEL_RING))
                 .save(pRecipeOutput, AngelRingMain.MODID+":smithing/golden_ring");
 
-        ItemStack itemStackFishron = ItemRegistry.ANGEL_RING.asItem().getDefaultInstance();
-        itemStackFishron.set(DataComponentRegistry.WING, "FISHRON");
-        itemStackFishron.set(DataComponents.CUSTOM_MODEL_DATA,new CustomModelData(8));
-
-        AdvancedSmithingRecipeBuilder.smithing(Ingredient.of(ItemRegistry.UPGRADE_TEMPLATE), Ingredient.of(ItemRegistry.ANGEL_RING), Ingredient.of(ItemRegistry.FISHRON_WINGS), RecipeCategory.MISC, itemStackFishron)
-                .unlocks("criteria", has(ItemRegistry.ANGEL_RING))
-                .save(pRecipeOutput, AngelRingMain.MODID+":smithing/fishron_ring");
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC,ItemRegistry.BAT_WINGS)
                 .requires(ItemRegistry.ANGEL_WINGS)
@@ -175,12 +168,6 @@ public class ModularRingRecipes extends RecipeProvider {
                 .unlockedBy("criteria", has(ItemRegistry.ANGEL_WINGS))
                 .save(pRecipeOutput,AngelRingMain.MODID+":shapeless/golden_wings");
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC,ItemRegistry.FISHRON_WINGS)
-                .requires(ItemRegistry.ANGEL_WINGS)
-                .requires(Items.PRISMARINE_SHARD)
-                .requires(Items.PRISMARINE_CRYSTALS)
-                .unlockedBy("criteria", has(ItemRegistry.ANGEL_WINGS))
-                .save(pRecipeOutput,AngelRingMain.MODID+":shapeless/fishron_wings");
     }
 
     @EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD, modid = AngelRingMain.MODID)

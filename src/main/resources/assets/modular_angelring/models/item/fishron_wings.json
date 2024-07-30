@@ -1,7 +1,0 @@
-{
-    "parent": "minecraft:item/generated",
-    "textures": {
-      "layer0": "modular_angelring:item/fishron_wings"
-    }
-  }
-  

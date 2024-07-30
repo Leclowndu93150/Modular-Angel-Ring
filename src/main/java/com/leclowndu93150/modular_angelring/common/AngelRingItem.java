@@ -1,9 +1,7 @@
 package com.leclowndu93150.modular_angelring.common;
 
-import com.leclowndu93150.modular_angelring.networking.PayloadActions;
 import com.leclowndu93150.modular_angelring.registry.DataComponentRegistry;
 import com.leclowndu93150.modular_angelring.registry.ItemRegistry;
-import com.leclowndu93150.modular_angelring.registry.KeyBindRegistry;
 import com.leclowndu93150.modular_angelring.utils.FlightSpeedPercentage;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -11,6 +9,9 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.Interaction;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -21,7 +22,6 @@ import org.jetbrains.annotations.NotNull;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotResult;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -76,6 +76,7 @@ public class AngelRingItem extends Item {
 
         return InteractionResultHolder.fail(item);
     }
+
 
     private static void startFlight(Player player) {
         if (!player.isCreative() && !player.isSpectator()) {
