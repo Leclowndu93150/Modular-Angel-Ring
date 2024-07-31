@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "item": "minecraft:golden_carrot"
+  },
+  "base": {
+    "item": "modular_angelring:blank_module"
+  },
+  "result": {
+    "count": 1,
+    "id": "modular_angelring:night_vision_module"
+  },
+  "template": []
+}

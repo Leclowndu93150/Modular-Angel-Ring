@@ -1,15 +1,14 @@
 {
   "type": "minecraft:smithing_transform",
   "addition": {
-    "item": "modular_angelring:fishron_wings"
+    "item": "modular_angelring:night_vision_module"
   },
   "base": {
     "item": "modular_angelring:angel_ring"
   },
   "result": {
     "components": {
-      "minecraft:custom_model_data": 8,
-      "modular_angelring:wing_component": "FISHRON"
+      "modular_angelring:night_vision_modifier": true
     },
     "count": 1,
     "id": "modular_angelring:angel_ring"

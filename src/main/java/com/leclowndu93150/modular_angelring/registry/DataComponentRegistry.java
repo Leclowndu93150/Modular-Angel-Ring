@@ -23,6 +23,9 @@ public class DataComponentRegistry {
     public static final Supplier<DataComponentType<Float>> SPEED_MODIFIER = COMPONENTS.registerComponentType("speed_modifier",
             builder -> builder.persistent(Codec.FLOAT).networkSynchronized(ByteBufCodecs.FLOAT));
 
+    public static final Supplier<DataComponentType<Boolean>> NIGHT_VISION_MODIFIER = COMPONENTS.registerComponentType("night_vision_modifier",
+            builder -> builder.persistent(Codec.BOOL).networkSynchronized(ByteBufCodecs.BOOL));
+
     public static final Supplier<DataComponentType<EnabledModifiersComponent>> MODIFIERS_ENABLED = COMPONENTS.registerComponentType("modifiers_enabled",
             builder -> builder.persistent(EnabledModifiersComponent.CODEC.codec()).networkSynchronized(EnabledModifiersComponent.STREAM_CODEC));
 

@@ -144,6 +144,12 @@ public class AngelRingItem extends Item {
         if (stack.has(DataComponentRegistry.SPEED_MODIFIER) && !data.speedModifierEnabled()) {
             pTooltipComponents.add(Component.literal("Speed Module: ").append(String.valueOf(FlightSpeedPercentage.speedToPercentage(AngelRingModules.getSpeedModifier(stack)))).append("%").withStyle(ChatFormatting.RED));
         }
+        if (AngelRingModules.getNightVisionModifier(stack) && data.nightVisionEnabled()) {
+            pTooltipComponents.add(Component.literal("Night Vision Module: ").append("Enabled").withStyle(ChatFormatting.GREEN));
+        }
+        if (AngelRingModules.getNightVisionModifier(stack) && !data.nightVisionEnabled()) {
+            pTooltipComponents.add(Component.literal("Night Vision Module: ").append("Disabled").withStyle(ChatFormatting.RED));
+        }
 
         super.appendHoverText(stack, pContext, pTooltipComponents, pTooltipFlag);
     }

@@ -30,4 +30,12 @@ public class AngelRingModules {
         return stack.getOrDefault(DataComponentRegistry.SPEED_MODIFIER,  0.02F );
     }
 
+    public static void setNightVisionModifier(ItemStack stack) {
+        stack.set(DataComponentRegistry.NIGHT_VISION_MODIFIER, true);
+    }
+
+    public static Boolean getNightVisionModifier(ItemStack stack) {
+        return stack.getOrDefault(DataComponentRegistry.NIGHT_VISION_MODIFIER, false);
+    }
+
 }

@@ -17,10 +17,9 @@ public class ItemRegistry {
             .component(DataComponentRegistry.MODIFIERS_ENABLED, EnabledModifiersComponent.EMPTY)));
 
     public static final DeferredItem<Item> INERTIA_MODULE = ITEMS.register("inertia_module", () -> new  InertiaModuleItem(new Item.Properties()));
-
     public static final DeferredItem<Item> MINING_MODULE = ITEMS.register("mining_module",() -> new MiningModuleItem(new Item.Properties()));
-
     public static final DeferredItem<Item> SPEED_MODULE = ITEMS.register("speed_module",() -> new SpeedModuleItem(new Item.Properties()));
+    public static final DeferredItem<Item> NIGHT_VISION_MODULE = ITEMS.register("night_vision_module",() -> new NightVisionModuleItem(new Item.Properties()));
 
     public static final DeferredItem<Item> UPGRADE_TEMPLATE = ITEMS.registerSimpleItem("angel_ring_upgrade_smithing_template");
 

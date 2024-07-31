@@ -31,10 +31,14 @@ public class KeyBindRegistry {
     public static final Lazy<KeyMapping> SPEED_MODULE = Lazy.of(() -> new KeyMapping(
             "Speed Module", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_K, "Modular Angel Ring"));
 
+    public static final Lazy<KeyMapping> NIGHT_VISION_MODULE = Lazy.of(() -> new KeyMapping(
+            "Night Vision Module", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_N, "Modular Angel Ring"));
+
     @SubscribeEvent
     public static void registerBindings(RegisterKeyMappingsEvent event) {
         event.register(SPEED_MODULE.get());
         event.register(INERTIA_MODULE.get());
+        event.register(NIGHT_VISION_MODULE.get());
     }
 
     @EventBusSubscriber(modid = MODID, bus = EventBusSubscriber.Bus.GAME, value = Dist.CLIENT)

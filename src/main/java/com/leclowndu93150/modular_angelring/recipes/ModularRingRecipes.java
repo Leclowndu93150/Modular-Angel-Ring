@@ -50,6 +50,13 @@ public class ModularRingRecipes extends RecipeProvider {
                 .unlocks("criteria", has(ItemRegistry.ANGEL_RING))
                 .save(pRecipeOutput, AngelRingMain.MODID+":smithing/speed_modifier");
 
+        ItemStack itemStackNightVision = ItemRegistry.ANGEL_RING.asItem().getDefaultInstance();
+        itemStackNightVision.set(DataComponentRegistry.NIGHT_VISION_MODIFIER, true);
+
+        AdvancedSmithingRecipeBuilder.smithing(Ingredient.of(ItemRegistry.UPGRADE_TEMPLATE), Ingredient.of(ItemRegistry.ANGEL_RING), Ingredient.of(ItemRegistry.NIGHT_VISION_MODULE), RecipeCategory.MISC, itemStackNightVision)
+                .unlocks("criteria", has(ItemRegistry.ANGEL_RING))
+                .save(pRecipeOutput, AngelRingMain.MODID+":smithing/night_vision_modifier");
+
         SmithingTransformRecipeBuilder.smithing(Ingredient.EMPTY, Ingredient.of(ItemRegistry.BLANK_MODULE), Ingredient.of(Items.DIAMOND_PICKAXE), RecipeCategory.MISC, ItemRegistry.MINING_MODULE.asItem())
                 .unlocks("criteria", has(ItemRegistry.ANGEL_RING))
                 .save(pRecipeOutput, AngelRingMain.MODID+":smithing/mining_module");
@@ -61,6 +68,10 @@ public class ModularRingRecipes extends RecipeProvider {
         SmithingTransformRecipeBuilder.smithing(Ingredient.EMPTY, Ingredient.of(ItemRegistry.BLANK_MODULE), Ingredient.of(Items.SUGAR), RecipeCategory.MISC, ItemRegistry.SPEED_MODULE.asItem())
                 .unlocks("criteria", has(ItemRegistry.ANGEL_RING))
                 .save(pRecipeOutput, AngelRingMain.MODID+":smithing/speed_module");
+
+        SmithingTransformRecipeBuilder.smithing(Ingredient.EMPTY, Ingredient.of(ItemRegistry.BLANK_MODULE), Ingredient.of(Items.GOLDEN_CARROT), RecipeCategory.MISC, ItemRegistry.NIGHT_VISION_MODULE.asItem())
+                .unlocks("criteria", has(ItemRegistry.ANGEL_RING))
+                .save(pRecipeOutput, AngelRingMain.MODID+":smithing/night_vision_module");
 
         ItemStack itemStackBat = ItemRegistry.ANGEL_RING.asItem().getDefaultInstance();
         itemStackBat.set(DataComponentRegistry.WING, "BAT");

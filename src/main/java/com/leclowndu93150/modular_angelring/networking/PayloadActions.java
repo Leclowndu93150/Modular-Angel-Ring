@@ -29,10 +29,16 @@ public final class PayloadActions {
             EnabledModifiersComponent data = itemStack.getOrDefault(DataComponentRegistry.MODIFIERS_ENABLED, EnabledModifiersComponent.EMPTY);
             if (key == 0) {
                 itemStack.set(DataComponentRegistry.MODIFIERS_ENABLED,
-                        new EnabledModifiersComponent(!data.inertiaEnabled(), data.speedModifierEnabled(), data.miningEnabled()));
+                        new EnabledModifiersComponent(!data.inertiaEnabled(), data.speedModifierEnabled(), data.miningEnabled(), data.nightVisionEnabled()));
             } else if (key == 1) {
                 itemStack.set(DataComponentRegistry.MODIFIERS_ENABLED,
-                        new EnabledModifiersComponent(data.inertiaEnabled(), !data.speedModifierEnabled(), data.miningEnabled()));
+                        new EnabledModifiersComponent(data.inertiaEnabled(), !data.speedModifierEnabled(), data.miningEnabled(), data.nightVisionEnabled()));
+            } else if (key == 2) {
+                itemStack.set(DataComponentRegistry.MODIFIERS_ENABLED,
+                        new EnabledModifiersComponent(data.inertiaEnabled(), data.speedModifierEnabled(), !data.miningEnabled(), data.nightVisionEnabled()));
+            } else if (key == 3) {
+                itemStack.set(DataComponentRegistry.MODIFIERS_ENABLED,
+                        new EnabledModifiersComponent(data.inertiaEnabled(), data.speedModifierEnabled(), data.miningEnabled(), !data.nightVisionEnabled()));
             }
         }
     }

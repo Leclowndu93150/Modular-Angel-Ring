@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "modular_angelring:smithing/fishron_ring"
+        "recipe": "modular_angelring:smithing/night_vision_module"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "modular_angelring:smithing/fishron_ring"
+      "modular_angelring:smithing/night_vision_module"
     ]
   }
 }
