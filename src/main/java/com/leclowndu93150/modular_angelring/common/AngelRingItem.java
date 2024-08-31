@@ -1,5 +1,6 @@
 package com.leclowndu93150.modular_angelring.common;
 
+import com.leclowndu93150.modular_angelring.AngelRingMain;
 import com.leclowndu93150.modular_angelring.registry.DataComponentRegistry;
 import com.leclowndu93150.modular_angelring.registry.ItemRegistry;
 import com.leclowndu93150.modular_angelring.utils.FlightSpeedPercentage;
@@ -17,6 +18,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.common.NeoForgeMod;
 import org.jetbrains.annotations.NotNull;
 import top.theillusivec4.curios.api.CuriosApi;

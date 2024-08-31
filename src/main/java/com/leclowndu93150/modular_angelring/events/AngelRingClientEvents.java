@@ -17,9 +17,12 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.fml.loading.FMLLoader;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.InputEvent;
+import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.network.PacketDistributor;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotResult;
@@ -88,7 +91,7 @@ public class AngelRingClientEvents {
         double initialGamma = 1.0;
         double maxGamma = 9999.0;
         Player player = Minecraft.getInstance().player;
-        if (player == null) return;
+        if (player == null || ModList.get().isLoaded("fullbrightnesstoggle")) return;
         Optional<SlotResult> slotResult = CuriosApi.getCuriosInventory(player).flatMap(handler -> handler.findFirstCurio(ItemRegistry.ANGEL_RING.get()));
         if (slotResult.isPresent()) {
             ItemStack angelRingStack = slotResult.get().stack();
