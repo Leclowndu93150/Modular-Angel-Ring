@@ -57,19 +57,19 @@ public class ModularRingRecipes extends RecipeProvider {
                 .unlocks("criteria", has(ItemRegistry.ANGEL_RING))
                 .save(pRecipeOutput, AngelRingMain.MODID+":smithing/night_vision_modifier");
 
-        SmithingTransformRecipeBuilder.smithing(Ingredient.EMPTY, Ingredient.of(ItemRegistry.BLANK_MODULE), Ingredient.of(Items.DIAMOND_PICKAXE), RecipeCategory.MISC, ItemRegistry.MINING_MODULE.asItem())
+        SmithingTransformRecipeBuilder.smithing(Ingredient.of(ItemRegistry.UPGRADE_TEMPLATE), Ingredient.of(ItemRegistry.BLANK_MODULE), Ingredient.of(Items.DIAMOND_PICKAXE), RecipeCategory.MISC, ItemRegistry.MINING_MODULE.asItem())
                 .unlocks("criteria", has(ItemRegistry.ANGEL_RING))
                 .save(pRecipeOutput, AngelRingMain.MODID+":smithing/mining_module");
 
-        SmithingTransformRecipeBuilder.smithing(Ingredient.EMPTY, Ingredient.of(ItemRegistry.BLANK_MODULE), Ingredient.of(Items.PHANTOM_MEMBRANE), RecipeCategory.MISC, ItemRegistry.INERTIA_MODULE.asItem())
+        SmithingTransformRecipeBuilder.smithing(Ingredient.of(ItemRegistry.UPGRADE_TEMPLATE), Ingredient.of(ItemRegistry.BLANK_MODULE), Ingredient.of(Items.PHANTOM_MEMBRANE), RecipeCategory.MISC, ItemRegistry.INERTIA_MODULE.asItem())
                 .unlocks("criteria", has(ItemRegistry.ANGEL_RING))
                 .save(pRecipeOutput, AngelRingMain.MODID+":smithing/inertia_module");
 
-        SmithingTransformRecipeBuilder.smithing(Ingredient.EMPTY, Ingredient.of(ItemRegistry.BLANK_MODULE), Ingredient.of(Items.SUGAR), RecipeCategory.MISC, ItemRegistry.SPEED_MODULE.asItem())
+        SmithingTransformRecipeBuilder.smithing(Ingredient.of(ItemRegistry.UPGRADE_TEMPLATE), Ingredient.of(ItemRegistry.BLANK_MODULE), Ingredient.of(Items.SUGAR), RecipeCategory.MISC, ItemRegistry.SPEED_MODULE.asItem())
                 .unlocks("criteria", has(ItemRegistry.ANGEL_RING))
                 .save(pRecipeOutput, AngelRingMain.MODID+":smithing/speed_module");
 
-        SmithingTransformRecipeBuilder.smithing(Ingredient.EMPTY, Ingredient.of(ItemRegistry.BLANK_MODULE), Ingredient.of(Items.GOLDEN_CARROT), RecipeCategory.MISC, ItemRegistry.NIGHT_VISION_MODULE.asItem())
+        SmithingTransformRecipeBuilder.smithing(Ingredient.of(ItemRegistry.UPGRADE_TEMPLATE), Ingredient.of(ItemRegistry.BLANK_MODULE), Ingredient.of(Items.GOLDEN_CARROT), RecipeCategory.MISC, ItemRegistry.NIGHT_VISION_MODULE.asItem())
                 .unlocks("criteria", has(ItemRegistry.ANGEL_RING))
                 .save(pRecipeOutput, AngelRingMain.MODID+":smithing/night_vision_module");
 

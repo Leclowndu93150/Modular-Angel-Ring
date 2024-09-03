@@ -10,5 +10,7 @@
     "count": 1,
     "id": "modular_angelring:speed_module"
   },
-  "template": []
+  "template": {
+    "item": "modular_angelring:angel_ring_upgrade_smithing_template"
+  }
 }
