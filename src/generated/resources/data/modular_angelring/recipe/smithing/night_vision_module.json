@@ -10,7 +10,5 @@
     "count": 1,
     "id": "modular_angelring:night_vision_module"
   },
-  "template": {
-    "item": "modular_angelring:angel_ring_upgrade_smithing_template"
-  }
+  "template": []
 }

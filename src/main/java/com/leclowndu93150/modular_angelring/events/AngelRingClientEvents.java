@@ -92,7 +92,6 @@ public class AngelRingClientEvents {
         double initialGamma = 1.0;
         double maxGamma = 9999.0;
         Player player = Minecraft.getInstance().player;
-        //Im not proud of this, but it works
         if (player == null || ModList.get().isLoaded("fullbrightnesstoggle")) return;
         Optional<SlotResult> slotResult = CuriosApi.getCuriosInventory(player).flatMap(handler -> handler.findFirstCurio(ItemRegistry.ANGEL_RING.get()));
         if (slotResult.isPresent()) {

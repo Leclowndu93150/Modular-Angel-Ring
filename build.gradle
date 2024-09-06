@@ -91,7 +91,7 @@ configurations {
 dependencies {
     implementation "net.neoforged:neoforge:${neo_version}"
     implementation "curse.maven:curios-1037991:5476603"
-    runtimeOnly("mezz.jei:jei-1.21-neoforge:${jei_version}")
+    runtimeOnly("mezz.jei:jei-${jei_mc_version}-neoforge:${jei_version}")
 }
 
 minecraft {
