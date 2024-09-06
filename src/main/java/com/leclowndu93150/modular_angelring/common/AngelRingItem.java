@@ -19,10 +19,14 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.common.NeoForgeMod;
 import org.jetbrains.annotations.NotNull;
 import top.theillusivec4.curios.api.CuriosApi;
+import top.theillusivec4.curios.api.CuriosCapability;
+import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.SlotResult;
+import top.theillusivec4.curios.api.type.capability.ICurio;
 
 import java.util.List;
 import java.util.Optional;
@@ -34,6 +38,46 @@ public class AngelRingItem extends Item {
 
     public AngelRingItem(Properties pProperties) {
         super(pProperties);
+    }
+
+    public static void registerCapabilities(final RegisterCapabilitiesEvent evt) {
+        evt.registerItem(
+                CuriosCapability.ITEM,
+                (stack, context) -> new ICurio() {
+
+                    @Override
+                    public ItemStack getStack() {
+                        return ItemRegistry.ANGEL_RING.toStack();
+                    }
+
+                    @Override
+                    public void curioTick(SlotContext slotContext) {
+                        Player player = (Player) slotContext.entity();
+                        Optional<SlotResult> slotResult = CuriosApi.getCuriosInventory(player).flatMap(handler -> handler.findFirstCurio(ItemRegistry.ANGEL_RING.get()));
+                        ItemStack angelRingStack = slotResult.get().stack();
+                        EnabledModifiersComponent data = stack.getOrDefault(DataComponentRegistry.MODIFIERS_ENABLED, EnabledModifiersComponent.EMPTY);
+
+                        if (angelRingStack.has(DataComponentRegistry.SPEED_MODIFIER) && ((player.getAbilities().getFlyingSpeed() != getSpeedModifier(angelRingStack)) || !data.speedModifierEnabled())) {
+                            if (data.speedModifierEnabled()) {
+                                player.getAbilities().setFlyingSpeed(getSpeedModifier(angelRingStack));
+                            }
+                        }
+
+                    }
+
+                    @Override
+                    public void onEquip(SlotContext slotContext, ItemStack prevStack) {
+                        Player player = (Player) slotContext.entity();
+                        startFlight(player);
+                    }
+
+                    @Override
+                    public void onUnequip(SlotContext slotContext, ItemStack newStack) {
+                        Player player = (Player) slotContext.entity();
+                        stopFlight(player);
+                        player.getAbilities().setFlyingSpeed(0.05F);
+                    }
+                },  ItemRegistry.ANGEL_RING.get());
     }
 
     @Override
@@ -81,50 +125,11 @@ public class AngelRingItem extends Item {
 
 
     private static void startFlight(Player player) {
-        if (!player.isCreative() && !player.isSpectator()) {
-            player.getAttribute(NeoForgeMod.CREATIVE_FLIGHT).setBaseValue(1);
-        }
+        player.getAttribute(NeoForgeMod.CREATIVE_FLIGHT).setBaseValue(1);
     }
 
     private static void stopFlight(Player player) {
-        if (!player.isCreative() && !player.isSpectator()) {
-            player.getAttribute(NeoForgeMod.CREATIVE_FLIGHT).setBaseValue(0);
-        }
-    }
-
-    public static void tickRing(ItemStack stack, Player player) {
-        Optional<SlotResult> slotResult = CuriosApi.getCuriosInventory(player).flatMap(handler -> handler.findFirstCurio(ItemRegistry.ANGEL_RING.get()));
-        if (slotResult.isEmpty()) {
-            player.getAbilities().setFlyingSpeed(0.05F);
-            return;
-        }
-
-        if (player.getAttribute(NeoForgeMod.CREATIVE_FLIGHT).getBaseValue() != 1) {
-            startFlight(player);
-        }
-
-        ItemStack angelRingStack = slotResult.get().stack();
-        EnabledModifiersComponent data = stack.getOrDefault(DataComponentRegistry.MODIFIERS_ENABLED, EnabledModifiersComponent.EMPTY);
-
-        if (angelRingStack.has(DataComponentRegistry.SPEED_MODIFIER) && ((player.getAbilities().getFlyingSpeed() != getSpeedModifier(angelRingStack)) || !data.speedModifierEnabled())) {
-            if (data.speedModifierEnabled()) {
-                player.getAbilities().setFlyingSpeed(getSpeedModifier(angelRingStack));
-            } else {
-                player.getAbilities().setFlyingSpeed(0.05F);
-            }
-        }
-    }
-
-    public static void tickPlayer(Player player) {
-        Optional<SlotResult> slotResult = CuriosApi.getCuriosInventory(player).flatMap(handler -> handler.findFirstCurio(ItemRegistry.ANGEL_RING.get()));
-        if (slotResult.isPresent()) {
-            ItemStack angelRingStack = slotResult.get().stack();
-            tickRing(angelRingStack, player);
-        }
-        if (slotResult.isEmpty()) {
-            stopFlight(player);
-            player.getAbilities().setFlyingSpeed(0.05F);
-        }
+        player.getAttribute(NeoForgeMod.CREATIVE_FLIGHT).setBaseValue(0);
     }
 
     @Override

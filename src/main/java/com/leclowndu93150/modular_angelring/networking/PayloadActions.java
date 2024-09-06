@@ -35,9 +35,6 @@ public final class PayloadActions {
                         new EnabledModifiersComponent(data.inertiaEnabled(), !data.speedModifierEnabled(), data.miningEnabled(), data.nightVisionEnabled()));
             } else if (key == 2) {
                 itemStack.set(DataComponentRegistry.MODIFIERS_ENABLED,
-                        new EnabledModifiersComponent(data.inertiaEnabled(), data.speedModifierEnabled(), !data.miningEnabled(), data.nightVisionEnabled()));
-            } else if (key == 3) {
-                itemStack.set(DataComponentRegistry.MODIFIERS_ENABLED,
                         new EnabledModifiersComponent(data.inertiaEnabled(), data.speedModifierEnabled(), data.miningEnabled(), !data.nightVisionEnabled()));
             }
         }

@@ -70,9 +70,4 @@ public class AngelRingEvents {
         }
     }
 
-    @SubscribeEvent
-    public static void onPlayerTick(PlayerTickEvent.Pre event) {
-        AngelRingItem.tickPlayer(event.getEntity());
-    }
-
 }

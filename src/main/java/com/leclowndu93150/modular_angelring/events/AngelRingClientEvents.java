@@ -72,7 +72,8 @@ public class AngelRingClientEvents {
             }
 
             if (KeyBindRegistry.NIGHT_VISION_MODULE.get().consumeClick() && angelRingStack.has(DataComponentRegistry.NIGHT_VISION_MODIFIER)) {
-                PacketDistributor.sendToServer(new KeyPressedPayload(3));
+                PacketDistributor.sendToServer(new KeyPressedPayload(2));
+                // Needs to be inverted, since the data component has not yet synced to the client
                 if (!data.nightVisionEnabled()) {
                     player.displayClientMessage(Component.literal("Night Vision Module: Enabled").withStyle(ChatFormatting.GREEN), true);
                     level.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.NOTE_BLOCK_BELL.value(), SoundSource.PLAYERS, 0.4f, 0.01f);
