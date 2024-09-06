@@ -158,6 +158,7 @@ public class AngelRingItem extends Item {
             pTooltipComponents.add(Component.literal("Night Vision Module: ").append("Disabled").withStyle(ChatFormatting.RED));
         }
 
+
         super.appendHoverText(stack, pContext, pTooltipComponents, pTooltipFlag);
     }
 }
