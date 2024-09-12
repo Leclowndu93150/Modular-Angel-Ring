@@ -76,10 +76,8 @@ public class AngelRingRenderer extends RenderLayer<AbstractClientPlayer, PlayerM
                 case "GOLDEN":
                     Minecraft.getInstance().getItemRenderer().renderStatic(player, new ItemStack(ItemRegistry.GOLDEN_WINGS_BOTH.get()), ItemDisplayContext.NONE, false, matrixStack, buffer, player.level(), 0xF000F0, OverlayTexture.NO_OVERLAY, player.getId());
                     break;
-                case "ANGEL":
+                default:
                     Minecraft.getInstance().getItemRenderer().renderStatic(player, new ItemStack(ItemRegistry.ANGEL_WINGS_BOTH.get()), ItemDisplayContext.NONE, false, matrixStack, buffer, player.level(), 0xF000F0, OverlayTexture.NO_OVERLAY, player.getId());
-                    break;
-                case "NO_WING":
                     break;
             }
 
