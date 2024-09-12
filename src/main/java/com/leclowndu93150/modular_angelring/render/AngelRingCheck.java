@@ -34,6 +34,7 @@ public class AngelRingCheck {
             if(angelRingStack.has(DataComponentRegistry.WING)){
                 return angelRingStack.get(DataComponentRegistry.WING);
             }
+            return "ANGEL";
         }
         return "NO_WING";
     }
