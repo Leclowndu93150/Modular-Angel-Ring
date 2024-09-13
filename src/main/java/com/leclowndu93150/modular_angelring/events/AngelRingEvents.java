@@ -63,7 +63,8 @@ public class AngelRingEvents {
             if (player.getAbilities().flying && getInertiaModifier(angelRingStack) && data.inertiaEnabled()) {
                 if (player.getPersistentData().getBoolean(PayloadActions.NO_KEYS_PRESSED)) {
                     if (motion.x != 0 || motion.z != 0) {
-                        player.setDeltaMovement(0, motion.y, 0);
+                        double slowdownFactor = 0.75; // Change this value for slower or faster slowdown (closer to 1 for slower).
+                        player.setDeltaMovement(motion.x * slowdownFactor, motion.y, motion.z * slowdownFactor);
                     }
                 }
             }
