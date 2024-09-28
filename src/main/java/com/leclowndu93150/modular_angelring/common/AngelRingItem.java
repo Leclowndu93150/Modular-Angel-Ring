@@ -54,18 +54,25 @@ public class AngelRingItem extends Item {
                     public void curioTick(SlotContext slotContext) {
                         Player player = (Player) slotContext.entity();
                         Optional<SlotResult> slotResult = CuriosApi.getCuriosInventory(player).flatMap(handler -> handler.findFirstCurio(ItemRegistry.ANGEL_RING.get()));
-                        if(slotResult.isPresent()){
-                            ItemStack angelRingStack = slotResult.get().stack();
-                            EnabledModifiersComponent data = stack.getOrDefault(DataComponentRegistry.MODIFIERS_ENABLED, EnabledModifiersComponent.EMPTY);
 
-                            if (angelRingStack.has(DataComponentRegistry.SPEED_MODIFIER) && ((player.getAbilities().getFlyingSpeed() != getSpeedModifier(angelRingStack)) || !data.speedModifierEnabled())) {
+                        if (slotResult.isPresent()) {
+                            ItemStack angelRingStack = slotResult.get().stack();
+                            EnabledModifiersComponent data = angelRingStack.getOrDefault(DataComponentRegistry.MODIFIERS_ENABLED, EnabledModifiersComponent.EMPTY);
+
+                            if (angelRingStack.has(DataComponentRegistry.SPEED_MODIFIER) &&
+                                    (player.getAbilities().getFlyingSpeed() != getSpeedModifier(angelRingStack) || !data.speedModifierEnabled())) {
+
                                 if (data.speedModifierEnabled()) {
-                                    player.getAbilities().setFlyingSpeed(getSpeedModifier(angelRingStack));
+                                    if (player.getAbilities().flying) {
+                                        player.getAbilities().setFlyingSpeed(getSpeedModifier(angelRingStack));
+                                    }
+                                } else {
+                                    player.getAbilities().setFlyingSpeed(0.05F);
                                 }
                             }
                         }
-
                     }
+
 
                     @Override
                     public void onEquip(SlotContext slotContext, ItemStack prevStack) {
