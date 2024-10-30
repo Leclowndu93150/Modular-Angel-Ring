@@ -1,5 +1,7 @@
 package com.leclowndu93150.modular_angelring.common;
 
+import com.leclowndu93150.modular_angelring.AngelRingConfig;
+import com.leclowndu93150.modular_angelring.utils.FlightSpeedPercentage;
 import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
@@ -25,7 +27,7 @@ public class SpeedModuleItem extends Item {
 
     @Override
     public void appendHoverText(@NotNull ItemStack pStack, @NotNull TooltipContext pContext, List<Component> pTooltipComponents, @NotNull TooltipFlag pTooltipFlag) {
-        pTooltipComponents.add(Component.literal("Allows you to configure your flight speed. (Range: 0% - 300%)").withStyle(ChatFormatting.GRAY));
+        pTooltipComponents.add(Component.literal("Allows you to configure your flight speed. (Range: 0% - ").append(String.valueOf(FlightSpeedPercentage.speedToPercentage((float) AngelRingConfig.maxFlightSpeed))).append("%)").withStyle(ChatFormatting.GRAY));
         pTooltipComponents.add(Component.literal("Shift for Info:").withStyle(ChatFormatting.GRAY));
         if (InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(),InputConstants.KEY_LSHIFT)){
             pTooltipComponents.add(Component.literal("Right-Click: +10% Speed").withStyle(ChatFormatting.GRAY));

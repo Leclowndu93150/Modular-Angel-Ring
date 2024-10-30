@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "item": "modular_angelring:magnet_module"
+  },
+  "base": {
+    "item": "modular_angelring:angel_ring"
+  },
+  "result": {
+    "components": {
+      "modular_angelring:magnet_modifier": true
+    },
+    "count": 1,
+    "id": "modular_angelring:angel_ring"
+  },
+  "template": {
+    "item": "modular_angelring:angel_ring_upgrade_smithing_template"
+  }
+}

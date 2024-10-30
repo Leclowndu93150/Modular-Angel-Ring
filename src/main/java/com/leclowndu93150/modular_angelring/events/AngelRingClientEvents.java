@@ -82,10 +82,21 @@ public class AngelRingClientEvents {
                     level.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.NOTE_BLOCK_BELL.value(), SoundSource.PLAYERS, 0.4f, 0.09f);
                 }
             }
+
+            if (KeyBindRegistry.MAGNET_MODULE.get().consumeClick() && angelRingStack.has(DataComponentRegistry.MAGNET_MODIFIER)) {
+                PacketDistributor.sendToServer(new KeyPressedPayload(3));
+                // Needs to be inverted, since the data component has not yet synced to the client
+                if (!data.magnetEnabled()) {
+                    player.displayClientMessage(Component.literal("Magnet Module: Enabled").withStyle(ChatFormatting.GREEN), true);
+                    level.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.NOTE_BLOCK_BELL.value(), SoundSource.PLAYERS, 0.4f, 0.01f);
+                } else{
+                    player.displayClientMessage(Component.literal("Magnet Module: Disabled").withStyle(ChatFormatting.RED), true);
+                    level.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.NOTE_BLOCK_BELL.value(), SoundSource.PLAYERS, 0.4f, 0.09f);
+                }
+            }
         }
 
     }
-
 
     @SubscribeEvent
     public static void onClientTick(ClientTickEvent.Pre event){
@@ -111,6 +122,4 @@ public class AngelRingClientEvents {
             Minecraft.getInstance().options.gamma().set(initialGamma);
         }
     }
-
-
 }

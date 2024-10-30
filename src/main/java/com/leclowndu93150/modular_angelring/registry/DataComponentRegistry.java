@@ -26,6 +26,9 @@ public class DataComponentRegistry {
     public static final Supplier<DataComponentType<Boolean>> NIGHT_VISION_MODIFIER = COMPONENTS.registerComponentType("night_vision_modifier",
             builder -> builder.persistent(Codec.BOOL).networkSynchronized(ByteBufCodecs.BOOL));
 
+    public static final Supplier<DataComponentType<Boolean>> MAGNET_MODIFIER = COMPONENTS.registerComponentType("magnet_modifier",
+            builder -> builder.persistent(Codec.BOOL).networkSynchronized(ByteBufCodecs.BOOL));
+
     public static final Supplier<DataComponentType<EnabledModifiersComponent>> MODIFIERS_ENABLED = COMPONENTS.registerComponentType("modifiers_enabled",
             builder -> builder.persistent(EnabledModifiersComponent.CODEC.codec()).networkSynchronized(EnabledModifiersComponent.STREAM_CODEC));
 

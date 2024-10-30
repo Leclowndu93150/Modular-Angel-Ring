@@ -1,4 +1,4 @@
-// 1.21	2024-09-27T14:08:04.8843043	Recipes
+// 1.21	2024-10-30T10:30:26.8741299	Recipes
 f17592b4c061b661cf746015e75f22fcf01645b6 data/modular_angelring/advancement/recipes/misc/shapeless/bat_wings.json
 60e10bfceda809b0d29bccfbf515bbc8108d0a36 data/modular_angelring/advancement/recipes/misc/shapeless/big_dragon_wings.json
 77aaca00c49d23276780e641d94ace386e07d571 data/modular_angelring/advancement/recipes/misc/shapeless/blue_dragon_wings.json
@@ -15,6 +15,8 @@ f92cd203cb2f209f45649bf11c5767900f9f412e data/modular_angelring/advancement/reci
 3c49e4070752f43d72430b7853a509f4ccdc8fae data/modular_angelring/advancement/recipes/misc/smithing/gold_ring.json
 029b5d630f07cd1c858cabae289779749780bb82 data/modular_angelring/advancement/recipes/misc/smithing/inertia_modifier.json
 c3a202cab90b96fcfbca1c361ecda50bab394319 data/modular_angelring/advancement/recipes/misc/smithing/inertia_module.json
+0eccf1809fb317fa836361ce2efafc5dc1687cc0 data/modular_angelring/advancement/recipes/misc/smithing/magnet_modifier.json
+fd16099499acdcb068134df68d47193a47e0de62 data/modular_angelring/advancement/recipes/misc/smithing/magnet_module.json
 a0dc22764c73d9316bb0b85b29997d9365f7b45f data/modular_angelring/advancement/recipes/misc/smithing/mining_modifier.json
 8237f8dcfbee2bdcb3d8e2b89edd7d5122120bfc data/modular_angelring/advancement/recipes/misc/smithing/mining_module.json
 73977f566db2b9f06c8693b1fd13ef32ebd25084 data/modular_angelring/advancement/recipes/misc/smithing/night_vision_modifier.json
@@ -37,6 +39,8 @@ d6169c70ce43550d661b37da27a0fa0477721504 data/modular_angelring/recipe/smithing/
 4024587a665571a880a0a1ccad9dd4893952329b data/modular_angelring/recipe/smithing/gold_ring.json
 4a64dbc2945e0dc540683f0887cabe80f44f6b84 data/modular_angelring/recipe/smithing/inertia_modifier.json
 f723b74516ad6291d383ea3ed969fb8d8f0b74c9 data/modular_angelring/recipe/smithing/inertia_module.json
+f4561b98d8b0ed72de100e1e5fdae633f657c646 data/modular_angelring/recipe/smithing/magnet_modifier.json
+ff3b1c20c3e1c2ee4cc93a3e90dd6d78c88b89ba data/modular_angelring/recipe/smithing/magnet_module.json
 d1a7a0ceb72cb10c980a74abad99a4dc9763577a data/modular_angelring/recipe/smithing/mining_modifier.json
 dffda0873204dc6b8b028a592e99464874b6e918 data/modular_angelring/recipe/smithing/mining_module.json
 b95080909de0a567e64cf73bad4f9cba45d063b8 data/modular_angelring/recipe/smithing/night_vision_modifier.json

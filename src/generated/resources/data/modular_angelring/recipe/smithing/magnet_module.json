@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "item": "minecraft:ender_eye"
+  },
+  "base": {
+    "item": "modular_angelring:blank_module"
+  },
+  "result": {
+    "count": 1,
+    "id": "modular_angelring:magnet_module"
+  },
+  "template": {
+    "item": "modular_angelring:angel_ring_upgrade_smithing_template"
+  }
+}

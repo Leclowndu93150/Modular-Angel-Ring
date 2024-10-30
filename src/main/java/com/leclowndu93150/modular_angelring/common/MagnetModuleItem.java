@@ -8,8 +8,8 @@ import net.minecraft.world.item.TooltipFlag;
 
 import java.util.List;
 
-public class NightVisionModuleItem extends Item {
-    public NightVisionModuleItem(Properties pProperties) {
+public class MagnetModuleItem extends Item {
+    public MagnetModuleItem(Properties pProperties) {
         super(pProperties);
     }
 
@@ -20,6 +20,7 @@ public class NightVisionModuleItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack pStack, TooltipContext pContext, List<Component> pTooltipComponents, TooltipFlag pTooltipFlag) {
-        pTooltipComponents.add(Component.literal("Gives Night Vision").withStyle(ChatFormatting.GRAY));
+        pTooltipComponents.add(Component.literal("Attracts items that are far away.").withStyle(ChatFormatting.GRAY));
+        super.appendHoverText(pStack, pContext, pTooltipComponents, pTooltipFlag);
     }
 }

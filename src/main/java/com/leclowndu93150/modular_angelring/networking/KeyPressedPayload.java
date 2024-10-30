@@ -9,7 +9,7 @@ import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * @param key 0 = inertia, 1 = speed, 2 = nightvision ?
+ * @param key 0 = inertia, 1 = speed, 2 = night_vision, 3 = magnet
  */
 public record KeyPressedPayload(int key) implements CustomPacketPayload {
     public static final Type<KeyPressedPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(AngelRingMain.MODID, "keypressed_payload"));

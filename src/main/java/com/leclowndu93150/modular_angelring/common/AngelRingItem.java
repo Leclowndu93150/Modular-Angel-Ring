@@ -1,6 +1,8 @@
 package com.leclowndu93150.modular_angelring.common;
 
+import com.leclowndu93150.modular_angelring.AngelRingConfig;
 import com.leclowndu93150.modular_angelring.AngelRingMain;
+import com.leclowndu93150.modular_angelring.events.AngelRingEvents;
 import com.leclowndu93150.modular_angelring.registry.DataComponentRegistry;
 import com.leclowndu93150.modular_angelring.registry.ItemRegistry;
 import com.leclowndu93150.modular_angelring.utils.FlightSpeedPercentage;
@@ -102,7 +104,7 @@ public class AngelRingItem extends Item {
     @Override
     public InteractionResultHolder<ItemStack> use(Level pLevel, Player player, InteractionHand pUsedHand) {
 
-        final float MAX_FLY_SPEED = 0.15F;
+        final float MAX_FLY_SPEED = (float) AngelRingConfig.maxFlightSpeed;
         final float MIN_FLY_SPEED = 0.0F;
         final float SPEED_INCREMENT = 0.005F;
         ItemStack item = player.getItemInHand(pUsedHand);
@@ -165,6 +167,12 @@ public class AngelRingItem extends Item {
         }
         if (AngelRingModules.getNightVisionModifier(stack) && !data.nightVisionEnabled()) {
             pTooltipComponents.add(Component.literal("Night Vision Module: ").append("Disabled").withStyle(ChatFormatting.RED));
+        }
+        if (AngelRingModules.getMagnetModifier(stack) && data.magnetEnabled()) {
+            pTooltipComponents.add(Component.literal("Magnet Module: ").append("Enabled").withStyle(ChatFormatting.GREEN).append(" (Radius: ").append(String.valueOf((int) AngelRingEvents.MAGNET_RADIUS)).append(" blocks)").withStyle(ChatFormatting.GREEN));
+        }
+        if (AngelRingModules.getMagnetModifier(stack) && !data.magnetEnabled()) {
+            pTooltipComponents.add(Component.literal("Magnet Module: ").append("Disabled").withStyle(ChatFormatting.RED));
         }
 
 

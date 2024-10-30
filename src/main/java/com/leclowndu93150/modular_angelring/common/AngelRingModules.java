@@ -1,6 +1,7 @@
 package com.leclowndu93150.modular_angelring.common;
 
 import com.leclowndu93150.modular_angelring.registry.DataComponentRegistry;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
 
@@ -38,4 +39,11 @@ public class AngelRingModules {
         return stack.getOrDefault(DataComponentRegistry.NIGHT_VISION_MODIFIER, false);
     }
 
+    public static void setMagnetModifier(ItemStack stack){
+        stack.set(DataComponentRegistry.MAGNET_MODIFIER, true);
+    }
+
+    public static Boolean getMagnetModifier(ItemStack stack){
+        return stack.getOrDefault(DataComponentRegistry.MAGNET_MODIFIER,false);
+    }
 }

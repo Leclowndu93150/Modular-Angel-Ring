@@ -25,6 +25,7 @@ public class CreativeTabRegistry {
                 output.accept(MINING_MODULE.get());
                 output.accept(SPEED_MODULE.get());
                 output.accept(NIGHT_VISION_MODULE.get());
+                output.accept(MAGNET_MODULE.get());
                 output.accept(UPGRADE_TEMPLATE.get());
                 output.accept(BLANK_MODULE.get());
 
