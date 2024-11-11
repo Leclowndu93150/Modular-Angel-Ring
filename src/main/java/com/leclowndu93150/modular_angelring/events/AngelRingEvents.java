@@ -40,8 +40,6 @@ public class AngelRingEvents {
         }
     }
 
-    public static double slowdownFactor = AngelRingConfig.slowdownFactor;
-
     @SubscribeEvent
     public static void stopDrift(PlayerTickEvent.Pre event) {
         Player player = event.getEntity();
@@ -53,15 +51,13 @@ public class AngelRingEvents {
             if (player.getAbilities().flying && getInertiaModifier(angelRingStack) && data.inertiaEnabled()) {
                 if (player.getPersistentData().getBoolean(PayloadActions.NO_KEYS_PRESSED)) {
                     if (motion.x != 0 || motion.z != 0) {
-                        player.setDeltaMovement(motion.x * slowdownFactor, motion.y, motion.z * slowdownFactor);
+                        player.setDeltaMovement(motion.x * AngelRingConfig.slowdownFactor, motion.y, motion.z * AngelRingConfig.slowdownFactor);
                     }
                 }
             }
         }
     }
 
-    public static final double MAGNET_RADIUS = AngelRingConfig.magnetRadius;
-    private static final double MAGNET_PULL_SPEED = AngelRingConfig.magnetPullSpeed;
 
     @SubscribeEvent
     public static void useMagnet(PlayerTickEvent.Pre event){
@@ -71,9 +67,9 @@ public class AngelRingEvents {
             ItemStack angelRingStack = slotResult.get().stack();
             EnabledModifiersComponent data = angelRingStack.getOrDefault(DataComponentRegistry.MODIFIERS_ENABLED, EnabledModifiersComponent.EMPTY);
             if (!player.isCrouching() && getMagnetModifier(angelRingStack) && data.magnetEnabled()) {
-                List<ItemEntity> nearbyItems = player.level().getEntitiesOfClass(ItemEntity.class, player.getBoundingBox().inflate(MAGNET_RADIUS));
+                List<ItemEntity> nearbyItems = player.level().getEntitiesOfClass(ItemEntity.class, player.getBoundingBox().inflate(AngelRingConfig.magnetRadius));
                 for (ItemEntity itemEntity : nearbyItems) {
-                    Vec3 pullVec = player.position().subtract(itemEntity.position()).normalize().scale(MAGNET_PULL_SPEED);
+                    Vec3 pullVec = player.position().subtract(itemEntity.position()).normalize().scale(AngelRingConfig.magnetPullSpeed);
                     itemEntity.setPickUpDelay(0);
                     itemEntity.setDeltaMovement(itemEntity.getDeltaMovement().add(pullVec));
                 }

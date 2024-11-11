@@ -169,7 +169,7 @@ public class AngelRingItem extends Item {
             pTooltipComponents.add(Component.literal("Night Vision Module: ").append("Disabled").withStyle(ChatFormatting.RED));
         }
         if (AngelRingModules.getMagnetModifier(stack) && data.magnetEnabled()) {
-            pTooltipComponents.add(Component.literal("Magnet Module: ").append("Enabled").withStyle(ChatFormatting.GREEN).append(" (Radius: ").append(String.valueOf((int) AngelRingEvents.MAGNET_RADIUS)).append(" blocks)").withStyle(ChatFormatting.GREEN));
+            pTooltipComponents.add(Component.literal("Magnet Module: ").append("Enabled").withStyle(ChatFormatting.GREEN).append(" (Radius: ").append(String.valueOf((int) AngelRingConfig.magnetRadius)).append(" blocks)").withStyle(ChatFormatting.GREEN));
         }
         if (AngelRingModules.getMagnetModifier(stack) && !data.magnetEnabled()) {
             pTooltipComponents.add(Component.literal("Magnet Module: ").append("Disabled").withStyle(ChatFormatting.RED));
