@@ -15,7 +15,6 @@ public class CreativeTabRegistry {
 
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> UTILS_TAB = CREATIVE_MODE_TABS.register("angelring_tab", () -> CreativeModeTab.builder()
             .title(Component.literal("Modular Angel Ring")) //The language key for the title of your CreativeModeTab
-            .withTabsBefore(CreativeModeTabs.COMBAT)
             .icon(() -> ANGEL_RING.get().getDefaultInstance())
             .displayItems((parameters, output) -> {
                 output.accept(ANGEL_RING.get());
