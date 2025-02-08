@@ -24,56 +24,71 @@ import static com.leclowndu93150.modular_angelring.common.AngelRingModules.*;
 
 @EventBusSubscriber(modid = AngelRingMain.MODID)
 public class AngelRingEvents {
+
     @SubscribeEvent
     public static void setRingBreakSpeed(PlayerEvent.BreakSpeed event) {
         Player player = event.getEntity();
-        Optional<SlotResult> slotResult = CuriosApi.getCuriosInventory(player).flatMap(handler -> handler.findFirstCurio(ItemRegistry.ANGEL_RING.get()));
-        if (slotResult.isPresent()) {
-            ItemStack angelRingStack = slotResult.get().stack();
-            float newDigSpeed = event.getOriginalSpeed();
-            if (getMiningSpeedModifier(angelRingStack) && !player.onGround()) {
-                newDigSpeed *= 5f;
-            }
-            if (newDigSpeed != event.getOriginalSpeed()) {
-                event.setNewSpeed(newDigSpeed);
-            }
-        }
+        if (player.onGround()) return;
+
+        CuriosApi.getCuriosInventory(player)
+                .flatMap(handler -> handler.findFirstCurio(ItemRegistry.ANGEL_RING.get()))
+                .ifPresent(slotResult -> {
+                    ItemStack angelRingStack = slotResult.stack();
+                    if (getMiningSpeedModifier(angelRingStack)) {
+                        event.setNewSpeed(event.getOriginalSpeed() * 5f);
+                    }
+                });
     }
 
     @SubscribeEvent
     public static void stopDrift(PlayerTickEvent.Pre event) {
         Player player = event.getEntity();
-        Optional<SlotResult> slotResult = CuriosApi.getCuriosInventory(player).flatMap(handler -> handler.findFirstCurio(ItemRegistry.ANGEL_RING.get()));
-        if (slotResult.isPresent()) {
-            ItemStack angelRingStack = slotResult.get().stack();
-            Vec3 motion = player.getDeltaMovement();
-            EnabledModifiersComponent data = angelRingStack.getOrDefault(DataComponentRegistry.MODIFIERS_ENABLED, EnabledModifiersComponent.EMPTY);
-            if (player.getAbilities().flying && getInertiaModifier(angelRingStack) && data.inertiaEnabled()) {
-                if (player.getPersistentData().getBoolean(PayloadActions.NO_KEYS_PRESSED)) {
-                    if (motion.x != 0 || motion.z != 0) {
-                        player.setDeltaMovement(motion.x * AngelRingConfig.slowdownFactor, motion.y, motion.z * AngelRingConfig.slowdownFactor);
+        if (!player.getAbilities().flying) return;
+
+        CuriosApi.getCuriosInventory(player)
+                .flatMap(handler -> handler.findFirstCurio(ItemRegistry.ANGEL_RING.get()))
+                .ifPresent(slotResult -> {
+                    ItemStack angelRingStack = slotResult.stack();
+                    EnabledModifiersComponent data = angelRingStack.getOrDefault(DataComponentRegistry.MODIFIERS_ENABLED, EnabledModifiersComponent.EMPTY);
+
+                    if (getInertiaModifier(angelRingStack) && data.inertiaEnabled() &&
+                            player.getPersistentData().getBoolean(PayloadActions.NO_KEYS_PRESSED)) {
+                        Vec3 motion = player.getDeltaMovement();
+                        if (motion.x != 0 || motion.z != 0) {
+                            player.setDeltaMovement(
+                                    motion.x * AngelRingConfig.slowdownFactor,
+                                    motion.y,
+                                    motion.z * AngelRingConfig.slowdownFactor
+                            );
+                        }
                     }
-                }
-            }
-        }
+                });
     }
 
 
     @SubscribeEvent
-    public static void useMagnet(PlayerTickEvent.Pre event){
+    public static void useMagnet(PlayerTickEvent.Pre event) {
         Player player = event.getEntity();
-        Optional<SlotResult> slotResult = CuriosApi.getCuriosInventory(player).flatMap(handler -> handler.findFirstCurio(ItemRegistry.ANGEL_RING.get()));
-        if (slotResult.isPresent()) {
-            ItemStack angelRingStack = slotResult.get().stack();
-            EnabledModifiersComponent data = angelRingStack.getOrDefault(DataComponentRegistry.MODIFIERS_ENABLED, EnabledModifiersComponent.EMPTY);
-            if (!player.isCrouching() && getMagnetModifier(angelRingStack) && data.magnetEnabled()) {
-                List<ItemEntity> nearbyItems = player.level().getEntitiesOfClass(ItemEntity.class, player.getBoundingBox().inflate(AngelRingConfig.magnetRadius));
-                for (ItemEntity itemEntity : nearbyItems) {
-                    Vec3 pullVec = player.position().subtract(itemEntity.position()).normalize().scale(AngelRingConfig.magnetPullSpeed);
-                    itemEntity.setPickUpDelay(0);
-                    itemEntity.setDeltaMovement(itemEntity.getDeltaMovement().add(pullVec));
-                }
-            }
-        }
+        if (player.isCrouching()) return;
+
+        CuriosApi.getCuriosInventory(player)
+                .flatMap(handler -> handler.findFirstCurio(ItemRegistry.ANGEL_RING.get()))
+                .ifPresent(slotResult -> {
+                    ItemStack angelRingStack = slotResult.stack();
+                    EnabledModifiersComponent data = angelRingStack.getOrDefault(DataComponentRegistry.MODIFIERS_ENABLED, EnabledModifiersComponent.EMPTY);
+
+                    if (getMagnetModifier(angelRingStack) && data.magnetEnabled()) {
+                        double radius = AngelRingConfig.magnetRadius;
+                        Vec3 playerPos = player.position();
+
+                        player.level().getEntitiesOfClass(ItemEntity.class, player.getBoundingBox().inflate(radius))
+                                .forEach(itemEntity -> {
+                                    Vec3 pullVec = playerPos.subtract(itemEntity.position())
+                                            .normalize()
+                                            .scale(AngelRingConfig.magnetPullSpeed);
+                                    itemEntity.setDeltaMovement(itemEntity.getDeltaMovement().add(pullVec));
+                                });
+                    }
+                });
     }
 }

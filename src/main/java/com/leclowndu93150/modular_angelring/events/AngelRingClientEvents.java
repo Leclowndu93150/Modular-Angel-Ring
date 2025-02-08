@@ -106,17 +106,18 @@ public class AngelRingClientEvents {
         Player player = Minecraft.getInstance().player;
         if (player == null) return;
 
-        Optional<SlotResult> slotResult = CuriosApi.getCuriosInventory(player).flatMap(handler -> handler.findFirstCurio(ItemRegistry.ANGEL_RING.get()));
-        if (slotResult.isPresent()) {
-            ItemStack angelRingStack = slotResult.get().stack();
-            EnabledModifiersComponent data = angelRingStack.getOrDefault(DataComponentRegistry.MODIFIERS_ENABLED, EnabledModifiersComponent.EMPTY);
+        CuriosApi.getCuriosInventory(player)
+                .flatMap(handler -> handler.findFirstCurio(ItemRegistry.ANGEL_RING.get()))
+                .ifPresent(slotResult -> {
+                    ItemStack angelRingStack = slotResult.stack();
+                    EnabledModifiersComponent data = angelRingStack.getOrDefault(DataComponentRegistry.MODIFIERS_ENABLED, EnabledModifiersComponent.EMPTY);
 
-            if (getNightVisionModifier(angelRingStack) && data.nightVisionEnabled()) {
-                MobEffectInstance effect = player.getEffect(MobEffects.NIGHT_VISION);
-                if (effect == null || effect.getDuration() < 219) {  // Only reapply when about to run out
-                    player.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, 400, 0, true, false));
-                }
-            }
-        }
+                    if (getNightVisionModifier(angelRingStack) && data.nightVisionEnabled()) {
+                        MobEffectInstance effect = player.getEffect(MobEffects.NIGHT_VISION);
+                        if (effect == null || effect.getDuration() < 219) {
+                            player.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, 400, 0, true, false));
+                        }
+                    }
+                });
     }
 }
