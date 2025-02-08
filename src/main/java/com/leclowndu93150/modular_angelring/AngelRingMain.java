@@ -1,6 +1,7 @@
 package com.leclowndu93150.modular_angelring;
 
 import com.leclowndu93150.modular_angelring.common.AngelRingItem;
+import com.leclowndu93150.modular_angelring.registry.AttachementRegistry;
 import com.leclowndu93150.modular_angelring.registry.CreativeTabRegistry;
 import com.leclowndu93150.modular_angelring.registry.DataComponentRegistry;
 import com.leclowndu93150.modular_angelring.registry.ItemRegistry;
@@ -17,6 +18,7 @@ public class AngelRingMain {
         CreativeTabRegistry.CREATIVE_MODE_TABS.register(modEventBus);
         ItemRegistry.ITEMS.register(modEventBus);
         DataComponentRegistry.COMPONENTS.register(modEventBus);
+        AttachementRegistry.ATTACHMENT_TYPES.register(modEventBus);
         modEventBus.addListener(AngelRingItem::registerCapabilities);
         modContainer.registerConfig(ModConfig.Type.COMMON, AngelRingConfig.SPEC);
     }

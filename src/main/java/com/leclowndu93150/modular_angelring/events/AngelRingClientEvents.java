@@ -4,6 +4,7 @@ import com.leclowndu93150.modular_angelring.AngelRingMain;
 import com.leclowndu93150.modular_angelring.common.AngelRingModules;
 import com.leclowndu93150.modular_angelring.common.EnabledModifiersComponent;
 import com.leclowndu93150.modular_angelring.networking.KeyPressedPayload;
+import com.leclowndu93150.modular_angelring.registry.AttachementRegistry;
 import com.leclowndu93150.modular_angelring.registry.DataComponentRegistry;
 import com.leclowndu93150.modular_angelring.registry.ItemRegistry;
 import com.leclowndu93150.modular_angelring.registry.KeyBindRegistry;
@@ -12,6 +13,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -99,27 +102,21 @@ public class AngelRingClientEvents {
     }
 
     @SubscribeEvent
-    public static void onClientTick(ClientTickEvent.Pre event){
-        double initialGamma = 1.0;
-        double maxGamma = 9999.0;
+    public static void onClientTick(ClientTickEvent.Pre event) {
         Player player = Minecraft.getInstance().player;
-        if (player == null || ModList.get().isLoaded("fullbrightnesstoggle")) return;
+        if (player == null) return;
+
         Optional<SlotResult> slotResult = CuriosApi.getCuriosInventory(player).flatMap(handler -> handler.findFirstCurio(ItemRegistry.ANGEL_RING.get()));
         if (slotResult.isPresent()) {
             ItemStack angelRingStack = slotResult.get().stack();
             EnabledModifiersComponent data = angelRingStack.getOrDefault(DataComponentRegistry.MODIFIERS_ENABLED, EnabledModifiersComponent.EMPTY);
-            if(getNightVisionModifier(angelRingStack) && data.nightVisionEnabled()){
-                    if (Minecraft.getInstance().options.gamma().get() != maxGamma) {
-                        Minecraft.getInstance().options.gamma().set(maxGamma);
-                    }
-            }
-            if (!data.nightVisionEnabled() && Minecraft.getInstance().options.gamma().get() != initialGamma) {
-                Minecraft.getInstance().options.gamma().set(initialGamma);
-            }
-        }
 
-        if(slotResult.isEmpty() && Minecraft.getInstance().options.gamma().get() != initialGamma){
-            Minecraft.getInstance().options.gamma().set(initialGamma);
+            if (getNightVisionModifier(angelRingStack) && data.nightVisionEnabled()) {
+                MobEffectInstance effect = player.getEffect(MobEffects.NIGHT_VISION);
+                if (effect == null || effect.getDuration() < 219) {  // Only reapply when about to run out
+                    player.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, 400, 0, true, false));
+                }
+            }
         }
     }
 }

@@ -3,15 +3,19 @@ package com.leclowndu93150.modular_angelring.common;
 import com.leclowndu93150.modular_angelring.AngelRingConfig;
 import com.leclowndu93150.modular_angelring.AngelRingMain;
 import com.leclowndu93150.modular_angelring.events.AngelRingEvents;
+import com.leclowndu93150.modular_angelring.registry.AttachementRegistry;
 import com.leclowndu93150.modular_angelring.registry.DataComponentRegistry;
 import com.leclowndu93150.modular_angelring.registry.ItemRegistry;
 import com.leclowndu93150.modular_angelring.utils.FlightSpeedPercentage;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.protocol.game.ClientboundRemoveMobEffectPacket;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.Interaction;
 import net.minecraft.world.entity.LivingEntity;
@@ -72,6 +76,15 @@ public class AngelRingItem extends Item {
                                     player.getAbilities().setFlyingSpeed(0.05F);
                                 }
                             }
+
+                            if (angelRingStack.has(DataComponentRegistry.NIGHT_VISION_MODIFIER)) {
+                                if (data.nightVisionEnabled()) {
+                                    MobEffectInstance effect = player.getEffect(MobEffects.NIGHT_VISION);
+                                    if (effect == null || effect.getDuration() < 219) {
+                                        player.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, 400, 0, true, false));
+                                    }
+                                }
+                            }
                         }
                     }
 
@@ -87,6 +100,10 @@ public class AngelRingItem extends Item {
                         Player player = (Player) slotContext.entity();
                         stopFlight(player);
                         player.getAbilities().setFlyingSpeed(0.05F);
+
+                        player.removeEffect(MobEffects.NIGHT_VISION);
+
+                        AttachementRegistry.setNightVision(player, false);
                     }
                 },  ItemRegistry.ANGEL_RING.get());
     }
