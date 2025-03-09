@@ -14,6 +14,10 @@ import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Quaternionf;
+import top.theillusivec4.curios.api.CuriosApi;
+import top.theillusivec4.curios.api.SlotResult;
+
+import java.util.Optional;
 
 import static com.leclowndu93150.modular_angelring.render.AngelRingCheck.*;
 
@@ -32,12 +36,13 @@ public class AngelRingRenderer extends RenderLayer<AbstractClientPlayer, PlayerM
 
     @Override
     public void render(@NotNull PoseStack matrixStack, @NotNull MultiBufferSource buffer, int packedLight, @NotNull AbstractClientPlayer player, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
-        assert Minecraft.getInstance().player != null;
+        Optional<SlotResult> slotResult = CuriosApi.getCuriosInventory(player).flatMap(handler -> handler.findFirstCurio(ItemRegistry.ANGEL_RING.get()));
+        if (slotResult.isEmpty()) return;
+
         if (!player.isInvisible() && isEquipped(player) && isVisible(player)) {
             matrixStack.pushPose();
             getParentModel().body.translateAndRotate(matrixStack);
 
-            // used to be +-0.2 0 0.2
             matrixStack.translate(dir * -0.5, 0.1, 0.35);
             matrixStack.scale(0.9f, 0.9f, 0.9f);
 
@@ -52,7 +57,6 @@ public class AngelRingRenderer extends RenderLayer<AbstractClientPlayer, PlayerM
 
             matrixStack.mulPose(Axis.YN.rotationDegrees((float) angle));
             matrixStack.translate(0.5,0,0);
-
 
             switch(getWingType(player)) {
                 case "BAT":
