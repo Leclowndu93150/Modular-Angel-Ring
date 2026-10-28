@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "E": "minecraft:elytra",
+    "G": "minecraft:gold_ingot"
+  },
+  "pattern": [
+    " G ",
+    "GEG",
+    " G "
+  ],
+  "result": {
+    "id": "modular_angelring:gold_ring"
+  }
+}

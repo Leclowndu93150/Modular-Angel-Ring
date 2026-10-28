@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "modular_angelring:angel_wings",
+    "minecraft:dragon_head",
+    "minecraft:red_dye",
+    "minecraft:orange_dye"
+  ],
+  "result": {
+    "id": "modular_angelring:dragon_wings"
+  }
+}

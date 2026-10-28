@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "modular_angelring:angel_wings",
+    "minecraft:cocoa_beans",
+    "minecraft:phantom_membrane"
+  ],
+  "result": {
+    "id": "modular_angelring:bat_wings"
+  }
+}

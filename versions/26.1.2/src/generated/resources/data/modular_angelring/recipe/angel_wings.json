@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "S": "minecraft:string",
+    "W": "minecraft:feather"
+  },
+  "pattern": [
+    "SWS",
+    "W W",
+    "W W"
+  ],
+  "result": {
+    "id": "modular_angelring:angel_wings"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "type": "modular_angelring:module_install",
+  "addition": "modular_angelring:inertia_module",
+  "base": "modular_angelring:angel_ring",
+  "module": "modular_angelring:inertia",
+  "template": "modular_angelring:angel_ring_upgrade_smithing_template"
+}

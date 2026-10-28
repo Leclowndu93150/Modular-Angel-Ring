@@ -1,0 +1,19 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.leclowndu93150.modular_angelring.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "PlayerMixin"
+  ],
+  "client": [
+    "client.FogRendererMixin",
+    "client.GameRendererMixin",
+    "client.LocalPlayerMixin",
+    "client.MinecraftMixin",
+    "client.LightTextureMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

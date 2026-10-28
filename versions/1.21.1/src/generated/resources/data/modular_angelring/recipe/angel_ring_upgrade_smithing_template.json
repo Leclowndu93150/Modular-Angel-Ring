@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "F": {
+      "item": "minecraft:feather"
+    },
+    "G": {
+      "item": "minecraft:gold_ingot"
+    },
+    "I": {
+      "item": "minecraft:iron_block"
+    }
+  },
+  "pattern": [
+    "GFG",
+    "GIG",
+    "GGG"
+  ],
+  "result": {
+    "count": 1,
+    "id": "modular_angelring:angel_ring_upgrade_smithing_template"
+  }
+}

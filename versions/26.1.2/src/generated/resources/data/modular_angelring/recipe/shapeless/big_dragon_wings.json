@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "modular_angelring:angel_wings",
+    "minecraft:dragon_head",
+    "minecraft:ender_eye"
+  ],
+  "result": {
+    "id": "modular_angelring:big_dragon_wings"
+  }
+}

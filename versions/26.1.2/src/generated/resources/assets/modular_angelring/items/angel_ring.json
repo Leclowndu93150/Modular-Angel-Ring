@@ -1,0 +1,62 @@
+{
+  "model": {
+    "type": "minecraft:select",
+    "cases": [
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "modular_angelring:item/ring/bat"
+        },
+        "when": "bat"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "modular_angelring:item/ring/big_dragon"
+        },
+        "when": "big_dragon"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "modular_angelring:item/ring/blue_dragon"
+        },
+        "when": "blue_dragon"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "modular_angelring:item/ring/butterfly"
+        },
+        "when": "butterfly"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "modular_angelring:item/ring/dragon"
+        },
+        "when": "dragon"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "modular_angelring:item/ring/gold"
+        },
+        "when": "gold"
+      },
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "modular_angelring:item/ring/golden"
+        },
+        "when": "golden"
+      }
+    ],
+    "component": "modular_angelring:wings",
+    "fallback": {
+      "type": "minecraft:model",
+      "model": "modular_angelring:item/angel_ring"
+    },
+    "property": "minecraft:component"
+  }
+}

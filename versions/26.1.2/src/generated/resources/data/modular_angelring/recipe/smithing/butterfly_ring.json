@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": "modular_angelring:butterfly_wings",
+  "base": "modular_angelring:angel_ring",
+  "result": {
+    "components": {
+      "modular_angelring:wings": "butterfly"
+    },
+    "id": "modular_angelring:angel_ring"
+  },
+  "template": "modular_angelring:angel_ring_upgrade_smithing_template"
+}

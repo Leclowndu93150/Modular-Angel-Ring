@@ -1,0 +1,6 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "modular_angelring:item/angel_ring_upgrade_smithing_template"
+  }
+}

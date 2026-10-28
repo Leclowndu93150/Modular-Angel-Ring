@@ -1,0 +1,50 @@
+{
+  "parent": "minecraft:item/generated",
+  "overrides": [
+    {
+      "model": "modular_angelring:item/ring/bat",
+      "predicate": {
+        "modular_angelring:wings": 1.0
+      }
+    },
+    {
+      "model": "modular_angelring:item/ring/big_dragon",
+      "predicate": {
+        "modular_angelring:wings": 2.0
+      }
+    },
+    {
+      "model": "modular_angelring:item/ring/blue_dragon",
+      "predicate": {
+        "modular_angelring:wings": 3.0
+      }
+    },
+    {
+      "model": "modular_angelring:item/ring/butterfly",
+      "predicate": {
+        "modular_angelring:wings": 4.0
+      }
+    },
+    {
+      "model": "modular_angelring:item/ring/dragon",
+      "predicate": {
+        "modular_angelring:wings": 5.0
+      }
+    },
+    {
+      "model": "modular_angelring:item/ring/gold",
+      "predicate": {
+        "modular_angelring:wings": 6.0
+      }
+    },
+    {
+      "model": "modular_angelring:item/ring/golden",
+      "predicate": {
+        "modular_angelring:wings": 7.0
+      }
+    }
+  ],
+  "textures": {
+    "layer0": "modular_angelring:item/ring/angel"
+  }
+}
